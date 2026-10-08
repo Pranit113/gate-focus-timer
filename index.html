@@ -990,9 +990,10 @@ body {
       </div>
 
       <div class="date-nav-controls">
-        <button class="btn-icon" onclick="navTaskDate(-1)">‹</button>
-        <span class="date-nav-label" id="taskNavLabel">Today</span>
-        <button class="btn-icon" onclick="navTaskDate(1)">›</button>
+        <button class="btn-icon" onclick="navTaskDate(-1)" title="Previous day / period">‹</button>
+        <span class="date-nav-label" id="taskNavLabel" style="cursor:pointer" onclick="openDateNavPicker()" title="Click to pick any date">Today</span>
+        <input type="date" id="quickDateNavPicker" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0" onchange="onNavDatePicker(this.value)"/>
+        <button class="btn-icon" onclick="navTaskDate(1)" title="Next day / period">›</button>
         <button class="btn btn-secondary btn-sm" onclick="navTaskToday()">Today</button>
       </div>
     </div>
@@ -1390,7 +1391,26 @@ const S = {
 };
 
 function ls(k,d){ return localStorage.getItem(k) || d; }
-function fmt(d){ return d.toISOString().slice(0,10); }
+
+function parseLocalDate(str) {
+  if (!str) return new Date();
+  if (str instanceof Date) return new Date(str.getFullYear(), str.getMonth(), str.getDate(), 12, 0, 0);
+  const parts = String(str).slice(0, 10).split('-').map(Number);
+  if (parts.length === 3 && !isNaN(parts[0])) {
+    return new Date(parts[0], parts[1] - 1, parts[2], 12, 0, 0);
+  }
+  return new Date();
+}
+
+function fmt(d) {
+  if (!d) return '';
+  if (typeof d === 'string' && d.length === 10 && d.includes('-')) return d;
+  const dateObj = (d instanceof Date) ? d : new Date(d);
+  const y = dateObj.getFullYear();
+  const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+  const day = String(dateObj.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
 
 /* ================================================================
    AURORA CANVAS
@@ -1499,10 +1519,18 @@ function renderDaysLeft(){
 }
 
 function renderDate(){
-  const n = new Date();
-  document.getElementById('schedDate').textContent = n.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
-  const day = Math.ceil((n - new Date(n.getFullYear(),0,1))/86400000)%120 || 120;
-  document.getElementById('dayBadge').textContent = `Day ${day} · 120 Days – 70 Marks`;
+  const d = parseLocalDate(S.selectedDate);
+  const todayStr = fmt(new Date());
+  
+  if (S.selectedDate === todayStr) {
+    document.getElementById('schedDate').textContent = 'Today, ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+  } else {
+    document.getElementById('schedDate').textContent = d.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+  }
+
+  const startOfYear = new Date(d.getFullYear(), 0, 1);
+  const dayNum = Math.ceil((d - startOfYear) / 86400000) % 120 || 120;
+  document.getElementById('dayBadge').textContent = `Day ${dayNum} · 120 Days – 70 Marks`;
 }
 
 /* ================================================================
@@ -1792,25 +1820,39 @@ function selectQuickDay(offset) {
   S.taskView = 'day';
 
   document.querySelectorAll('.date-nav-row .tabs-trigger').forEach((b,i)=> b.classList.toggle('active', i===0));
-  document.querySelectorAll('.day-strip-chip').forEach((c, i) => c.classList.toggle('active', i === offset));
-
-  updateTaskNavLabel();
+  syncQuickDayChips();
+  renderDate();
   renderTasks();
 }
 
 function navTaskDate(offset) {
-  const d = new Date(S.selectedDate + 'T00:00:00');
+  const d = parseLocalDate(S.selectedDate);
   if(S.taskView === 'day') d.setDate(d.getDate() + offset);
   else if(S.taskView === 'week') d.setDate(d.getDate() + offset * 7);
   else if(S.taskView === 'month') d.setMonth(d.getMonth() + offset);
   S.selectedDate = fmt(d);
   syncQuickDayChips();
-  updateTaskNavLabel();
+  renderDate();
   renderTasks();
 }
 
 function navTaskToday() {
   selectQuickDay(0);
+}
+
+function openDateNavPicker() {
+  const inp = document.getElementById('quickDateNavPicker');
+  inp.value = S.selectedDate;
+  if (inp.showPicker) inp.showPicker();
+  else inp.click();
+}
+
+function onNavDatePicker(val) {
+  if (!val) return;
+  S.selectedDate = val;
+  S.taskView = 'day';
+  document.querySelectorAll('.date-nav-row .tabs-trigger').forEach((b,i)=> b.classList.toggle('active', i===0));
+  renderTasks();
 }
 
 function syncQuickDayChips() {
@@ -1827,7 +1869,7 @@ function syncQuickDayChips() {
 
 function updateTaskNavLabel() {
   const lbl = document.getElementById('taskNavLabel');
-  const d = new Date(S.selectedDate + 'T00:00:00');
+  const d = parseLocalDate(S.selectedDate);
   const todayStr = fmt(new Date());
 
   if(S.taskView === 'day') {
@@ -1845,21 +1887,22 @@ function updateTaskNavLabel() {
 }
 
 function getFilteredTasks() {
-  const cur = new Date(S.selectedDate + 'T00:00:00');
+  const cur = parseLocalDate(S.selectedDate);
   
   // 1. Filter by period (day, week, month)
   const byPeriod = S.tasks.filter(t => {
-    if(!t.date) return S.taskView === 'day' && S.selectedDate === fmt(new Date());
-    const td = new Date(t.date + 'T00:00:00');
+    const taskDate = t.date || fmt(new Date());
     if(S.taskView === 'day') {
-      return t.date === S.selectedDate;
+      return taskDate === S.selectedDate;
     } else if(S.taskView === 'week') {
+      const td = parseLocalDate(taskDate);
       const mon = new Date(cur);
       const day = mon.getDay() || 7;
       mon.setDate(mon.getDate() - day + 1);
       const sun = new Date(mon); sun.setDate(sun.getDate() + 6);
       return td >= mon && td <= sun;
     } else if(S.taskView === 'month') {
+      const td = parseLocalDate(taskDate);
       return td.getFullYear() === cur.getFullYear() && td.getMonth() === cur.getMonth();
     }
     return true;
@@ -1879,6 +1922,7 @@ function getFilteredTasks() {
 
 function renderTasks(){
   updateTaskNavLabel();
+  renderDate();
   syncQuickDayChips();
   const l = document.getElementById('taskList');
   l.innerHTML = '';
