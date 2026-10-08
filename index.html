@@ -1491,7 +1491,7 @@ body {
           </div>
           <div class="form-group">
             <label>Supabase Anon Public Key</label>
-            <input class="form-input" id="sbKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required/>
+            <input class="form-input" id="sbKeyInput" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtaWx1bmtuaHB5aHR4bWFpZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0Nzg5MzksImV4cCI6MjEwNzA1NDkzOX0.k9XDBQx6NMIcEiT4s5HjNN97HzvN7XJUVgHoAlnqBgA" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required/>
             <div style="font-size:0.7rem;color:var(--muted-foreground);margin-top:4px">
               💡 Found in your Supabase Dashboard ➔ <strong>Project Settings</strong> ➔ <strong>API</strong> ➔ <strong>Project API keys (anon public)</strong>
             </div>
@@ -2904,7 +2904,7 @@ function hashString(str) {
    SUPABASE CLOUD SYNC & AUTH ENGINE
 ================================================================ */
 const DEFAULT_SUPABASE_URL = 'https://tmilunknhpyhtxmaigui.supabase.co';
-const DEFAULT_SUPABASE_KEY = '';
+const DEFAULT_SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtaWx1bmtuaHB5aHR4bWFpZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0Nzg5MzksImV4cCI6MjEwNzA1NDkzOX0.k9XDBQx6NMIcEiT4s5HjNN97HzvN7XJUVgHoAlnqBgA';
 
 let sbClient = null;
 let currentUser = null;
