@@ -1431,10 +1431,9 @@ body {
         Sign in to automatically sync your study tasks, timer logs, and mock tests across all your devices.
       </p>
 
-      <div class="tabs-list" style="width:100%;display:grid;grid-template-columns:1fr 1fr 1fr;height:38px;margin-bottom:16px">
+      <div class="tabs-list" style="width:100%;display:grid;grid-template-columns:1fr 1fr;height:38px;margin-bottom:16px">
         <button class="tabs-trigger active" id="tabBtnSignIn" onclick="setCloudTab('signin')">Sign In</button>
         <button class="tabs-trigger" id="tabBtnSignUp" onclick="setCloudTab('signup')">Sign Up</button>
-        <button class="tabs-trigger" id="tabBtnConfig" onclick="setCloudTab('config')">⚙️ Setup</button>
       </div>
 
       <!-- Sign In Panel -->
@@ -1478,45 +1477,6 @@ body {
           Already have an account? <a href="#" onclick="setCloudTab('signin');return false" style="color:var(--foreground);text-decoration:underline">Sign In</a>
         </div>
       </div>
-
-      <!-- Supabase Setup / Config Panel -->
-      <div id="panelConfig" style="display:none">
-        <p style="font-size:0.75rem;color:var(--muted-foreground);margin-bottom:12px">
-          Enter your Supabase project credentials. If you haven't created a project yet, get your free URL & Key from <a href="https://supabase.com" target="_blank" style="color:var(--accent);text-decoration:underline">supabase.com</a>.
-        </p>
-        <form onsubmit="saveSupabaseConfig(event)">
-          <div class="form-group">
-            <label>Supabase Project URL</label>
-            <input class="form-input" id="sbUrlInput" value="https://tmilunknhpyhtxmaigui.supabase.co" placeholder="https://tmilunknhpyhtxmaigui.supabase.co" required/>
-          </div>
-          <div class="form-group">
-            <label>Supabase Anon Public Key</label>
-            <input class="form-input" id="sbKeyInput" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRtaWx1bmtuaHB5aHR4bWFpZ3VpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTE0Nzg5MzksImV4cCI6MjEwNzA1NDkzOX0.k9XDBQx6NMIcEiT4s5HjNN97HzvN7XJUVgHoAlnqBgA" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required/>
-            <div style="font-size:0.7rem;color:var(--muted-foreground);margin-top:4px">
-              💡 Found in your Supabase Dashboard ➔ <strong>Project Settings</strong> ➔ <strong>API</strong> ➔ <strong>Project API keys (anon public)</strong>
-            </div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width:100%">Save Supabase Keys</button>
-        </form>
-
-        <div style="margin-top:16px;border-top:1px solid var(--border);padding-top:12px">
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-            <span style="font-size:0.75rem;font-weight:600">Database Table Setup</span>
-            <button type="button" class="btn btn-secondary btn-sm" onclick="copySetupSQL()">📋 Copy SQL</button>
-          </div>
-          <p style="font-size:0.72rem;color:var(--muted-foreground);margin-bottom:8px">
-            Run this in your Supabase <strong>SQL Editor</strong> to enable the secure <code>user_data</code> table:
-          </p>
-          <pre id="sqlSnippet" style="background:var(--background);border:1px solid var(--border);border-radius:6px;padding:8px 10px;font-size:0.68rem;overflow-x:auto;color:var(--muted-foreground);max-height:120px;user-select:all">CREATE TABLE IF NOT EXISTS public.user_data (
-  id uuid references auth.users on delete cascade primary key,
-  data jsonb not null default '{}'::jsonb,
-  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
-ALTER TABLE public.user_data ENABLE ROW LEVEL SECURITY;
-DROP POLICY IF EXISTS "Users access own data" ON public.user_data;
-CREATE POLICY "Users access own data" ON public.user_data FOR ALL USING (auth.uid() = id) WITH CHECK (auth.uid() = id);</pre>
-        </div>
-      </div>
     </div>
 
     <!-- When Logged In View -->
@@ -1542,9 +1502,6 @@ CREATE POLICY "Users access own data" ON public.user_data FOR ALL USING (auth.ui
         </button>
         <button class="btn btn-secondary" onclick="restoreFromCloud()">
           📥 Pull Latest Data from Cloud
-        </button>
-        <button class="btn btn-outline" onclick="openConfigInLoggedIn()">
-          ⚙️ Supabase Settings
         </button>
         <button class="btn btn-outline" onclick="handleSignOut()" style="color:#f43f5e;border-color:rgba(244,63,94,0.3);margin-top:6px">
           🚪 Sign Out
@@ -2917,12 +2874,6 @@ function initSupabase() {
   const url = (localStorage.getItem('sb_url') || DEFAULT_SUPABASE_URL).trim();
   const key = (localStorage.getItem('sb_key') || DEFAULT_SUPABASE_KEY).trim();
 
-  // Populate setup input fields if saved or default
-  const urlInput = document.getElementById('sbUrlInput');
-  const keyInput = document.getElementById('sbKeyInput');
-  if (urlInput) urlInput.value = url;
-  if (keyInput && key) keyInput.value = key;
-
   if (!url || !key) {
     updateCloudStatusUI('unconfigured');
     return false;
@@ -3067,10 +3018,7 @@ function formatRelativeTime(isoStr) {
 }
 
 function openCloudModal() {
-  const hasKeys = !!((localStorage.getItem('sb_url') || DEFAULT_SUPABASE_URL).trim() && (localStorage.getItem('sb_key') || DEFAULT_SUPABASE_KEY).trim());
-  if (!hasKeys && !currentUser) {
-    setCloudTab('config');
-  } else if (!currentUser) {
+  if (!currentUser) {
     setCloudTab('signin');
   }
   updateCloudStatusUI(currentUser ? 'logged_in' : 'logged_out');
@@ -3078,44 +3026,21 @@ function openCloudModal() {
 }
 
 function setCloudTab(tab) {
-  ['signin', 'signup', 'config'].forEach(t => {
-    const btnId = t === 'signin' ? 'tabBtnSignIn' : t === 'signup' ? 'tabBtnSignUp' : 'tabBtnConfig';
-    const panelId = t === 'signin' ? 'panelSignIn' : t === 'signup' ? 'panelSignUp' : 'panelConfig';
-    const btn = document.getElementById(btnId);
-    const panel = document.getElementById(panelId);
-    if (btn) btn.classList.toggle('active', t === tab);
-    if (panel) panel.style.display = (t === tab ? 'block' : 'none');
-  });
+  const isSignIn = tab === 'signin';
+  const btnIn = document.getElementById('tabBtnSignIn');
+  const btnUp = document.getElementById('tabBtnSignUp');
+  const pIn = document.getElementById('panelSignIn');
+  const pUp = document.getElementById('panelSignUp');
+  if (btnIn) btnIn.classList.toggle('active', isSignIn);
+  if (btnUp) btnUp.classList.toggle('active', !isSignIn);
+  if (pIn) pIn.style.display = isSignIn ? 'block' : 'none';
+  if (pUp) pUp.style.display = isSignIn ? 'none' : 'block';
 
   // Clear messages
   const err1 = document.getElementById('authErrorMsg');
   const err2 = document.getElementById('signUpErrorMsg');
   if (err1) { err1.style.display = 'none'; err1.textContent = ''; err1.className = 'cloud-alert cloud-alert-error'; }
   if (err2) { err2.style.display = 'none'; err2.textContent = ''; err2.className = 'cloud-alert cloud-alert-error'; }
-}
-
-function openConfigInLoggedIn() {
-  document.getElementById('cloudUserView').style.display = 'none';
-  document.getElementById('cloudAuthView').style.display = 'block';
-  setCloudTab('config');
-}
-
-function saveSupabaseConfig(e) {
-  if (e) e.preventDefault();
-  const url = (document.getElementById('sbUrlInput').value || DEFAULT_SUPABASE_URL).trim();
-  const key = (document.getElementById('sbKeyInput').value || '').trim();
-
-  if (!url || !key) {
-    toast('⚠️ Please paste your Supabase Anon Public Key');
-    return;
-  }
-
-  localStorage.setItem('sb_url', url);
-  localStorage.setItem('sb_key', key);
-  toast('✅ Supabase credentials saved!');
-
-  initSupabase();
-  setCloudTab('signin');
 }
 
 async function handleSignIn(e) {
@@ -3127,9 +3052,8 @@ async function handleSignIn(e) {
   if (!sbClient) {
     const inited = initSupabase();
     if (!inited) {
-      errDiv.textContent = 'Please paste your Supabase Anon Public Key in the Setup tab to connect.';
+      errDiv.textContent = 'Could not initialize Supabase connection.';
       errDiv.style.display = 'block';
-      setCloudTab('config');
       return;
     }
   }
@@ -3174,9 +3098,8 @@ async function handleSignUp(e) {
   if (!sbClient) {
     const inited = initSupabase();
     if (!inited) {
-      errDiv.textContent = 'Please paste your Supabase Anon Public Key in the Setup tab to connect.';
+      errDiv.textContent = 'Could not initialize Supabase connection.';
       errDiv.style.display = 'block';
-      setCloudTab('config');
       return;
     }
   }
@@ -3435,46 +3358,6 @@ function restoreFromCloud() {
   if (confirm('Fetch latest data from Supabase cloud and merge with this device?')) {
     pullDataFromCloud(true);
   }
-}
-
-function copySetupSQL() {
-  const sql = `CREATE TABLE IF NOT EXISTS public.user_data (
-  id uuid references auth.users on delete cascade primary key,
-  data jsonb not null default '{}'::jsonb,
-  updated_at timestamp with time zone default timezone('utc'::text, now()) not null
-);
-
-ALTER TABLE public.user_data ENABLE ROW LEVEL SECURITY;
-
-DROP POLICY IF EXISTS "Users access own data" ON public.user_data;
-
-CREATE POLICY "Users access own data"
-  ON public.user_data
-  FOR ALL
-  USING (auth.uid() = id)
-  WITH CHECK (auth.uid() = id);`;
-
-  if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(sql).then(() => {
-      toast('📋 SQL script copied to clipboard!');
-    }).catch(() => fallbackCopy(sql));
-  } else {
-    fallbackCopy(sql);
-  }
-}
-
-function fallbackCopy(text) {
-  const ta = document.createElement('textarea');
-  ta.value = text;
-  document.body.appendChild(ta);
-  ta.select();
-  try {
-    document.execCommand('copy');
-    toast('📋 SQL script copied to clipboard!');
-  } catch(e) {
-    toast('⚠️ Please copy the SQL manually');
-  }
-  ta.remove();
 }
 </script>
 </body>
