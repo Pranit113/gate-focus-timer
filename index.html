@@ -411,7 +411,7 @@ body {
 ================================================================ */
 .bottom-grid {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 360px;
   gap: 18px;
   margin-bottom: 20px;
 }
@@ -1128,22 +1128,48 @@ body {
     </button>
   </div>
 
-  <!-- Activity & Busy Meter -->
-  <div class="card act-card" style="margin-bottom:0">
-    <div class="act-title">Activity by hour</div>
-    <div class="act-legend">
-      <div class="act-legend-item"><div class="act-legend-dot" style="background:linear-gradient(to right,var(--accent),var(--accent2))"></div>Study</div>
-      <div class="act-legend-item"><div class="act-legend-dot" style="background:#f97316"></div>Running / Workout</div>
-      <div class="act-legend-item"><div class="act-legend-dot" style="background:linear-gradient(to right,var(--accent),#f97316)"></div>Mixed</div>
+  <!-- ===================== RUNNING & WORKOUT STATS (REPLACES ACTIVITY BY HOUR) ===================== -->
+  <div class="card" id="runStatsCard" style="margin-bottom:0">
+    <div class="stats-header" style="margin-bottom:12px">
+      <div>
+        <div class="run-stats-title">🏃 Running &amp; Workout</div>
+        <div class="auto-credit-hint" style="font-size:0.68rem;color:#f97316">⚡ Auto-credits on task completion</div>
+      </div>
+      <div style="display:flex;gap:6px;align-items:center">
+        <div class="tabs-list" style="padding:2px">
+          <button class="tabs-trigger" onclick="setRunView('week',this)" style="font-size:0.68rem;padding:2px 7px">Week</button>
+          <button class="tabs-trigger active" onclick="setRunView('month',this)" style="font-size:0.68rem;padding:2px 7px">Month</button>
+        </div>
+        <button class="btn btn-outline btn-sm" onclick="openRunModal()" style="font-size:0.72rem;padding:3px 8px;white-space:nowrap">+ Log</button>
+      </div>
     </div>
-    <div class="act-chart" id="actChart"></div>
-    <div class="busy-sec">
-      <div class="busy-lbl">Busy meter</div>
-      <input type="range" class="busy-slider" min="0" max="100" value="65"/>
-      <div class="busy-ends"><span>Chill</span><span>Intense</span></div>
-    </div>
-  </div>
 
+    <!-- KPIs -->
+    <div class="run-kpi-grid" id="runKpiGrid" style="grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px"></div>
+
+    <!-- Distance Bar Chart -->
+    <div style="margin-bottom:14px">
+      <div class="chart-title" id="runBarTitle" style="font-size:0.75rem;margin-bottom:6px">Distance this week (km)</div>
+      <div class="run-bar-chart" id="runBarChart" style="height:70px"></div>
+    </div>
+
+    <!-- Activity Breakdown & Streak -->
+    <div style="margin-bottom:12px">
+      <div class="chart-title" style="font-size:0.75rem;margin-bottom:6px">Activity Breakdown</div>
+      <div class="pie-inner" style="justify-content:flex-start;gap:10px">
+        <svg id="runPieChart" width="75" height="75" viewBox="0 0 100 100" style="flex-shrink:0"></svg>
+        <div class="pie-legend" id="runPieLegend" style="font-size:0.68rem"></div>
+      </div>
+    </div>
+
+    <div style="margin-bottom:12px">
+      <div class="chart-title" style="font-size:0.75rem;margin-bottom:6px">Workout Streak (28 days)</div>
+      <div class="run-streak-grid" id="runSgGrid"></div>
+    </div>
+
+    <div class="run-list-header" style="font-size:0.72rem;margin:10px 0 6px">Recent Workouts</div>
+    <div id="runEntryList" style="max-height:180px;overflow-y:auto;padding-right:2px"></div>
+  </div>
 </div>
 
 <!-- ===================== STUDY STATS (AUTOMATIC TRACKING) ===================== -->
@@ -1182,47 +1208,6 @@ body {
     <div class="chart-title">Study streak (last 28 days)</div>
     <div class="sg-grid" id="sgGrid"></div>
   </div>
-</div>
-
-<!-- ===================== RUNNING / WORKOUT STATS ===================== -->
-<div class="card" id="runStatsCard">
-  <div class="stats-header">
-    <div>
-      <div class="run-stats-title">ðŸƒ Running & Workout Stats</div>
-      <div class="auto-credit-hint">âš¡ Auto-credited when you complete a Running/Workout task</div>
-    </div>
-    <div style="display:flex;gap:8px;align-items:center">
-      <div class="tabs-list">
-        <button class="tabs-trigger" onclick="setRunView('week',this)">Week</button>
-        <button class="tabs-trigger active" onclick="setRunView('month',this)">Month</button>
-      </div>
-      <button class="btn btn-outline btn-sm" onclick="openRunModal()" style="white-space:nowrap">+ Log Workout</button>
-    </div>
-  </div>
-
-  <div class="run-kpi-grid" id="runKpiGrid"></div>
-
-  <div class="stats-row">
-    <div class="chart-card">
-      <div class="chart-title" id="runBarTitle">Distance this week (km)</div>
-      <div class="run-bar-chart" id="runBarChart"></div>
-    </div>
-    <div class="chart-card">
-      <div class="chart-title">Activity breakdown</div>
-      <div class="pie-inner">
-        <svg id="runPieChart" width="100" height="100" viewBox="0 0 100 100"></svg>
-        <div class="pie-legend" id="runPieLegend"></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="streak-graph">
-    <div class="chart-title">Workout streak (last 28 days)</div>
-    <div class="run-streak-grid" id="runSgGrid"></div>
-  </div>
-
-  <div class="run-list-header">Recent Workouts</div>
-  <div id="runEntryList"></div>
 </div>
 
 <!-- Run/Workout Log Modal -->
@@ -2685,29 +2670,8 @@ function renderStreakGraph(){
   }
 }
 
-function renderActivity(){
-  const chart = document.getElementById('actChart'); chart.innerHTML = '';
-  const curIdx = Math.floor(new Date().getHours() / 3);
-  const todayStr = fmt(new Date());
-  const studyVals = S.hourlyLog[todayStr] || [0,0,0,0,0,0,0,0];
-  const runVals   = S.hourlyRunLog[todayStr] || [0,0,0,0,0,0,0,0];
-  const combined  = studyVals.map((v, i) => v + runVals[i]);
-  const maxV = Math.max(...combined, 1);
-  const labels = ['12a','3a','6a','9a','12p','3p','6p','9p'];
-
-  combined.forEach((v, i) => {
-    const w = document.createElement('div'); w.className = 'abar-wrap';
-    const hasStudy = studyVals[i] > 0, hasRun = runVals[i] > 0;
-    const cur = i === curIdx;
-    const h = Math.round((v / maxV) * 85);
-    let barClass = 'abar';
-    if(hasStudy && hasRun) barClass += ' on-mixed';
-    else if(hasRun)         barClass += ' on-run';
-    else if(hasStudy)       barClass += ' on';
-    if(cur) barClass += ' cur';
-    w.innerHTML = `<div class="${barClass}" style="height:${Math.max(v > 0 ? h : 3, 3)}px"></div><div class="albl">${labels[i]}</div>`;
-    chart.appendChild(w);
-  });
+function renderActivity() {
+  // Activity by hour removed per user request and replaced by Running & Workout Stats
 }
 
 
