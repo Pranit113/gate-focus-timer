@@ -1487,11 +1487,14 @@ body {
         <form onsubmit="saveSupabaseConfig(event)">
           <div class="form-group">
             <label>Supabase Project URL</label>
-            <input class="form-input" id="sbUrlInput" placeholder="https://xxxxxxxxxxxx.supabase.co" required/>
+            <input class="form-input" id="sbUrlInput" value="https://tmilunknhpyhtxmaigui.supabase.co" placeholder="https://tmilunknhpyhtxmaigui.supabase.co" required/>
           </div>
           <div class="form-group">
             <label>Supabase Anon Public Key</label>
             <input class="form-input" id="sbKeyInput" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." required/>
+            <div style="font-size:0.7rem;color:var(--muted-foreground);margin-top:4px">
+              💡 Found in your Supabase Dashboard ➔ <strong>Project Settings</strong> ➔ <strong>API</strong> ➔ <strong>Project API keys (anon public)</strong>
+            </div>
           </div>
           <button type="submit" class="btn btn-primary" style="width:100%">Save Supabase Keys</button>
         </form>
@@ -2900,6 +2903,9 @@ function hashString(str) {
 /* ================================================================
    SUPABASE CLOUD SYNC & AUTH ENGINE
 ================================================================ */
+const DEFAULT_SUPABASE_URL = 'https://tmilunknhpyhtxmaigui.supabase.co';
+const DEFAULT_SUPABASE_KEY = '';
+
 let sbClient = null;
 let currentUser = null;
 let cloudSyncDebounceTimer = null;
@@ -2907,13 +2913,13 @@ let isSyncing = false;
 let lastSyncedAt = localStorage.getItem('sb_last_synced') || null;
 
 function initSupabase() {
-  const url = (localStorage.getItem('sb_url') || '').trim();
-  const key = (localStorage.getItem('sb_key') || '').trim();
+  const url = (localStorage.getItem('sb_url') || DEFAULT_SUPABASE_URL).trim();
+  const key = (localStorage.getItem('sb_key') || DEFAULT_SUPABASE_KEY).trim();
 
-  // Populate setup input fields if saved
+  // Populate setup input fields if saved or default
   const urlInput = document.getElementById('sbUrlInput');
   const keyInput = document.getElementById('sbKeyInput');
-  if (urlInput && url) urlInput.value = url;
+  if (urlInput) urlInput.value = url;
   if (keyInput && key) keyInput.value = key;
 
   if (!url || !key) {
@@ -3024,7 +3030,7 @@ function updateCloudStatusUI(status) {
       userView.style.display = 'none';
     }
 
-    const hasKeys = !!((localStorage.getItem('sb_url') || '').trim() && (localStorage.getItem('sb_key') || '').trim());
+    const hasKeys = !!((localStorage.getItem('sb_url') || DEFAULT_SUPABASE_URL).trim() && (localStorage.getItem('sb_key') || DEFAULT_SUPABASE_KEY).trim());
     if (status === 'error') {
       dot.classList.add('error');
       txt.textContent = '☁️ Sync Error';
@@ -3060,7 +3066,7 @@ function formatRelativeTime(isoStr) {
 }
 
 function openCloudModal() {
-  const hasKeys = !!((localStorage.getItem('sb_url') || '').trim() && (localStorage.getItem('sb_key') || '').trim());
+  const hasKeys = !!((localStorage.getItem('sb_url') || DEFAULT_SUPABASE_URL).trim() && (localStorage.getItem('sb_key') || DEFAULT_SUPABASE_KEY).trim());
   if (!hasKeys && !currentUser) {
     setCloudTab('config');
   } else if (!currentUser) {
@@ -3095,11 +3101,11 @@ function openConfigInLoggedIn() {
 
 function saveSupabaseConfig(e) {
   if (e) e.preventDefault();
-  const url = (document.getElementById('sbUrlInput').value || '').trim();
+  const url = (document.getElementById('sbUrlInput').value || DEFAULT_SUPABASE_URL).trim();
   const key = (document.getElementById('sbKeyInput').value || '').trim();
 
   if (!url || !key) {
-    toast('⚠️ Please fill both Project URL and Anon Key');
+    toast('⚠️ Please paste your Supabase Anon Public Key');
     return;
   }
 
@@ -3120,7 +3126,7 @@ async function handleSignIn(e) {
   if (!sbClient) {
     const inited = initSupabase();
     if (!inited) {
-      errDiv.textContent = 'Please configure your Supabase Project URL & Anon Key in the Setup tab first.';
+      errDiv.textContent = 'Please paste your Supabase Anon Public Key in the Setup tab to connect.';
       errDiv.style.display = 'block';
       setCloudTab('config');
       return;
@@ -3167,7 +3173,7 @@ async function handleSignUp(e) {
   if (!sbClient) {
     const inited = initSupabase();
     if (!inited) {
-      errDiv.textContent = 'Please configure your Supabase Project URL & Anon Key in the Setup tab first.';
+      errDiv.textContent = 'Please paste your Supabase Anon Public Key in the Setup tab to connect.';
       errDiv.style.display = 'block';
       setCloudTab('config');
       return;
