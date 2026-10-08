@@ -52,8 +52,8 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
 .days-pill .lbl{font-size:.78rem;color:var(--text-muted)}
 
 /* ===================== MAIN GRID ===================== */
-.main-grid{display:grid;grid-template-columns:1fr 270px;gap:18px;margin-bottom:18px}
-@media(max-width:800px){.main-grid,.bottom-grid{grid-template-columns:1fr!important}}
+.main-grid{margin-bottom:18px}
+@media(max-width:800px){.bottom-grid{grid-template-columns:1fr!important}}
 
 /* ===================== TIMER CARD ===================== */
 .timer-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:22px;padding:28px 20px;display:flex;flex-direction:column;align-items:center;position:relative}
@@ -133,22 +133,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
 .am-open-link{display:flex;align-items:center;justify-content:center;gap:7px;padding:11px 16px;background:linear-gradient(135deg,#fc3c44,#ff2d55);border-radius:12px;color:#fff;font-size:.85rem;font-weight:700;cursor:pointer;text-decoration:none;transition:opacity .2s;margin-top:14px}
 .am-open-link:hover{opacity:.88}
 
-/* ===================== LEADERBOARD ===================== */
-.lb-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:22px;padding:18px;overflow:hidden}
-.lb-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px}
-.lb-title{font-size:.95rem;font-weight:700}
-.lb-tabs{display:flex;gap:3px}
-.lb-tab{font-size:.72rem;padding:3px 9px;border-radius:6px;cursor:pointer;border:none;background:transparent;color:var(--text-muted);transition:.2s}
-.lb-tab.active{background:var(--bg-hover);color:var(--text-primary)}
-.lb-sub{font-size:.72rem;color:var(--text-dim);margin-bottom:12px}
-.lb-entry{display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);transition:background .3s}
-.lb-entry:last-child{border-bottom:none}
-.lb-rank{width:22px;font-size:.82rem;font-weight:700;color:var(--text-muted);text-align:center;flex-shrink:0}
-.lb-av{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;flex-shrink:0}
-.lb-name{flex:1;font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.lb-time{font-size:.74rem;color:var(--text-muted);flex-shrink:0}
-.rank-change{font-size:.65rem;margin-left:2px}
-.rank-up{color:#22c55e}.rank-down{color:#ef4444}.rank-same{color:var(--text-dim)}
 
 /* ===================== BOTTOM GRID ===================== */
 .bottom-grid{display:grid;grid-template-columns:1fr 330px;gap:18px;margin-bottom:18px}
@@ -221,32 +205,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
 .sg-cell.s2{background:rgba(162,89,255,.6)}
 .sg-cell.s3{background:var(--accent)}
 
-/* ===================== PLANNER ===================== */
-.planner-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:22px;padding:22px;margin-bottom:18px}
-.planner-title{font-size:1.05rem;font-weight:700;margin-bottom:5px}
-.planner-sub{font-size:.8rem;color:var(--text-muted);margin-bottom:18px}
-.planner-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px}
-.plan-day{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;padding:12px 14px}
-.plan-day.today{border-color:var(--accent);background:rgba(162,89,255,.08)}
-.plan-day-label{font-size:.72rem;font-weight:700;color:var(--accent);margin-bottom:4px}
-.plan-day-name{font-size:.88rem;font-weight:600;margin-bottom:8px}
-.plan-topic{display:flex;align-items:center;gap:6px;font-size:.75rem;color:var(--text-muted);margin-top:4px}
-.plan-topic-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.plan-hours{font-size:.68rem;color:var(--text-dim);margin-top:6px}
-
-/* ===================== WEEKLY LB ===================== */
-.weekly-card{background:var(--bg-secondary);border:1px solid var(--border);border-radius:22px;padding:22px;margin-bottom:18px}
-.wlb-title{font-size:1.05rem;font-weight:700;margin-bottom:4px}
-.wlb-sub{font-size:.78rem;color:var(--text-muted);margin-bottom:16px}
-.wlb-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:9px}
-.wlb-entry{display:flex;align-items:center;gap:9px;padding:9px 11px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;transition:border-color .3s}
-.wlb-entry:hover{border-color:var(--accent)}
-.wlb-rank{font-size:.85rem;font-weight:700;color:var(--text-muted);width:18px;text-align:center}
-.wlb-av{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;flex-shrink:0}
-.wlb-info{flex:1;min-width:0}
-.wlb-name{font-size:.78rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.wlb-time{font-size:.7rem;color:var(--accent2);font-weight:600}
-.wlb-bar{height:3px;border-radius:2px;margin-top:4px;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:width .6s ease}
 
 /* ===================== MODALS ===================== */
 .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:200;align-items:center;justify-content:center;backdrop-filter:blur(5px)}
@@ -284,15 +242,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
 @keyframes slideIn{from{opacity:0;transform:translateX(38px)}to{opacity:1;transform:translateX(0)}}
 @keyframes fadeOut{to{opacity:0;transform:translateX(38px)}}
 
-/* ===================== AVATAR COLORS ===================== */
-.av1{background:linear-gradient(135deg,#7c3aed,#a855f7);color:#fff}
-.av2{background:linear-gradient(135deg,#2563eb,#3b82f6);color:#fff}
-.av3{background:linear-gradient(135deg,#0891b2,#22d3ee);color:#fff}
-.av4{background:linear-gradient(135deg,#db2777,#ec4899);color:#fff}
-.av5{background:linear-gradient(135deg,#ea580c,#f97316);color:#fff}
-.av6{background:linear-gradient(135deg,#16a34a,#22c55e);color:#fff}
-.av7{background:linear-gradient(135deg,#dc2626,#ef4444);color:#fff}
-.av8{background:linear-gradient(135deg,#ca8a04,#eab308);color:#fff}
 
 @media(max-width:600px){.timer-display{font-size:3rem}.ring-wrap{width:240px;height:130px}.top-left h1{font-size:1.25rem}}
 </style>
@@ -374,18 +323,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
     </div>
   </div>
 
-  <!-- LEADERBOARD -->
-  <div class="lb-card">
-    <div class="lb-head">
-      <div class="lb-title">Leaderboard</div>
-      <div class="lb-tabs">
-        <button class="lb-tab active" onclick="switchLb('today',this)">Today</button>
-        <button class="lb-tab" onclick="switchLb('week',this)">Week</button>
-      </div>
-    </div>
-    <div class="lb-sub">Top 10 studiers</div>
-    <div id="lbList"></div>
-  </div>
 </div>
 
 <!-- ===================== BOTTOM GRID ===================== -->
@@ -439,12 +376,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
   </div>
 </div>
 
-<!-- ===================== SMART PLANNER ===================== -->
-<div class="planner-card">
-  <div class="planner-title">⏰ Smart Study Planner</div>
-  <div class="planner-sub" id="plannerSub">Auto-scheduled topics based on your GATE date</div>
-  <div class="planner-grid" id="plannerGrid"></div>
-</div>
 
 <!-- ===================== APPLE MUSIC ===================== -->
 <div class="apple-music-card">
@@ -502,12 +433,6 @@ body{background:var(--bg-primary);color:var(--text-primary);font-family:'Segoe U
   </div>
 </div>
 
-<!-- ===================== WEEKLY LB ===================== -->
-<div class="weekly-card">
-  <div class="wlb-title">🏆 Weekly Leaderboard</div>
-  <div class="wlb-sub">Top performers this week · Updates live</div>
-  <div class="wlb-grid" id="wlbGrid"></div>
-</div>
 
 </div><!-- /app-wrapper -->
 
@@ -682,8 +607,6 @@ window.addEventListener('DOMContentLoaded',()=>{
   applyState();
   renderDate();
   renderDaysLeft();
-  renderLeaderboard('today');
-  renderWeeklyLB();
   renderActivity();
   renderTasks();
   renderSessionDots();
@@ -691,11 +614,7 @@ window.addEventListener('DOMContentLoaded',()=>{
   renderWeekBar();
   renderPie();
   renderStreakGraph();
-  renderPlanner();
   initAppleMusic();
-
-  // animate leaderboard every 8s
-  setInterval(animateLB,8000);
 });
 
 function fmt(d){return d.toISOString().slice(0,10)}
@@ -899,56 +818,6 @@ function addTask(){
 }
 function saveTasks(){localStorage.setItem('tasks',JSON.stringify(S.tasks))}
 
-/* ================================================================
-   LEADERBOARD
-================================================================ */
-const AVS=['av1','av2','av3','av4','av5','av6','av7','av8'];
-const MEDALS=['🥇','🥈','🥉'];
-const NAMES=['Arjun S.','Priya K.','Rahul M.','Sneha B.','Vikram T.','Ananya R.','Karthik L.','Divya N.','Rohan P.','Meera J.'];
-let lbData={today:[],week:[]};
-function genLB(){
-  lbData.today=NAMES.map((n,i)=>({name:n,mins:Math.floor(Math.random()*300+60),av:AVS[i%8],ini:n.split(' ').map(w=>w[0]).join(''),prev:i}));
-  lbData.week=NAMES.map((n,i)=>({name:n,mins:Math.floor(Math.random()*1800+300),av:AVS[(i+3)%8],ini:n.split(' ').map(w=>w[0]).join(''),prev:i}));
-  lbData.today.sort((a,b)=>b.mins-a.mins);lbData.week.sort((a,b)=>b.mins-a.mins);
-}
-genLB();
-let curLbTab='today';
-function renderLeaderboard(tab){
-  curLbTab=tab;
-  const l=document.getElementById('lbList');l.innerHTML='';
-  lbData[tab].slice(0,8).forEach((e,i)=>{
-    const chg=e.prev-i,arrow=chg>0?`<span class="rank-change rank-up">↑${chg}</span>`:chg<0?`<span class="rank-change rank-down">↓${Math.abs(chg)}</span>`:`<span class="rank-change rank-same">—</span>`;
-    const time=tab==='today'?`${Math.floor(e.mins/60)}h ${e.mins%60}m`:`${Math.floor(e.mins/60)}h ${e.mins%60}m`;
-    const row=document.createElement('div');row.className='lb-entry';
-    row.innerHTML=`<div class="lb-rank">${i<3?MEDALS[i]:i+1}</div><div class="lb-av ${e.av}">${e.ini}</div><div class="lb-name">${e.name}${arrow}</div><div class="lb-time">${time}</div>`;
-    l.appendChild(row);
-  });
-}
-function switchLb(tab,btn){document.querySelectorAll('.lb-tab').forEach(t=>t.classList.remove('active'));btn.classList.add('active');renderLeaderboard(tab)}
-function animateLB(){
-  // shuffle slightly to simulate live updates
-  const d=lbData[curLbTab];
-  d.forEach(e=>{e.prev=d.indexOf(e);e.mins+=Math.floor(Math.random()*5)});
-  d.sort((a,b)=>b.mins-a.mins);
-  renderLeaderboard(curLbTab);
-  renderWeeklyLB();
-}
-
-/* ================================================================
-   WEEKLY LEADERBOARD
-================================================================ */
-function renderWeeklyLB(){
-  const g=document.getElementById('wlbGrid');g.innerHTML='';
-  const maxM=lbData.week[0]?.mins||1;
-  lbData.week.slice(0,10).forEach((e,i)=>{
-    const pct=Math.round((e.mins/maxM)*100);
-    const time=`${Math.floor(e.mins/60)}h ${e.mins%60}m`;
-    const d=document.createElement('div');d.className='wlb-entry';
-    d.innerHTML=`<div class="wlb-rank">${i<3?MEDALS[i]:i+1}</div><div class="wlb-av ${e.av}">${e.ini}</div>
-    <div class="wlb-info"><div class="wlb-name">${e.name}</div><div class="wlb-time">${time}</div><div class="wlb-bar" style="width:${pct}%"></div></div>`;
-    g.appendChild(d);
-  });
-}
 
 /* ================================================================
    ACTIVITY CHART
@@ -1062,39 +931,6 @@ function renderStreakGraph(){
   }
 }
 
-/* ================================================================
-   SMART PLANNER
-================================================================ */
-const PLAN_TOPICS=[
-  {subj:'Linear Algebra',topics:['Matrices','Eigenvalues','Vector Spaces','Linear Transforms'],color:'#a259ff'},
-  {subj:'Probability',topics:['Basics','Distributions','Bayes','Markov Chains'],color:'#5f9fff'},
-  {subj:'Signals',topics:['Fourier Transform','Laplace','Z-Transform','Sampling'],color:'#00d4aa'},
-  {subj:'Control',topics:['Transfer Functions','Bode Plot','Root Locus','PID'],color:'#ff8c42'},
-  {subj:'Networks',topics:['Graph Theory','Shortest Path','Max Flow','Spanning Tree'],color:'#ff5fa0'},
-  {subj:'Algorithms',topics:['Sorting','DP','Greedy','Complexity'],color:'#22c55e'},
-];
-function renderPlanner(){
-  const g=document.getElementById('plannerGrid');g.innerHTML='';
-  const today=new Date();
-  const gate=new Date(S.gateDate);
-  const daysLeft=Math.ceil((gate-today)/86400000);
-  document.getElementById('plannerSub').textContent=`${daysLeft} days left · Auto-scheduled topics for your GATE preparation`;
-  // show next 5 days
-  for(let i=0;i<5;i++){
-    const d=new Date(today);d.setDate(d.getDate()+i);
-    const tIdx=(Math.floor(d.getTime()/86400000))%PLAN_TOPICS.length;
-    const topic=PLAN_TOPICS[tIdx];
-    const subtopic=topic.topics[(i+Math.floor(d.getDate()/7))%topic.topics.length];
-    const isToday=i===0;
-    const card=document.createElement('div');card.className='plan-day'+(isToday?' today':'');
-    card.innerHTML=`<div class="plan-day-label">${isToday?'TODAY':d.toLocaleDateString('en-US',{weekday:'short'}).toUpperCase()}</div>
-    <div class="plan-day-name">${d.toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
-    <div class="plan-topic"><div class="plan-topic-dot" style="background:${topic.color}"></div>${topic.subj}</div>
-    <div class="plan-topic" style="margin-left:12px;font-size:.7rem">${subtopic}</div>
-    <div class="plan-hours">⏱ ${2+i%2}h suggested</div>`;
-    g.appendChild(card);
-  }
-}
 
 /* ================================================================
    SETTINGS
@@ -1123,7 +959,7 @@ function saveSettings(){
   S.gateDate=document.getElementById('gateDateInput').value||S.gateDate;
   ['focusMin','shortMin','longMin','sessions','rA','rB','gateDate'].forEach(k=>localStorage.setItem(k,S[k]));
   if(!S.running){S.timeLeft=modeMin()*60;S.total=S.timeLeft;updateDisp();drawRing(1)}
-  renderSessionDots();renderDaysLeft();renderPlanner();
+  renderSessionDots();renderDaysLeft();
   closeOv(null,'settingsOv');toast('✅ Settings saved!');
 }
 function testSound(){beep();toast('🔔 Sound OK!')}

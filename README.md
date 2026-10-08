@@ -16,8 +16,6 @@ A sleek, responsive dark/light study focus timer and preparation tracker designe
   - Weekly study trend bar chart
   - 28-day GitHub-style study streak heatmap
 - **📅 Daily Schedule & Streak Tracker**: Daily task checklist with subjects, completion status, and ongoing streak counter.
-- **⏰ Smart Study Planner**: Auto-scheduled topics and suggested study hours based on your target GATE exam date.
-- **🏆 Live Mock Leaderboards**: Daily and weekly leaderboards with rank movements and progress bars.
 - **🌗 Dark / Light Theme Toggle**: Seamless transition with local persistence.
 - **💾 100% Local Storage**: All settings, logs, and custom tasks persist in your browser without requiring a backend server.
 
