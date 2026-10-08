@@ -3073,7 +3073,11 @@ async function handleSignIn(e) {
   try {
     const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
     if (error) {
-      errDiv.textContent = error.message;
+      if (error.message.toLowerCase().includes('email not confirmed')) {
+        errDiv.textContent = '✉️ Email not confirmed yet! Please click the verification link in your email inbox, or turn off "Confirm email" in Supabase Auth settings.';
+      } else {
+        errDiv.textContent = error.message;
+      }
       errDiv.style.display = 'block';
     } else if (data && data.user) {
       closeOv(null, 'cloudOv');
@@ -3125,7 +3129,11 @@ async function handleSignUp(e) {
   try {
     const { data, error } = await sbClient.auth.signUp({ email, password });
     if (error) {
-      errDiv.textContent = error.message;
+      if (error.message.toLowerCase().includes('rate limit')) {
+        errDiv.textContent = '⚠️ Email rate limit reached by Supabase. Turn off "Confirm email" in Supabase Auth settings for instant signups.';
+      } else {
+        errDiv.textContent = error.message;
+      }
       errDiv.style.display = 'block';
     } else if (data) {
       if (data.session) {
