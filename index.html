@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>120 Days â€“ 70 Marks | Focus Timer</title>
+<title>120 Days – 70 Marks | Focus Timer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -561,19 +561,13 @@ body {
 
 /* Activity Card */
 .act-card { padding: 22px; }
-.act-title { font-size: 0.75rem; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.act-title { font-size: 0.75rem; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
 .act-chart { display: flex; align-items: flex-end; gap: 5px; height: 95px; margin-bottom: 8px; }
-.abar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; position: relative; }
+.abar-wrap { display: flex; flex-direction: column; align-items: center; gap: 4px; flex: 1; }
 .abar { width: 100%; min-height: 3px; border-radius: 3px 3px 0 0; background: var(--muted); transition: height 0.3s; position: relative; }
-.abar.on       { background: linear-gradient(to top, var(--accent), var(--accent2)); }
-.abar.on-run   { background: linear-gradient(to top, #f97316, #fb923c); }
-.abar.on-mixed { background: linear-gradient(to top, var(--accent), #f97316); }
-.abar.cur::after { content: 'â€¢'; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); color: var(--accent2); font-size: 0.75rem; }
+.abar.on { background: linear-gradient(to top, var(--accent), var(--accent2)); }
+.abar.cur::after { content: '•'; position: absolute; bottom: -18px; left: 50%; transform: translateX(-50%); color: var(--accent2); font-size: 0.75rem; }
 .albl { font-size: 0.65rem; color: var(--muted-foreground); }
-/* activity legend */
-.act-legend { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 10px; }
-.act-legend-item { display: flex; align-items: center; gap: 5px; font-size: 0.68rem; color: var(--muted-foreground); }
-.act-legend-dot { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
 
 .busy-sec { margin-top: 14px; }
 .busy-lbl { font-size: 0.75rem; font-weight: 600; color: var(--muted-foreground); margin-bottom: 6px; }
@@ -591,38 +585,31 @@ body {
   box-shadow: 0 1px 4px rgba(0,0,0,0.4);
 }
 .busy-ends { display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--muted-foreground); }
-
 /* ================================================================
-   RUNNING STATS
+   RUNNING & WORKOUT STATS
 ================================================================ */
-.run-stats-title { font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
-.run-kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(110px, 1fr)); gap: 10px; margin-bottom: 16px; }
-.run-kpi-box { background: var(--muted); border-radius: 10px; padding: 14px 12px; }
-.run-kpi-val { font-size: 1.35rem; font-weight: 800; color: #f97316; letter-spacing: -0.03em; }
-.run-kpi-lbl { font-size: 0.7rem; color: var(--muted-foreground); margin-top: 3px; }
-.run-bar-chart { display: flex; align-items: flex-end; gap: 6px; height: 80px; padding-top: 6px; }
+.run-stats-title { font-size: 1.05rem; font-weight: 700; letter-spacing: -0.02em; display: flex; align-items: center; gap: 8px; }
+.run-kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
+.run-kpi-box { background: var(--muted); border-radius: 8px; padding: 10px 12px; }
+.run-kpi-val { font-size: 1.25rem; font-weight: 800; color: #f97316; letter-spacing: -0.02em; }
+.run-kpi-lbl { font-size: 0.68rem; color: var(--muted-foreground); margin-top: 2px; }
+.run-bar-chart { display: flex; align-items: flex-end; gap: 5px; height: 70px; padding-top: 4px; }
 .run-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
 .run-bar { width: 100%; min-height: 3px; border-radius: 3px 3px 0 0; background: var(--muted); transition: height 0.3s; }
 .run-bar.on { background: linear-gradient(to top, #f97316, #fbbf24); }
 .run-bar-lbl { font-size: 0.6rem; color: var(--muted-foreground); white-space: nowrap; }
-.run-streak-grid { display: grid; grid-template-columns: repeat(28,1fr); gap: 3px; margin-top: 8px; }
-.run-sg-cell { width: 100%; aspect-ratio: 1; border-radius: 3px; background: var(--muted); }
+.run-streak-grid { display: grid; grid-template-columns: repeat(28, 1fr); gap: 3px; margin-top: 6px; }
+.run-sg-cell { width: 100%; aspect-ratio: 1; border-radius: 2px; background: var(--muted); }
 .run-sg-cell.lit { background: #f97316; }
-.run-list-header { font-size: 0.7rem; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; margin: 14px 0 8px; }
-.run-entry { display: flex; align-items: center; gap: 10px; padding: 10px 12px; background: var(--muted); border-radius: 8px; margin-bottom: 6px; }
-.run-entry-icon { font-size: 1.3rem; }
-.run-entry-info { flex: 1; }
-.run-entry-title { font-size: 0.85rem; font-weight: 600; }
-.run-entry-meta { font-size: 0.72rem; color: var(--muted-foreground); margin-top: 2px; }
-.run-entry-badge { font-size: 0.72rem; font-weight: 700; color: #f97316; background: rgba(249,115,22,0.12); border-radius: 6px; padding: 2px 8px; }
-.run-type-chip { display: inline-block; font-size: 0.68rem; padding: 2px 7px; border-radius: 99px; font-weight: 600; }
-.run-type-run   { background: rgba(249,115,22,0.18); color: #f97316; }
-.run-type-walk  { background: rgba(16,185,129,0.15); color: #10b981; }
-.run-type-cycle { background: rgba(59,130,246,0.15); color: #3b82f6; }
-.run-type-gym   { background: rgba(168,85,247,0.15); color: #a855f7; }
-.run-type-yoga  { background: rgba(236,72,153,0.15); color: #ec4899; }
-/* task type badge in task list */
-.task-type-run  { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 99px; background: rgba(249,115,22,0.18); color: #f97316; font-weight: 600; margin-left: 4px; }
+.run-list-header { font-size: 0.7rem; font-weight: 700; color: var(--muted-foreground); text-transform: uppercase; letter-spacing: 0.05em; margin: 10px 0 6px; }
+.run-entry { display: flex; align-items: center; gap: 8px; padding: 8px 10px; background: var(--muted); border-radius: 6px; margin-bottom: 5px; }
+.run-entry-icon { font-size: 1.15rem; }
+.run-entry-info { flex: 1; min-width: 0; }
+.run-entry-title { font-size: 0.8rem; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.run-entry-meta { font-size: 0.68rem; color: var(--muted-foreground); margin-top: 1px; }
+.run-entry-badge { font-size: 0.68rem; font-weight: 700; color: #f97316; background: rgba(249,115,22,0.12); border-radius: 4px; padding: 2px 6px; white-space: nowrap; }
+.task-type-run { display: inline-block; font-size: 0.65rem; padding: 1px 6px; border-radius: 99px; background: rgba(249,115,22,0.18); color: #f97316; font-weight: 600; margin-left: 4px; }
+
 
 /* ================================================================
    STUDY STATS (SHADCN METRIC CARDS & CHARTS)
@@ -989,25 +976,25 @@ body {
 <!-- ===================== TOP BAR ===================== -->
 <div class="top-bar">
   <div class="top-left">
-    <h1 id="goalTitle">120 Days â€“ 70 Marks</h1>
+    <h1 id="goalTitle">120 Days – 70 Marks</h1>
     <div class="meta">
       <span id="userName">Your Name</span>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="#" onclick="openRename();return false">Rename</a>
-      <span class="dot">Â·</span>
+      <span class="dot">·</span>
       <a href="#" onclick="notYou();return false">Not you?</a>
     </div>
   </div>
   <div class="top-right">
     <button class="cloud-status-btn" id="cloudStatusBtn" onclick="openCloudModal()" title="Supabase Cloud Account & Sync">
       <span class="cloud-dot" id="cloudDot"></span>
-      <span id="cloudBtnText">â˜ï¸ Cloud Sync</span>
+      <span id="cloudBtnText">☁️ Cloud Sync</span>
     </button>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme"></button>
     <div class="days-pill">
-      <div class="icon">ðŸ“…</div>
+      <div class="icon">📅</div>
       <div>
-        <div class="num" id="daysLeft">â€”</div>
+        <div class="num" id="daysLeft">—</div>
         <div class="lbl">days till GATE</div>
       </div>
     </div>
@@ -1016,7 +1003,7 @@ body {
 
 <!-- ===================== TIMER CARD ===================== -->
 <div class="card timer-card">
-  <button class="gear-btn" onclick="openSettings()" title="Settings">âš™ï¸</button>
+  <button class="gear-btn" onclick="openSettings()" title="Settings">⚙️</button>
 
   <div class="tabs-list" style="margin-bottom:12px">
     <button class="tabs-trigger active" onclick="setMode('focus',this)">Focus</button>
@@ -1048,19 +1035,19 @@ body {
 
   <!-- Music Player -->
   <div class="music-bar">
-    <button class="music-btn" id="musicPlayBtn" onclick="toggleMusic()">â–¶</button>
+    <button class="music-btn" id="musicPlayBtn" onclick="toggleMusic()">▶</button>
     <div class="music-track">
       <div class="music-name" id="musicName">Lo-fi Chill Beats</div>
-      <div class="music-sub" id="musicSub">Ambient Â· Study mode</div>
+      <div class="music-sub" id="musicSub">Ambient · Study mode</div>
     </div>
     <input type="range" class="vol-slider" min="0" max="1" step=".05" value=".5" oninput="setVol(this.value)" title="Volume"/>
   </div>
   <div class="music-sounds">
-    <button class="sound-btn active" onclick="setSound('lofi',this)">ðŸŽµ Lo-fi</button>
-    <button class="sound-btn" onclick="setSound('rain',this)">ðŸŒ§ Rain</button>
-    <button class="sound-btn" onclick="setSound('cafe',this)">â˜• CafÃ©</button>
-    <button class="sound-btn" onclick="setSound('white',this)">ðŸŒŠ White</button>
-    <button class="sound-btn" onclick="setSound('fire',this)">ðŸ”¥ Fire</button>
+    <button class="sound-btn active" onclick="setSound('lofi',this)">🎵 Lo-fi</button>
+    <button class="sound-btn" onclick="setSound('rain',this)">🌧 Rain</button>
+    <button class="sound-btn" onclick="setSound('cafe',this)">☕ Café</button>
+    <button class="sound-btn" onclick="setSound('white',this)">🌊 White</button>
+    <button class="sound-btn" onclick="setSound('fire',this)">🔥 Fire</button>
   </div>
 </div>
 
@@ -1070,12 +1057,12 @@ body {
   <div class="card" style="margin-bottom:0">
     <div class="sched-top">
       <div>
-        <div class="badge badge-purple" id="dayBadge" style="margin-bottom:6px">Day 1 Â· 120 Days â€“ 70 Marks</div>
-        <div class="sched-date-title" id="schedDate">Loadingâ€¦</div>
+        <div class="badge badge-purple" id="dayBadge" style="margin-bottom:6px">Day 1 · 120 Days – 70 Marks</div>
+        <div class="sched-date-title" id="schedDate">Loading…</div>
         <div class="sched-sub">Completed tasks automatically credit study time to your stats</div>
       </div>
       <div class="badge badge-secondary" style="font-size:0.8rem;padding:5px 12px">
-        ðŸ”¥ <span id="streakNum" style="font-weight:700;margin-left:3px">0</span>&nbsp;day streak
+        🔥 <span id="streakNum" style="font-weight:700;margin-left:3px">0</span>&nbsp;day streak
       </div>
     </div>
 
@@ -1083,10 +1070,10 @@ body {
     <div class="day-strip">
       <span style="font-size:0.72rem;color:var(--muted-foreground);font-weight:600;margin-right:2px">SCHEDULE:</span>
       <button class="day-strip-chip active" id="chipToday" onclick="selectQuickDay(0)">Today</button>
-      <button class="day-strip-chip" id="chipTomorrow" onclick="selectQuickDay(1)">Tomorrow âš¡</button>
+      <button class="day-strip-chip" id="chipTomorrow" onclick="selectQuickDay(1)">Tomorrow ⚡</button>
       <button class="day-strip-chip" id="chipIn2Days" onclick="selectQuickDay(2)">Day After</button>
       <button class="btn btn-primary btn-sm" onclick="openTaskModal(null, 1)" style="margin-left:auto">
-        ï¼‹ Plan Tomorrow
+        ＋ Plan Tomorrow
       </button>
     </div>
 
@@ -1099,10 +1086,10 @@ body {
       </div>
 
       <div class="date-nav-controls">
-        <button class="btn-icon" onclick="navTaskDate(-1)" title="Previous day / period">â€¹</button>
+        <button class="btn-icon" onclick="navTaskDate(-1)" title="Previous day / period">‹</button>
         <span class="date-nav-label" id="taskNavLabel" style="cursor:pointer" onclick="openDateNavPicker()" title="Click to pick any date">Today</span>
         <input type="date" id="quickDateNavPicker" style="position:absolute;opacity:0;pointer-events:none;width:0;height:0" onchange="onNavDatePicker(this.value)"/>
-        <button class="btn-icon" onclick="navTaskDate(1)" title="Next day / period">â€º</button>
+        <button class="btn-icon" onclick="navTaskDate(1)" title="Next day / period">›</button>
         <button class="btn btn-secondary btn-sm" onclick="navTaskToday()">Today</button>
       </div>
     </div>
@@ -1113,7 +1100,7 @@ body {
         Pending <span class="badge badge-secondary" id="pendingCountBadge" style="margin-left:4px">0</span>
       </button>
       <button class="task-filter-btn" onclick="setTaskFilter('completed',this)">
-        Completed âœ“ <span class="badge badge-success" id="completedCountBadge" style="margin-left:4px">0</span>
+        Completed ✓ <span class="badge badge-success" id="completedCountBadge" style="margin-left:4px">0</span>
       </button>
       <button class="task-filter-btn" onclick="setTaskFilter('all',this)">
         All Tasks
@@ -1124,13 +1111,13 @@ body {
     <div class="task-list" id="taskList"></div>
 
     <button class="btn btn-outline" onclick="openTaskModal()" style="width:100%;margin-top:12px;border-style:dashed">
-      ï¼‹ Add task for this day
+      ＋ Add task for this day
     </button>
   </div>
 
-  <!-- ===================== RUNNING & WORKOUT STATS (REPLACES ACTIVITY BY HOUR) ===================== -->
+  <!-- Running & Workout Stats (replaces Activity by Hour) -->
   <div class="card" id="runStatsCard" style="margin-bottom:0">
-    <div class="stats-header" style="margin-bottom:12px">
+    <div class="stats-header" style="margin-bottom:10px">
       <div>
         <div class="run-stats-title">🏃 Running &amp; Workout</div>
         <div class="auto-credit-hint" style="font-size:0.68rem;color:#f97316">⚡ Auto-credits on task completion</div>
@@ -1145,40 +1132,43 @@ body {
     </div>
 
     <!-- KPIs -->
-    <div class="run-kpi-grid" id="runKpiGrid" style="grid-template-columns:repeat(2,1fr);gap:8px;margin-bottom:12px"></div>
+    <div class="run-kpi-grid" id="runKpiGrid"></div>
 
     <!-- Distance Bar Chart -->
-    <div style="margin-bottom:14px">
+    <div style="margin-bottom:12px">
       <div class="chart-title" id="runBarTitle" style="font-size:0.75rem;margin-bottom:6px">Distance this week (km)</div>
-      <div class="run-bar-chart" id="runBarChart" style="height:70px"></div>
+      <div class="run-bar-chart" id="runBarChart"></div>
     </div>
 
-    <!-- Activity Breakdown & Streak -->
+    <!-- Activity Breakdown -->
     <div style="margin-bottom:12px">
       <div class="chart-title" style="font-size:0.75rem;margin-bottom:6px">Activity Breakdown</div>
       <div class="pie-inner" style="justify-content:flex-start;gap:10px">
-        <svg id="runPieChart" width="75" height="75" viewBox="0 0 100 100" style="flex-shrink:0"></svg>
+        <svg id="runPieChart" width="70" height="70" viewBox="0 0 100 100" style="flex-shrink:0"></svg>
         <div class="pie-legend" id="runPieLegend" style="font-size:0.68rem"></div>
       </div>
     </div>
 
-    <div style="margin-bottom:12px">
-      <div class="chart-title" style="font-size:0.75rem;margin-bottom:6px">Workout Streak (28 days)</div>
+    <!-- Streak Heatmap -->
+    <div style="margin-bottom:10px">
+      <div class="chart-title" style="font-size:0.75rem;margin-bottom:5px">Workout Streak (28 days)</div>
       <div class="run-streak-grid" id="runSgGrid"></div>
     </div>
 
-    <div class="run-list-header" style="font-size:0.72rem;margin:10px 0 6px">Recent Workouts</div>
-    <div id="runEntryList" style="max-height:180px;overflow-y:auto;padding-right:2px"></div>
+    <!-- Recent Workouts -->
+    <div class="run-list-header">Recent Workouts</div>
+    <div id="runEntryList" style="max-height:160px;overflow-y:auto;padding-right:2px"></div>
   </div>
+
 </div>
 
 <!-- ===================== STUDY STATS (AUTOMATIC TRACKING) ===================== -->
 <div class="card">
   <div class="stats-header">
     <div>
-      <div class="stats-title">ðŸ“ˆ Study Stats</div>
+      <div class="stats-title">📈 Study Stats</div>
       <div class="auto-credit-hint">
-        âš¡ Time updates automatically whenever you complete a task or timer session
+        ⚡ Time updates automatically whenever you complete a task or timer session
       </div>
     </div>
     <div class="tabs-list">
@@ -1210,57 +1200,11 @@ body {
   </div>
 </div>
 
-<!-- Run/Workout Log Modal -->
-<div class="overlay" id="runModalOv" onclick="closeOv(event,'runModalOv')">
-  <div class="modal">
-    <button class="mclose" onclick="closeOv(null,'runModalOv')">âœ•</button>
-    <div class="mtitle" id="runModalTitle">ðŸƒ Log Workout</div>
-    <input type="hidden" id="editRunId" value=""/>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label>Activity Type</label>
-        <select class="form-select" id="runInputType">
-          <option value="run">ðŸƒ Running</option>
-          <option value="walk">ðŸš¶ Walking</option>
-          <option value="cycle">ðŸš´ Cycling</option>
-          <option value="gym">ðŸ‹ï¸ Gym / Strength</option>
-          <option value="yoga">ðŸ§˜ Yoga / Stretch</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Date</label>
-        <input type="date" class="form-input" id="runInputDate"/>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <div class="form-group">
-        <label>Distance (km) <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
-        <input type="number" step="0.1" min="0" class="form-input" id="runInputDist" placeholder="e.g. 5.2"/>
-      </div>
-      <div class="form-group">
-        <label>Duration</label>
-        <input class="form-input" id="runInputDur" placeholder="e.g. 30m or 1h"/>
-      </div>
-    </div>
-
-    <div class="form-group">
-      <label>Notes <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
-      <input class="form-input" id="runInputNotes" placeholder="e.g. Morning jog, intervals" maxlength="80"/>
-    </div>
-
-    <div style="display:flex;gap:8px;margin-top:4px">
-      <button class="btn btn-primary" onclick="saveRunEntry()" style="flex:1">Save Workout</button>
-    </div>
-  </div>
-</div>
-
-
+<!-- ===================== MOCK TESTS TRACKER ===================== -->
 <div class="card">
   <div class="mock-header">
     <div>
-      <div class="mock-title">ðŸ“ Mock Tests Tracker</div>
+      <div class="mock-title">📝 Mock Tests Tracker</div>
       <div style="font-size:0.75rem;color:var(--muted-foreground)">Track Topic-wise and Subject-wise test performance</div>
     </div>
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
@@ -1269,7 +1213,7 @@ body {
         <button class="tabs-trigger" onclick="setMockFilter('subject',this)">Subject-wise</button>
         <button class="tabs-trigger" onclick="setMockFilter('topic',this)">Topic-wise</button>
       </div>
-      <button class="btn btn-primary btn-sm" onclick="openMockModal()">ï¼‹ Add Mock Test</button>
+      <button class="btn btn-primary btn-sm" onclick="openMockModal()">＋ Add Mock Test</button>
     </div>
   </div>
 
@@ -1286,7 +1230,7 @@ body {
 <div class="card apple-music-card">
   <div class="am-header">
     <div class="am-title">
-      <div class="am-logo">ðŸŽµ</div>
+      <div class="am-logo">🎵</div>
       <div>
         <div class="am-title-text">Apple Music</div>
         <div class="am-title-sub">Play study playlists directly in-app</div>
@@ -1307,7 +1251,7 @@ body {
       </iframe>
     </div>
     <a class="btn btn-secondary btn-sm" id="amOpenLink" href="https://music.apple.com" target="_blank" rel="noopener" style="width:100%">
-      ðŸŽµ Open in Apple Music
+      🎵 Open in Apple Music
     </a>
   </div>
 
@@ -1315,8 +1259,8 @@ body {
     <div style="background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius)-2px);padding:14px;margin-bottom:12px">
       <div style="font-size:0.75rem;font-weight:700;color:var(--muted-foreground);text-transform:uppercase">Paste your Apple Music link</div>
       <div class="am-input-row">
-        <input class="am-url-input" id="amUrlInput" placeholder="https://music.apple.com/in/playlist/â€¦" />
-        <button class="btn btn-primary btn-sm" onclick="embedCustom()">Embed â–¶</button>
+        <input class="am-url-input" id="amUrlInput" placeholder="https://music.apple.com/in/playlist/…" />
+        <button class="btn btn-primary btn-sm" onclick="embedCustom()">Embed ▶</button>
       </div>
     </div>
     <div class="am-embed-wrap" id="amCustomEmbedWrap">
@@ -1333,8 +1277,8 @@ body {
 <!-- ===================== TASK MODAL (ADD / EDIT / NEXT DAY) ===================== -->
 <div class="overlay" id="taskModalOv" onclick="closeOv(event,'taskModalOv')">
   <div class="modal">
-    <button class="mclose" onclick="closeOv(null,'taskModalOv')">âœ•</button>
-    <div class="mtitle" id="taskModalTitle">ðŸ“ Add Study Task</div>
+    <button class="mclose" onclick="closeOv(null,'taskModalOv')">✕</button>
+    <div class="mtitle" id="taskModalTitle">📝 Add Study Task</div>
     
     <input type="hidden" id="editTaskId" value=""/>
 
@@ -1347,12 +1291,12 @@ body {
     <div class="form-group">
       <label>Task Type</label>
       <div class="chip-group" id="taskTypeChips" style="margin-top:4px">
-        <button type="button" class="chip-btn active" onclick="setTaskType('study',this)">ðŸ“š Study</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('run',this)">ðŸƒ Running</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('walk',this)">ðŸš¶ Walk</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('gym',this)">ðŸ‹ï¸ Gym</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('cycle',this)">ðŸš´ Cycle</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('yoga',this)">ðŸ§˜ Yoga</button>
+        <button type="button" class="chip-btn active" onclick="setTaskType('study',this)">📚 Study</button>
+        <button type="button" class="chip-btn" onclick="setTaskType('run',this)">🏃 Running</button>
+        <button type="button" class="chip-btn" onclick="setTaskType('walk',this)">🚶 Walk</button>
+        <button type="button" class="chip-btn" onclick="setTaskType('gym',this)">🏋️ Gym</button>
+        <button type="button" class="chip-btn" onclick="setTaskType('cycle',this)">🚴 Cycle</button>
+        <button type="button" class="chip-btn" onclick="setTaskType('yoga',this)">🧘 Yoga</button>
       </div>
       <input type="hidden" id="taskInputType" value="study"/>
     </div>
@@ -1387,24 +1331,68 @@ body {
       <input type="date" class="form-input" id="taskInputDate"/>
       <div class="chip-group" style="margin-top:6px">
         <button type="button" class="chip-btn" onclick="setTaskDateChip(0)">Today</button>
-        <button type="button" class="chip-btn" onclick="setTaskDateChip(1)">Tomorrow âš¡</button>
+        <button type="button" class="chip-btn" onclick="setTaskDateChip(1)">Tomorrow ⚡</button>
         <button type="button" class="chip-btn" onclick="setTaskDateChip(2)">In 2 Days</button>
       </div>
     </div>
 
     <div id="taskAutoHint" style="font-size:0.72rem;color:var(--accent4);margin-bottom:14px;background:rgba(16,185,129,0.08);padding:8px 10px;border-radius:6px;border:1px solid rgba(16,185,129,0.2)">
-      âœ“ When marked complete, this duration will automatically be credited to your Study Stats for this subject.
+      ✓ When marked complete, this duration will automatically be credited to your Study Stats for this subject.
     </div>
 
     <button class="btn btn-primary" onclick="saveTaskFromModal()" style="width:100%">Save Task</button>
   </div>
 </div>
 
+<!-- ===================== WORKOUT LOG MODAL ===================== -->
+<div class="overlay" id="runModalOv" onclick="closeOv(event,'runModalOv')">
+  <div class="modal">
+    <button class="mclose" onclick="closeOv(null,'runModalOv')">✕</button>
+    <div class="mtitle" id="runModalTitle">🏃 Log Workout</div>
+    <input type="hidden" id="editRunId" value=""/>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Activity Type</label>
+        <select class="form-select" id="runInputType">
+          <option value="run">🏃 Running</option>
+          <option value="walk">🚶 Walking</option>
+          <option value="cycle">🚴 Cycling</option>
+          <option value="gym">🏋️ Gym / Strength</option>
+          <option value="yoga">🧘 Yoga / Stretch</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Date</label>
+        <input type="date" class="form-input" id="runInputDate"/>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Distance (km) <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
+        <input type="number" step="0.1" min="0" class="form-input" id="runInputDist" placeholder="e.g. 5.2"/>
+      </div>
+      <div class="form-group">
+        <label>Duration</label>
+        <input class="form-input" id="runInputDur" placeholder="e.g. 30m or 1h"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Notes <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
+      <input class="form-input" id="runInputNotes" placeholder="e.g. Morning jog, intervals" maxlength="80"/>
+    </div>
+
+    <button class="btn btn-primary" onclick="saveRunEntry()" style="width:100%;margin-top:4px">Save Workout</button>
+  </div>
+</div>
+
 <!-- ===================== MOCK TEST MODAL ===================== -->
 <div class="overlay" id="mockModalOv" onclick="closeOv(event,'mockModalOv')">
   <div class="modal">
-    <button class="mclose" onclick="closeOv(null,'mockModalOv')">âœ•</button>
-    <div class="mtitle" id="mockModalTitle">ðŸ“ Record Mock Test</div>
+    <button class="mclose" onclick="closeOv(null,'mockModalOv')">✕</button>
+    <div class="mtitle" id="mockModalTitle">📝 Record Mock Test</div>
     
     <input type="hidden" id="editMockId" value=""/>
 
@@ -1472,8 +1460,8 @@ body {
 <!-- ===================== SETTINGS MODAL ===================== -->
 <div class="overlay" id="settingsOv" onclick="closeOv(event,'settingsOv')">
   <div class="modal">
-    <button class="mclose" onclick="closeOv(null,'settingsOv')">âœ•</button>
-    <div class="mtitle">âš™ï¸ Timer Settings</div>
+    <button class="mclose" onclick="closeOv(null,'settingsOv')">✕</button>
+    <div class="mtitle">⚙️ Timer Settings</div>
     
     <div class="mrow">
       <div style="font-size:0.8125rem">Ring color</div>
@@ -1489,9 +1477,9 @@ body {
     <div class="mrow">
       <div style="font-size:0.8125rem">Focus Duration</div>
       <div class="spin">
-        <button class="spin-btn" onclick="adj('focus',-5)">âˆ’</button>
+        <button class="spin-btn" onclick="adj('focus',-5)">−</button>
         <div class="spin-val" id="vFocus">120</div>
-        <button class="spin-btn" onclick="adj('focus',5)">ï¼‹</button>
+        <button class="spin-btn" onclick="adj('focus',5)">＋</button>
         <span style="font-size:0.75rem;color:var(--muted-foreground)">min</span>
       </div>
     </div>
@@ -1499,9 +1487,9 @@ body {
     <div class="mrow">
       <div style="font-size:0.8125rem">Short break</div>
       <div class="spin">
-        <button class="spin-btn" onclick="adj('short',-1)">âˆ’</button>
+        <button class="spin-btn" onclick="adj('short',-1)">−</button>
         <div class="spin-val" id="vShort">5</div>
-        <button class="spin-btn" onclick="adj('short',1)">ï¼‹</button>
+        <button class="spin-btn" onclick="adj('short',1)">＋</button>
         <span style="font-size:0.75rem;color:var(--muted-foreground)">min</span>
       </div>
     </div>
@@ -1509,9 +1497,9 @@ body {
     <div class="mrow">
       <div style="font-size:0.8125rem">Long break</div>
       <div class="spin">
-        <button class="spin-btn" onclick="adj('long',-1)">âˆ’</button>
+        <button class="spin-btn" onclick="adj('long',-1)">−</button>
         <div class="spin-val" id="vLong">15</div>
-        <button class="spin-btn" onclick="adj('long',1)">ï¼‹</button>
+        <button class="spin-btn" onclick="adj('long',1)">＋</button>
         <span style="font-size:0.75rem;color:var(--muted-foreground)">min</span>
       </div>
     </div>
@@ -1519,9 +1507,9 @@ body {
     <div class="mrow">
       <div style="font-size:0.8125rem">Sessions / long break</div>
       <div class="spin">
-        <button class="spin-btn" onclick="adj('sess',-1)">âˆ’</button>
+        <button class="spin-btn" onclick="adj('sess',-1)">−</button>
         <div class="spin-val" id="vSess">4</div>
-        <button class="spin-btn" onclick="adj('sess',1)">ï¼‹</button>
+        <button class="spin-btn" onclick="adj('sess',1)">＋</button>
       </div>
     </div>
 
@@ -1532,7 +1520,7 @@ body {
 
     <button class="btn btn-primary" onclick="saveSettings()" style="width:100%;margin-top:8px">Save Changes</button>
     <button class="btn btn-outline" onclick="resetAllData()" style="width:100%;margin-top:8px;color:#f43f5e;border-color:rgba(244,63,94,0.3)">
-      âš ï¸ Reset All Data to Zero
+      ⚠️ Reset All Data to Zero
     </button>
   </div>
 </div>
@@ -1540,9 +1528,9 @@ body {
 <!-- ===================== RENAME MODAL ===================== -->
 <div class="overlay" id="renameOv" onclick="closeOv(event,'renameOv')">
   <div class="modal" style="max-width:340px">
-    <button class="mclose" onclick="closeOv(null,'renameOv')">âœ•</button>
+    <button class="mclose" onclick="closeOv(null,'renameOv')">✕</button>
     <div class="mtitle">What's your name?</div>
-    <input class="form-input" id="rinInput" placeholder="Enter your nameâ€¦" maxlength="30" onkeydown="if(event.key==='Enter')saveName()"/>
+    <input class="form-input" id="rinInput" placeholder="Enter your name…" maxlength="30" onkeydown="if(event.key==='Enter')saveName()"/>
     <button class="btn btn-primary" onclick="saveName()" style="width:100%;margin-top:12px">Save</button>
   </div>
 </div>
@@ -1550,12 +1538,12 @@ body {
 <!-- ===================== SUPABASE CLOUD & AUTH MODAL ===================== -->
 <div class="overlay" id="cloudOv" onclick="closeOv(event,'cloudOv')">
   <div class="modal" style="max-width:480px">
-    <button class="mclose" onclick="closeOv(null,'cloudOv')">âœ•</button>
+    <button class="mclose" onclick="closeOv(null,'cloudOv')">✕</button>
     
     <!-- When Logged Out: Sign In, Sign Up, or Setup Credentials -->
     <div id="cloudAuthView">
       <div class="mtitle" style="display:flex;align-items:center;gap:8px">
-        <span>â˜ï¸</span> Cloud Account & Sync
+        <span>☁️</span> Cloud Account & Sync
       </div>
       <p style="font-size:0.75rem;color:var(--muted-foreground);margin-top:-10px;margin-bottom:14px">
         Sign in to automatically sync your study tasks, timer logs, and mock tests across all your devices.
@@ -1575,7 +1563,7 @@ body {
           </div>
           <div class="form-group">
             <label>Password</label>
-            <input type="password" class="form-input" id="authPassword" placeholder="â€¢â€¢â€¢â€¢â€¢â€¢â€¢â€¢" required autocomplete="current-password"/>
+            <input type="password" class="form-input" id="authPassword" placeholder="••••••••" required autocomplete="current-password"/>
           </div>
           <div id="authErrorMsg" class="cloud-alert cloud-alert-error" style="display:none"></div>
           <button type="submit" class="btn btn-primary" id="btnSignInSubmit" style="width:100%;margin-top:4px">
@@ -1616,7 +1604,7 @@ body {
           </span>
         </div>
         <button type="button" class="btn btn-outline" id="btnGuestBackup" onclick="handleGuestSignIn()" style="width:100%;border-style:dashed;display:flex;align-items:center;justify-content:center;gap:8px">
-          <span>âš¡</span> Continue as Guest (Instant Cloud Backup)
+          <span>⚡</span> Continue as Guest (Instant Cloud Backup)
         </button>
         <div style="font-size:0.7rem;color:var(--muted-foreground);text-align:center;margin-top:6px;line-height:1.4">
           Backs up all study tasks, timer history & mock tests to Supabase instantly. No email or password needed!
@@ -1627,7 +1615,7 @@ body {
     <!-- When Logged In View -->
     <div id="cloudUserView" style="display:none">
       <div class="mtitle" style="display:flex;align-items:center;gap:8px">
-        <span>â˜ï¸</span> Supabase Cloud Connected
+        <span>☁️</span> Supabase Cloud Connected
       </div>
       <div style="background:var(--background);border:1px solid var(--border);border-radius:calc(var(--radius) - 2px);padding:14px;margin-bottom:16px">
         <div style="display:flex;align-items:center;gap:12px">
@@ -1636,20 +1624,20 @@ body {
           </div>
           <div style="overflow:hidden">
             <div style="font-weight:600;font-size:0.875rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="userEmailLabel">user@example.com</div>
-            <div style="font-size:0.72rem;color:var(--accent4);margin-top:2px" id="userSyncTime">âœ“ Last synced: Just now</div>
+            <div style="font-size:0.72rem;color:var(--accent4);margin-top:2px" id="userSyncTime">✓ Last synced: Just now</div>
           </div>
         </div>
       </div>
 
       <div style="display:flex;flex-direction:column;gap:8px">
         <button class="btn btn-primary" id="btnSyncNow" onclick="manualSyncNow()">
-          ðŸ”„ Sync Now to Cloud
+          🔄 Sync Now to Cloud
         </button>
         <button class="btn btn-secondary" onclick="restoreFromCloud()">
-          ðŸ“¥ Pull Latest Data from Cloud
+          📥 Pull Latest Data from Cloud
         </button>
         <button class="btn btn-outline" onclick="handleSignOut()" style="color:#f43f5e;border-color:rgba(244,63,94,0.3);margin-top:6px">
-          ðŸšª Sign Out
+          🚪 Sign Out
         </button>
       </div>
     </div>
@@ -1689,11 +1677,11 @@ const S = {
   tasks:       JSON.parse(ls('tasks', '[]')) || [],
   studyLog:    JSON.parse(ls('studyLog', '{}')) || {},      // YYYY-MM-DD -> minutes
   subjLog:     JSON.parse(ls('subjLog', '{}')) || {},       // subjectName -> minutes
-  hourlyLog:   JSON.parse(ls('hourlyLog', '{}')) || {},     // YYYY-MM-DD -> [0..7] minutes (study)
-  hourlyRunLog:JSON.parse(ls('hourlyRunLog', '{}')) || {},  // YYYY-MM-DD -> [0..7] minutes (run)
+  hourlyLog:   JSON.parse(ls('hourlyLog', '{}')) || {},     // YYYY-MM-DD -> [0..7] minutes
   mockTests:   JSON.parse(ls('mockTests', '[]')) || [],
-  runEntries:  JSON.parse(ls('runEntries', '[]')) || [],    // workout log entries
-  runLog:      JSON.parse(ls('runLog', '{}')) || {},        // YYYY-MM-DD -> {mins, km}
+  runEntries:  JSON.parse(ls('runEntries', '[]')) || [],
+  runLog:      JSON.parse(ls('runLog', '{}')) || {},
+  hourlyRunLog:JSON.parse(ls('hourlyRunLog', '{}')) || {},
   theme:       ls('theme', 'dark'),
 
   // UI state
@@ -1702,7 +1690,7 @@ const S = {
   selectedDate: fmt(new Date()),
   statsView:   'week',         // 'day' | 'week' | 'month'
   mockFilter:  'all',          // 'all' | 'subject' | 'topic'
-  runView:     'month',        // 'week' | 'month'
+  runView:     'month',
 };
 
 function ls(k,d){ return localStorage.getItem(k) || d; }
@@ -1847,7 +1835,7 @@ function renderDate(){
 
   const startOfYear = new Date(d.getFullYear(), 0, 1);
   const dayNum = Math.ceil((d - startOfYear) / 86400000) % 120 || 120;
-  document.getElementById('dayBadge').textContent = `Day ${dayNum} Â· 120 Days â€“ 70 Marks`;
+  document.getElementById('dayBadge').textContent = `Day ${dayNum} · 120 Days – 70 Marks`;
 }
 
 /* ================================================================
@@ -1927,7 +1915,7 @@ function resetTimer(){
 function onEnd(){
   document.getElementById('startBtn').textContent = 'Start';
   document.getElementById('aurora-canvas').style.opacity = '.28';
-  beep(); toast('âœ… Session complete! Great work ðŸ”¥');
+  beep(); toast('✅ Session complete! Great work 🔥');
   if(S.mode==='focus'){
     const today = fmt(new Date());
     const mins = S.focusMin;
@@ -1995,11 +1983,11 @@ function renderSessionDots(){
 ================================================================ */
 let audioCtx, gainNode, noiseSource, oscSources=[];
 const soundDefs={
-  lofi:{label:'Lo-fi Chill Beats',sub:'Ambient Â· Study mode'},
-  rain:{label:'Rain Sounds',sub:'Nature Â· Relaxing'},
-  cafe:{label:'CafÃ© Ambience',sub:'Background Â· Focus'},
-  white:{label:'White Noise',sub:'Concentration Â· Calm'},
-  fire:{label:'Crackling Fire',sub:'Cozy Â· Warm'},
+  lofi:{label:'Lo-fi Chill Beats',sub:'Ambient · Study mode'},
+  rain:{label:'Rain Sounds',sub:'Nature · Relaxing'},
+  cafe:{label:'Café Ambience',sub:'Background · Focus'},
+  white:{label:'White Noise',sub:'Concentration · Calm'},
+  fire:{label:'Crackling Fire',sub:'Cozy · Warm'},
 };
 function getACtx(){
   if(!audioCtx){
@@ -2036,7 +2024,7 @@ function startNoise(type){
 }
 function toggleMusic(){
   S.musicOn = !S.musicOn;
-  document.getElementById('musicPlayBtn').textContent = S.musicOn?'â¸':'â–¶';
+  document.getElementById('musicPlayBtn').textContent = S.musicOn?'⏸':'▶';
   if(S.musicOn){
     try{
       const ac = getACtx();
@@ -2044,12 +2032,12 @@ function toggleMusic(){
       if(p && typeof p.then === 'function'){
         p.then(() => startNoise(S.sound)).catch(e => {
           console.warn('Audio resume blocked:', e);
-          toast('âš ï¸ Click anywhere to enable audio');
+          toast('⚠️ Click anywhere to enable audio');
         });
       } else {
         startNoise(S.sound);
       }
-    }catch(e){ toast('âš ï¸ Click anywhere to enable audio'); }
+    }catch(e){ toast('⚠️ Click anywhere to enable audio'); }
   } else {
     stopAllNoise();
   }
@@ -2107,24 +2095,20 @@ function toggleTask(id){
   if(t.done) {
     t.creditedMins = targetMins;
     if(isRun) {
-      // Credit to Run Log
       if(!S.runLog[taskDate]) S.runLog[taskDate] = { mins: 0, km: 0 };
       S.runLog[taskDate].mins = (S.runLog[taskDate].mins || 0) + targetMins;
-      // Add auto run entry from task
       const autoEntry = {
         id: Date.now(), type: t.taskType, date: taskDate,
         mins: targetMins, km: 0, notes: t.name, fromTask: true
       };
       S.runEntries.push(autoEntry);
-      // Hourly run log
       if(!S.hourlyRunLog[taskDate]) S.hourlyRunLog[taskDate] = [0,0,0,0,0,0,0,0];
       S.hourlyRunLog[taskDate][block] = (S.hourlyRunLog[taskDate][block] || 0) + targetMins;
       localStorage.setItem('runLog', JSON.stringify(S.runLog));
       localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
       localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
-      toast(`ðŸƒ Workout logged! +${fmtTime(targetMins)} added to Running Stats`);
+      toast(`🏃 Workout logged! +${fmtTime(targetMins)} added to Running Stats`);
     } else {
-      // Credit to Study Stats
       S.studyLog[taskDate] = (S.studyLog[taskDate] || 0) + targetMins;
       S.subjLog[subj] = (S.subjLog[subj] || 0) + targetMins;
       if(!S.hourlyLog[taskDate]) S.hourlyLog[taskDate] = [0,0,0,0,0,0,0,0];
@@ -2132,7 +2116,7 @@ function toggleTask(id){
       localStorage.setItem('studyLog', JSON.stringify(S.studyLog));
       localStorage.setItem('subjLog', JSON.stringify(S.subjLog));
       localStorage.setItem('hourlyLog', JSON.stringify(S.hourlyLog));
-      toast(`ðŸŽ‰ Task completed! +${fmtTime(targetMins)} added to Study Stats (${subj})`);
+      toast(`🎉 Task completed! +${fmtTime(targetMins)} added to Study Stats (${subj})`);
     }
   } else {
     const revertMins = t.creditedMins || targetMins;
@@ -2140,7 +2124,6 @@ function toggleTask(id){
       if(S.runLog[taskDate]) {
         S.runLog[taskDate].mins = Math.max(0, (S.runLog[taskDate].mins || 0) - revertMins);
       }
-      // Remove auto entry if it came from this task
       S.runEntries = S.runEntries.filter(e => !(e.fromTask && e.date === taskDate && e.notes === t.name));
       if(S.hourlyRunLog[taskDate]) {
         S.hourlyRunLog[taskDate][block] = Math.max(0, (S.hourlyRunLog[taskDate][block] || 0) - revertMins);
@@ -2148,7 +2131,7 @@ function toggleTask(id){
       localStorage.setItem('runLog', JSON.stringify(S.runLog));
       localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
       localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
-      toast('â†©ï¸ Workout unmarked. Running Stats adjusted.');
+      toast('↩️ Workout unmarked. Running Stats adjusted.');
     } else {
       if(S.studyLog[taskDate]) {
         S.studyLog[taskDate] = Math.max(0, S.studyLog[taskDate] - revertMins);
@@ -2164,7 +2147,7 @@ function toggleTask(id){
       localStorage.setItem('studyLog', JSON.stringify(S.studyLog));
       localStorage.setItem('subjLog', JSON.stringify(S.subjLog));
       localStorage.setItem('hourlyLog', JSON.stringify(S.hourlyLog));
-      toast('â†©ï¸ Task unmarked. Study Stats adjusted.');
+      toast('↩️ Task unmarked. Study Stats adjusted.');
     }
     t.creditedMins = 0;
   }
@@ -2265,7 +2248,7 @@ function updateTaskNavLabel() {
     const day = monday.getDay() || 7;
     monday.setDate(monday.getDate() - day + 1);
     const sunday = new Date(monday); sunday.setDate(sunday.getDate() + 6);
-    lbl.textContent = `${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})} â€“ ${sunday.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
+    lbl.textContent = `${monday.toLocaleDateString('en-US',{month:'short',day:'numeric'})} – ${sunday.toLocaleDateString('en-US',{month:'short',day:'numeric'})}`;
   } else if(S.taskView === 'month') {
     lbl.textContent = d.toLocaleDateString('en-US',{month:'long',year:'numeric'});
   }
@@ -2318,7 +2301,7 @@ function renderTasks(){
     l.innerHTML = `
       <div class="empty-box">
         <p>${isCompletedTab ? 'No completed tasks yet. Check off a task to automatically add its time to your Study Stats!' : 'No ' + (S.taskFilter==='pending'?'pending ':'') + 'tasks found for this ' + S.taskView + '.'}</p>
-        <button class="btn btn-secondary btn-sm" onclick="openTaskModal()">ï¼‹ Add Task</button>
+        <button class="btn btn-secondary btn-sm" onclick="openTaskModal()">＋ Add Task</button>
       </div>`;
     return;
   }
@@ -2326,30 +2309,32 @@ function renderTasks(){
   filtered.forEach(t => {
     const d = document.createElement('div');
     d.className = 'task-item' + (t.done ? ' done' : '');
+    const color = t.color || PALETTE[Math.abs(hashString(t.subject||'')) % PALETTE.length];
+    const duration = t.time || `${parseDurationMins(t.time)}m`;
+    
     const isRun = t.taskType && t.taskType !== 'study';
     const runColor = isRun ? '#f97316' : null;
-    const color = runColor || t.color || PALETTE[Math.abs(hashString(t.subject||'')) % PALETTE.length];
-    const duration = t.time || `${parseDurationMins(t.time)}m`;
-    const runTypeIcons = { run:'ðŸƒ', walk:'ðŸš¶', gym:'ðŸ‹ï¸', cycle:'ðŸš´', yoga:'ðŸ§˜' };
-    const runBadge = isRun ? `<span class="task-type-run">${runTypeIcons[t.taskType] || 'ðŸƒ'} ${t.taskType}</span>` : '';
+    const finalColor = runColor || color;
+    const runTypeIcons = { run:'🏃', walk:'🚶', gym:'🏋️', cycle:'🚴', yoga:'🧘' };
+    const runBadge = isRun ? `<span class="task-type-run">${runTypeIcons[t.taskType] || '🏃'} ${t.taskType}</span>` : '';
     
     d.innerHTML = `
-      <div class="tchk" onclick="toggleTask(${t.id})" style="${isRun ? 'border-color:#f97316' : ''}">${t.done ? 'âœ“' : ''}</div>
+      <div class="tchk" onclick="toggleTask(${t.id})" style="${isRun ? 'border-color:#f97316' : ''}">${t.done ? '✓' : ''}</div>
       <div class="tinfo" onclick="toggleTask(${t.id})">
         <div class="tname">${esc(t.name)}${runBadge}</div>
         <div class="tsubj-row">
           <span style="display:flex;align-items:center;gap:4px">
-            <span class="sdot-subj" style="background:${color}"></span><strong>${isRun ? (runTypeIcons[t.taskType]||'ðŸƒ') + ' ' + t.taskType : esc(t.subject || 'General')}</strong>
+            <span class="sdot-subj" style="background:${finalColor}"></span><strong>${isRun ? (runTypeIcons[t.taskType]||'🏃') + ' ' + t.taskType : esc(t.subject || 'General')}</strong>
           </span>
           <span class="badge ${t.done ? 'badge-success' : 'badge-secondary'}">
-            ${t.done ? (isRun ? 'ðŸƒ Logged' : 'âœ“ Auto-credited') : 'â± ' + esc(duration)}
+            ${t.done ? (isRun ? '🏃 Logged' : '✓ Auto-credited') : '⏱ ' + esc(duration)}
           </span>
-          <span class="badge badge-secondary">ðŸ“… ${formatShortDate(t.date || fmt(new Date()))}</span>
+          <span class="badge badge-secondary">📅 ${formatShortDate(t.date || fmt(new Date()))}</span>
         </div>
       </div>
       <div class="task-actions">
-        <button class="btn-icon" onclick="openTaskModal(${t.id})" title="Edit task">âœï¸</button>
-        <button class="btn-icon del" onclick="deleteTask(${t.id})" title="Delete task">ðŸ—‘ï¸</button>
+        <button class="btn-icon" onclick="openTaskModal(${t.id})" title="Edit task">✏️</button>
+        <button class="btn-icon del" onclick="deleteTask(${t.id})" title="Delete task">🗑️</button>
       </div>
     `;
     l.appendChild(d);
@@ -2364,10 +2349,9 @@ function formatShortDate(ds) {
 
 function openTaskModal(taskId, dayOffset) {
   const isEdit = typeof taskId === 'number';
-  document.getElementById('taskModalTitle').textContent = isEdit ? 'âœï¸ Edit Task' : 'ðŸ“ Add Task';
+  document.getElementById('taskModalTitle').textContent = isEdit ? '✏️ Edit Task' : '📝 Add Task';
   document.getElementById('editTaskId').value = isEdit ? taskId : '';
 
-  // Reset type chips to 'study'
   let taskType = 'study';
   if(isEdit) {
     const t = S.tasks.find(x => x.id === taskId);
@@ -2390,7 +2374,6 @@ function openTaskModal(taskId, dayOffset) {
     }
   }
 
-  // Set type chip active state
   document.getElementById('taskInputType').value = taskType;
   document.querySelectorAll('#taskTypeChips .chip-btn').forEach(b => {
     b.classList.toggle('active', b.getAttribute('onclick').includes("'" + taskType + "'"));
@@ -2415,8 +2398,8 @@ function updateTaskTypeUI(type) {
   if(subjectRow) subjectRow.style.display = isStudy ? '' : 'none';
   if(hint) {
     hint.innerHTML = isStudy
-      ? 'âœ“ When marked complete, duration is auto-credited to your <strong>Study Stats</strong>.'
-      : 'ðŸƒ When marked complete, duration is auto-credited to your <strong>Running &amp; Workout Stats</strong>.';
+      ? '✓ When marked complete, duration is auto-credited to your <strong>Study Stats</strong>.'
+      : '🏃 When marked complete, duration is auto-credited to your <strong>Running &amp; Workout Stats</strong>.';
     hint.style.color = isStudy ? 'var(--accent4)' : '#f97316';
     hint.style.borderColor = isStudy ? 'rgba(16,185,129,0.2)' : 'rgba(249,115,22,0.25)';
     hint.style.background = isStudy ? 'rgba(16,185,129,0.08)' : 'rgba(249,115,22,0.08)';
@@ -2434,7 +2417,7 @@ function setTaskDateChip(offset) {
 
 function saveTaskFromModal() {
   const name = document.getElementById('taskInputName').value.trim();
-  if(!name) { toast('âš ï¸ Please enter a task title'); return; }
+  if(!name) { toast('⚠️ Please enter a task title'); return; }
 
   const taskType = document.getElementById('taskInputType').value || 'study';
   const isStudy = taskType === 'study';
@@ -2447,14 +2430,14 @@ function saveTaskFromModal() {
     const t = S.tasks.find(x => x.id === +editId);
     if(t) {
       t.name = name; t.subject = subject; t.time = time; t.date = date; t.taskType = taskType;
-      toast('âœï¸ Task updated!');
+      toast('✏️ Task updated!');
     }
   } else {
     const color = isStudy
       ? PALETTE[Math.abs(hashString(subject)) % PALETTE.length]
       : '#f97316';
     S.tasks.push({ id: Date.now(), name, subject, time, date, color, done: false, creditedMins: 0, taskType });
-    toast(isStudy ? 'ðŸ“ Task scheduled!' : 'ðŸƒ Workout scheduled!');
+    toast(isStudy ? '📝 Task scheduled!' : '🏃 Workout scheduled!');
   }
 
   saveTasks();
@@ -2481,7 +2464,7 @@ function deleteTask(id) {
     renderTasks();
     renderStats();
     renderSubjectDropdowns();
-    toast('ðŸ—‘ï¸ Task removed');
+    toast('🗑️ Task removed');
   }
 }
 
@@ -2518,7 +2501,7 @@ function renderStats(){
       periodMins += (S.studyLog[fmt(td)] || 0);
     }
     periodDays = 7;
-    document.getElementById('barChartTitle').textContent = "Hours this week (Mon â€“ Sun)";
+    document.getElementById('barChartTitle').textContent = "Hours this week (Mon – Sun)";
   } else if(S.statsView === 'month') {
     const cur = new Date();
     const y = cur.getFullYear(), m = cur.getMonth();
@@ -2541,7 +2524,7 @@ function renderStats(){
     { v: fmtTime(periodMins), l: `Total (${S.statsView} view)` },
     { v: fmtTime(todayMins),  l: "Today's hours" },
     { v: fmtTime(avgMins),    l: "Daily average" },
-    { v: S.streak + ' ðŸ”¥',    l: "Day streak" },
+    { v: S.streak + ' 🔥',    l: "Day streak" },
     { v: S.done,              l: "Sessions today" },
     { v: subsCount,           l: "Subjects tracked" },
   ].forEach(x => {
@@ -2632,7 +2615,7 @@ function renderPie(){
     circle.setAttribute('fill', PALETTE[0]);
     svg.appendChild(circle);
     const li = document.createElement('div'); li.className = 'pie-legend-item';
-    li.innerHTML = `<div class="pie-dot" style="background:${PALETTE[0]}"></div><span>${esc(entries[0][0])} (100% Â· ${fmtTime(entries[0][1])})</span>`;
+    li.innerHTML = `<div class="pie-dot" style="background:${PALETTE[0]}"></div><span>${esc(entries[0][0])} (100% · ${fmtTime(entries[0][1])})</span>`;
     leg.appendChild(li);
     return;
   }
@@ -2651,7 +2634,7 @@ function renderPie(){
     svg.appendChild(path);
 
     const li = document.createElement('div'); li.className = 'pie-legend-item';
-    li.innerHTML = `<div class="pie-dot" style="background:${color}"></div><span>${esc(subj)} (${Math.round((mins/total)*100)}% Â· ${fmtTime(mins)})</span>`;
+    li.innerHTML = `<div class="pie-dot" style="background:${color}"></div><span>${esc(subj)} (${Math.round((mins/total)*100)}% · ${fmtTime(mins)})</span>`;
     leg.appendChild(li);
     angle += slice;
   });
@@ -2670,16 +2653,14 @@ function renderStreakGraph(){
   }
 }
 
-function renderActivity() {
-  // Activity by hour removed per user request and replaced by Running & Workout Stats
+function renderActivity(){
+  // Replaced by Running & Workout Stats sidebar card
 }
-
-
 
 /* ================================================================
    RUNNING & WORKOUT STATS
 ================================================================ */
-const RUN_TYPE_ICONS = { run:'\u{1F3C3}', walk:'\u{1F6B6}', cycle:'\u{1F6B4}', gym:'\u{1F3CB}', yoga:'\u{1F9D8}' };
+const RUN_TYPE_ICONS = { run:'🏃', walk:'🚶', cycle:'🚴', gym:'🏋️', yoga:'🧘' };
 const RUN_TYPE_LABELS = { run:'Running', walk:'Walking', cycle:'Cycling', gym:'Gym', yoga:'Yoga' };
 const RUN_PIE_COLORS = { run:'#f97316', walk:'#10b981', cycle:'#3b82f6', gym:'#a855f7', yoga:'#ec4899' };
 
@@ -2692,7 +2673,7 @@ function setRunView(view, btn) {
 
 function openRunModal(entryId) {
   const isEdit = typeof entryId === 'number';
-  document.getElementById('runModalTitle').textContent = isEdit ? 'Edit Workout' : 'Log Workout';
+  document.getElementById('runModalTitle').textContent = isEdit ? '✏️ Edit Workout' : '🏃 Log Workout';
   document.getElementById('editRunId').value = isEdit ? entryId : '';
   if(isEdit) {
     const e = S.runEntries.find(x => x.id === entryId);
@@ -2722,139 +2703,186 @@ function saveRunEntry() {
   const mins = parseDurationMins(durStr || '30m');
   const notes = document.getElementById('runInputNotes').value.trim();
   const editId = document.getElementById('editRunId').value;
-  if(!durStr && km === 0) { toast('Please enter duration or distance'); return; }
+
+  if(!durStr && km === 0) { toast('⚠️ Please enter duration or distance'); return; }
+
   if(editId) {
     const e = S.runEntries.find(x => x.id === +editId);
     if(e) {
       if(S.runLog[e.date]) {
-        S.runLog[e.date].mins = Math.max(0,(S.runLog[e.date].mins||0)-e.mins);
-        S.runLog[e.date].km  = Math.max(0,(S.runLog[e.date].km||0)-(e.km||0));
+        S.runLog[e.date].mins = Math.max(0, (S.runLog[e.date].mins||0) - e.mins);
+        S.runLog[e.date].km  = Math.max(0, (S.runLog[e.date].km||0) - (e.km||0));
       }
-      e.type=type; e.date=date; e.km=km; e.mins=mins; e.notes=notes;
-      toast('Workout updated!');
+      e.type = type; e.date = date; e.km = km; e.mins = mins; e.notes = notes;
+      toast('✏️ Workout updated!');
     }
   } else {
-    S.runEntries.push({ id:Date.now(), type, date, km, mins, notes, fromTask:false });
-    toast('Workout logged!');
+    S.runEntries.push({ id: Date.now(), type, date, km, mins, notes, fromTask: false });
+    toast('🏃 Workout logged!');
   }
-  if(!S.runLog[date]) S.runLog[date]={mins:0,km:0};
-  S.runLog[date].mins=(S.runLog[date].mins||0)+mins;
-  S.runLog[date].km=(S.runLog[date].km||0)+km;
-  const block=Math.floor(new Date().getHours()/3);
-  if(!S.hourlyRunLog[date]) S.hourlyRunLog[date]=[0,0,0,0,0,0,0,0];
-  S.hourlyRunLog[date][block]=(S.hourlyRunLog[date][block]||0)+mins;
-  localStorage.setItem('runEntries',JSON.stringify(S.runEntries));
-  localStorage.setItem('runLog',JSON.stringify(S.runLog));
-  localStorage.setItem('hourlyRunLog',JSON.stringify(S.hourlyRunLog));
+
+  if(!S.runLog[date]) S.runLog[date] = { mins: 0, km: 0 };
+  S.runLog[date].mins = (S.runLog[date].mins || 0) + mins;
+  S.runLog[date].km   = (S.runLog[date].km   || 0) + km;
+
+  const block = Math.floor(new Date().getHours() / 3);
+  if(!S.hourlyRunLog[date]) S.hourlyRunLog[date] = [0,0,0,0,0,0,0,0];
+  S.hourlyRunLog[date][block] = (S.hourlyRunLog[date][block] || 0) + mins;
+
+  localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
+  localStorage.setItem('runLog', JSON.stringify(S.runLog));
+  localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
   triggerCloudSync();
-  closeOv(null,'runModalOv');
+  closeOv(null, 'runModalOv');
   renderRunStats();
-  renderActivity();
 }
 
 function deleteRunEntry(id) {
-  const idx=S.runEntries.findIndex(x=>x.id===id);
-  if(idx>-1){
-    const e=S.runEntries[idx];
-    if(S.runLog[e.date]){
-      S.runLog[e.date].mins=Math.max(0,(S.runLog[e.date].mins||0)-e.mins);
-      S.runLog[e.date].km=Math.max(0,(S.runLog[e.date].km||0)-(e.km||0));
+  const idx = S.runEntries.findIndex(x => x.id === id);
+  if(idx > -1) {
+    const e = S.runEntries[idx];
+    if(S.runLog[e.date]) {
+      S.runLog[e.date].mins = Math.max(0, (S.runLog[e.date].mins||0) - e.mins);
+      S.runLog[e.date].km   = Math.max(0, (S.runLog[e.date].km||0) - (e.km||0));
     }
-    S.runEntries.splice(idx,1);
-    localStorage.setItem('runEntries',JSON.stringify(S.runEntries));
-    localStorage.setItem('runLog',JSON.stringify(S.runLog));
+    S.runEntries.splice(idx, 1);
+    localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
+    localStorage.setItem('runLog', JSON.stringify(S.runLog));
     triggerCloudSync();
-    renderRunStats(); renderActivity();
-    toast('Workout removed');
+    renderRunStats();
+    toast('🗑️ Workout removed');
   }
 }
 
-function renderRunStats(){
-  const now=new Date();
-  const days=S.runView==='week'?7:30;
-  const dates=[];
-  for(let i=days-1;i>=0;i--){const d=new Date(now);d.setDate(d.getDate()-i);dates.push(fmt(d));}
-  let totalMins=0,totalKm=0,totalSessions=0,maxKmDay=0;
-  dates.forEach(d=>{
-    const rl=S.runLog[d];
-    if(rl&&(rl.mins>0||rl.km>0)){totalMins+=(rl.mins||0);totalKm+=(rl.km||0);totalSessions++;if((rl.km||0)>maxKmDay)maxKmDay=rl.km;}
+function renderRunStats() {
+  const now = new Date();
+  const days = S.runView === 'week' ? 7 : 30;
+  const dates = [];
+  for(let i = days - 1; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    dates.push(fmt(d));
+  }
+
+  let totalMins = 0, totalKm = 0, totalSessions = 0, maxKmDay = 0;
+  dates.forEach(d => {
+    const rl = S.runLog[d];
+    if(rl && (rl.mins > 0 || rl.km > 0)) {
+      totalMins += (rl.mins || 0);
+      totalKm   += (rl.km || 0);
+      totalSessions++;
+      if((rl.km || 0) > maxKmDay) maxKmDay = rl.km;
+    }
   });
-  const kpiGrid=document.getElementById('runKpiGrid');
-  if(!kpiGrid)return;
-  kpiGrid.innerHTML='';
-  [{v:totalSessions,l:'Sessions'},{v:totalKm.toFixed(1)+' km',l:'Total Distance'},{v:fmtTime(totalMins),l:'Active Time'},{v:maxKmDay.toFixed(1)+' km',l:'Best Day'}].forEach(k=>{
-    const box=document.createElement('div');box.className='run-kpi-box';
-    box.innerHTML=`<div class="run-kpi-val">${k.v}</div><div class="run-kpi-lbl">${k.l}</div>`;
+
+  const kpiGrid = document.getElementById('runKpiGrid');
+  if(!kpiGrid) return;
+  kpiGrid.innerHTML = '';
+  [
+    { v: totalSessions, l: 'Sessions' },
+    { v: totalKm.toFixed(1) + ' km', l: 'Total Dist' },
+    { v: fmtTime(totalMins), l: 'Active Time' },
+    { v: maxKmDay.toFixed(1) + ' km', l: 'Best Day' }
+  ].forEach(k => {
+    const box = document.createElement('div'); box.className = 'run-kpi-box';
+    box.innerHTML = `<div class="run-kpi-val">${k.v}</div><div class="run-kpi-lbl">${k.l}</div>`;
     kpiGrid.appendChild(box);
   });
-  const barChart=document.getElementById('runBarChart');
-  const barTitle=document.getElementById('runBarTitle');
-  barChart.innerHTML='';
-  const barVals=dates.map(d=>(S.runLog[d]&&S.runLog[d].km)||0);
-  const maxBar=Math.max(...barVals,0.1);
-  barTitle.textContent=days===7?'Distance this week (km)':'Distance this month (km)';
-  dates.forEach((d,i)=>{
-    const v=barVals[i],h=Math.round((v/maxBar)*72);
-    const lbl=days===7?['M','T','W','T','F','S','S'][i]:(i%5===0?d.slice(5):'');
-    const w=document.createElement('div');w.className='run-bar-wrap';
-    w.innerHTML=`<div class="run-bar${v>0?' on':''}" style="height:${Math.max(v>0?h:3,3)}px" title="${v.toFixed(1)} km"></div><div class="run-bar-lbl">${lbl}</div>`;
-    barChart.appendChild(w);
-  });
-  const pieEntries=S.runEntries.filter(e=>dates.includes(e.date));
-  const typeTotals={};
-  pieEntries.forEach(e=>{typeTotals[e.type]=(typeTotals[e.type]||0)+(e.mins||0);});
-  const pieEl=document.getElementById('runPieChart');
-  const legendEl=document.getElementById('runPieLegend');
-  pieEl.innerHTML='';legendEl.innerHTML='';
-  const typeKeys=Object.keys(typeTotals);
-  if(!typeKeys.length){
-    pieEl.innerHTML=`<circle cx="50" cy="50" r="38" fill="none" stroke="var(--muted)" stroke-width="24"/>`;
-  }else{
-    const total=typeKeys.reduce((s,k)=>s+typeTotals[k],0);
-    let ang=-90;
-    typeKeys.forEach(k=>{
-      const pct=typeTotals[k]/total,deg=pct*360,r=38,cx=50,cy=50;
-      const rad=a=>a*Math.PI/180;
-      const x1=cx+r*Math.cos(rad(ang)),y1=cy+r*Math.sin(rad(ang));
-      const x2=cx+r*Math.cos(rad(ang+deg)),y2=cy+r*Math.sin(rad(ang+deg));
-      const large=deg>180?1:0,color=RUN_PIE_COLORS[k]||'#f97316';
-      if(typeKeys.length===1){pieEl.innerHTML+=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="24"/>`;}
-      else{pieEl.innerHTML+=`<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${color}"/>`;}
-      legendEl.innerHTML+=`<div class="pie-leg-item"><span class="pie-dot" style="background:${color}"></span>${RUN_TYPE_LABELS[k]||k} <span style="color:var(--muted-foreground)">${Math.round(pct*100)}%</span></div>`;
-      ang+=deg;
+
+  // Bar chart
+  const barChart = document.getElementById('runBarChart');
+  const barTitle = document.getElementById('runBarTitle');
+  if(barChart) {
+    barChart.innerHTML = '';
+    const barVals = dates.map(d => (S.runLog[d] && S.runLog[d].km) || 0);
+    const maxBar = Math.max(...barVals, 0.1);
+    if(barTitle) barTitle.textContent = days === 7 ? 'Distance this week (km)' : 'Distance this month (km)';
+    dates.forEach((d, i) => {
+      const v = barVals[i];
+      const h = Math.round((v / maxBar) * 65);
+      const lbl = days === 7 ? ['M','T','W','T','F','S','S'][i] : (i % 5 === 0 ? d.slice(5) : '');
+      const w = document.createElement('div'); w.className = 'run-bar-wrap';
+      w.innerHTML = `<div class="run-bar${v > 0 ? ' on' : ''}" style="height:${Math.max(v > 0 ? h : 3, 3)}px" title="${v.toFixed(1)} km"></div><div class="run-bar-lbl">${lbl}</div>`;
+      barChart.appendChild(w);
     });
   }
-  const sgGrid=document.getElementById('runSgGrid');
-  sgGrid.innerHTML='';
-  for(let i=27;i>=0;i--){
-    const d2=new Date(now);d2.setDate(d2.getDate()-i);
-    const ds=fmt(d2),active=S.runLog[ds]&&(S.runLog[ds].mins>0||S.runLog[ds].km>0);
-    const cell=document.createElement('div');cell.className='run-sg-cell'+(active?' lit':'');
-    cell.title=ds+(active?` - ${(S.runLog[ds].km||0).toFixed(1)} km`:'');
-    sgGrid.appendChild(cell);
+
+  // Pie: activity breakdown
+  const pieEl = document.getElementById('runPieChart');
+  const legendEl = document.getElementById('runPieLegend');
+  if(pieEl && legendEl) {
+    const pieEntries = S.runEntries.filter(e => dates.includes(e.date));
+    const typeTotals = {};
+    pieEntries.forEach(e => { typeTotals[e.type] = (typeTotals[e.type] || 0) + (e.mins || 0); });
+    pieEl.innerHTML = ''; legendEl.innerHTML = '';
+    const typeKeys = Object.keys(typeTotals);
+    if(!typeKeys.length) {
+      pieEl.innerHTML = `<circle cx="50" cy="50" r="38" fill="none" stroke="var(--muted)" stroke-width="24"/>`;
+    } else {
+      const total = typeKeys.reduce((s, k) => s + typeTotals[k], 0);
+      let ang = -90;
+      typeKeys.forEach(k => {
+        const pct = typeTotals[k] / total;
+        const deg = pct * 360;
+        const r = 38, cx = 50, cy = 50;
+        const rad = a => a * Math.PI / 180;
+        const x1 = cx + r * Math.cos(rad(ang));
+        const y1 = cy + r * Math.sin(rad(ang));
+        const x2 = cx + r * Math.cos(rad(ang + deg));
+        const y2 = cy + r * Math.sin(rad(ang + deg));
+        const large = deg > 180 ? 1 : 0;
+        const color = RUN_PIE_COLORS[k] || '#f97316';
+        if(typeKeys.length === 1) {
+          pieEl.innerHTML += `<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${color}" stroke-width="24"/>`;
+        } else {
+          pieEl.innerHTML += `<path d="M${cx},${cy} L${x1},${y1} A${r},${r} 0 ${large},1 ${x2},${y2} Z" fill="${color}"/>`;
+        }
+        legendEl.innerHTML += `<div class="pie-leg-item" style="font-size:0.68rem"><span class="pie-dot" style="background:${color}"></span>${RUN_TYPE_LABELS[k]||k} <span style="color:var(--muted-foreground)">${Math.round(pct*100)}%</span></div>`;
+        ang += deg;
+      });
+    }
   }
-  const listEl=document.getElementById('runEntryList');
-  listEl.innerHTML='';
-  const recent=[...S.runEntries].sort((a,b)=>b.date.localeCompare(a.date)).slice(0,15);
-  if(!recent.length){
-    listEl.innerHTML=`<div class="empty-box"><p>No workouts logged yet. Complete a Running task or tap "+ Log Workout".</p><button class="btn btn-secondary btn-sm" onclick="openRunModal()">+ Log Your First Workout</button></div>`;
-    return;
+
+  // Streak heatmap
+  const sgGrid = document.getElementById('runSgGrid');
+  if(sgGrid) {
+    sgGrid.innerHTML = '';
+    for(let i = 27; i >= 0; i--) {
+      const d2 = new Date(now); d2.setDate(d2.getDate() - i);
+      const ds = fmt(d2);
+      const active = S.runLog[ds] && (S.runLog[ds].mins > 0 || S.runLog[ds].km > 0);
+      const cell = document.createElement('div');
+      cell.className = 'run-sg-cell' + (active ? ' lit' : '');
+      cell.title = ds + (active ? ` — ${(S.runLog[ds].km||0).toFixed(1)} km` : '');
+      sgGrid.appendChild(cell);
+    }
   }
-  recent.forEach(e=>{
-    const row=document.createElement('div');row.className='run-entry';
-    const icon=RUN_TYPE_ICONS[e.type]||'?',label=RUN_TYPE_LABELS[e.type]||e.type;
-    const distStr=e.km>0?`${e.km.toFixed(1)} km - `:'';
-    row.innerHTML=`
-      <div class="run-entry-icon">${icon}</div>
-      <div class="run-entry-info">
-        <div class="run-entry-title">${esc(e.notes||label)}</div>
-        <div class="run-entry-meta">${distStr}${fmtTime(e.mins||0)} - ${e.date}</div>
-      </div>
-      <div class="run-entry-badge">${e.km>0?e.km.toFixed(1)+' km':fmtTime(e.mins||0)}</div>
-      ${!e.fromTask?`<button class="btn-icon del" onclick="deleteRunEntry(${e.id})" title="Delete">X</button>`:''}
-    `;
-    listEl.appendChild(row);
-  });
+
+  // Recent entries list
+  const listEl = document.getElementById('runEntryList');
+  if(listEl) {
+    listEl.innerHTML = '';
+    const recent = [...S.runEntries].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 15);
+    if(!recent.length) {
+      listEl.innerHTML = `<div class="empty-box" style="padding:16px 10px"><p style="font-size:0.75rem">No workouts logged yet. Complete a running task or tap "+ Log".</p></div>`;
+      return;
+    }
+    recent.forEach(e => {
+      const row = document.createElement('div'); row.className = 'run-entry';
+      const icon = RUN_TYPE_ICONS[e.type] || '🏃';
+      const label = RUN_TYPE_LABELS[e.type] || e.type;
+      const distStr = e.km > 0 ? `${e.km.toFixed(1)} km · ` : '';
+      row.innerHTML = `
+        <div class="run-entry-icon">${icon}</div>
+        <div class="run-entry-info">
+          <div class="run-entry-title">${esc(e.notes || label)}</div>
+          <div class="run-entry-meta">${distStr}${fmtTime(e.mins||0)} · ${e.date}</div>
+        </div>
+        <div class="run-entry-badge">${e.km > 0 ? e.km.toFixed(1)+' km' : fmtTime(e.mins||0)}</div>
+        ${!e.fromTask ? `<button class="btn-icon del" onclick="deleteRunEntry(${e.id})" title="Delete" style="font-size:0.7rem">🗑️</button>` : ''}
+      `;
+      listEl.appendChild(row);
+    });
+  }
 }
 
 /* ================================================================
@@ -2906,7 +2934,7 @@ function renderMockTests() {
     list.innerHTML = `
       <div class="empty-box">
         <p>No ${S.mockFilter !== 'all' ? S.mockFilter + ' ' : ''}mock tests recorded yet.</p>
-        <button class="btn btn-secondary btn-sm" onclick="openMockModal()">ï¼‹ Record Your First Test</button>
+        <button class="btn btn-secondary btn-sm" onclick="openMockModal()">＋ Record Your First Test</button>
       </div>`;
   } else {
     filtered.forEach(m => {
@@ -2919,16 +2947,16 @@ function renderMockTests() {
           <div class="mock-item-title">
             <span>${esc(m.title)}</span>
             <span class="badge ${m.type === 'topic' ? 'badge-purple' : m.type === 'subject' ? 'badge-secondary' : 'badge-danger'}">
-              ${m.type === 'topic' ? 'ðŸŽ¯ Topic-wise' : m.type === 'subject' ? 'ðŸ“š Subject-wise' : 'ðŸ† Full Mock'}
+              ${m.type === 'topic' ? '🎯 Topic-wise' : m.type === 'subject' ? '📚 Subject-wise' : '🏆 Full Mock'}
             </span>
           </div>
           <div class="mock-meta">
-            <span>ðŸ“š <strong>${esc(m.subject)}</strong></span>
-            ${m.topic ? `<span>ðŸŽ¯ <em>${esc(m.topic)}</em></span>` : ''}
-            <span>ðŸ“… ${m.date || 'Today'}</span>
-            ${m.time ? `<span>â± ${m.time}m</span>` : ''}
+            <span>📚 <strong>${esc(m.subject)}</strong></span>
+            ${m.topic ? `<span>🎯 <em>${esc(m.topic)}</em></span>` : ''}
+            <span>📅 ${m.date || 'Today'}</span>
+            ${m.time ? `<span>⏱ ${m.time}m</span>` : ''}
           </div>
-          ${m.notes ? `<div style="font-size:0.72rem;color:var(--muted-foreground);margin-top:4px">ðŸ’¡ ${esc(m.notes)}</div>` : ''}
+          ${m.notes ? `<div style="font-size:0.72rem;color:var(--muted-foreground);margin-top:4px">💡 ${esc(m.notes)}</div>` : ''}
         </div>
         <div class="mock-score-col">
           <div class="mock-score-num">
@@ -2940,8 +2968,8 @@ function renderMockTests() {
           </div>
         </div>
         <div class="task-actions">
-          <button class="btn-icon" onclick="openMockModal(${m.id})" title="Edit test">âœï¸</button>
-          <button class="btn-icon del" onclick="deleteMockTest(${m.id})" title="Delete test">ðŸ—‘ï¸</button>
+          <button class="btn-icon" onclick="openMockModal(${m.id})" title="Edit test">✏️</button>
+          <button class="btn-icon del" onclick="deleteMockTest(${m.id})" title="Delete test">🗑️</button>
         </div>
       `;
       list.appendChild(item);
@@ -2958,15 +2986,15 @@ function renderMockTests() {
       subStats[m.subject].sum += pct; subStats[m.subject].count++;
     }
     if(m.topic) {
-      const key = `${m.subject} â€“ ${m.topic}`;
+      const key = `${m.subject} – ${m.topic}`;
       if(!topicStats[key]) topicStats[key] = { sum: 0, count: 0 };
       topicStats[key].sum += pct; topicStats[key].count++;
     }
   });
 
   const cardsData = [
-    ...Object.entries(subStats).map(([name, s]) => ({ name: `ðŸ“š ${name}`, avg: Math.round(s.sum/s.count), count: s.count })),
-    ...Object.entries(topicStats).map(([name, s]) => ({ name: `ðŸŽ¯ ${name}`, avg: Math.round(s.sum/s.count), count: s.count })),
+    ...Object.entries(subStats).map(([name, s]) => ({ name: `📚 ${name}`, avg: Math.round(s.sum/s.count), count: s.count })),
+    ...Object.entries(topicStats).map(([name, s]) => ({ name: `🎯 ${name}`, avg: Math.round(s.sum/s.count), count: s.count })),
   ];
 
   if(!cardsData.length) {
@@ -2992,7 +3020,7 @@ function renderMockTests() {
 
 function openMockModal(mockId) {
   const isEdit = typeof mockId === 'number';
-  document.getElementById('mockModalTitle').textContent = isEdit ? 'âœï¸ Edit Mock Test' : 'ðŸ“ Record Mock Test';
+  document.getElementById('mockModalTitle').textContent = isEdit ? '✏️ Edit Mock Test' : '📝 Record Mock Test';
   document.getElementById('editMockId').value = isEdit ? mockId : '';
 
   if(isEdit) {
@@ -3049,10 +3077,10 @@ function saveMockTestFromModal() {
   const score = parseFloat(document.getElementById('mockInputScore').value);
   const total = parseFloat(document.getElementById('mockInputTotal').value);
 
-  if(!title) { toast('âš ï¸ Please enter a test title'); return; }
-  if(!subject) { toast('âš ï¸ Please specify a subject'); return; }
+  if(!title) { toast('⚠️ Please enter a test title'); return; }
+  if(!subject) { toast('⚠️ Please specify a subject'); return; }
   if(isNaN(score) || isNaN(total) || total <= 0) {
-    toast('âš ï¸ Please enter valid score and total marks'); return;
+    toast('⚠️ Please enter valid score and total marks'); return;
   }
 
   const type = document.getElementById('mockInputType').value;
@@ -3067,11 +3095,11 @@ function saveMockTestFromModal() {
     if(m) {
       m.title = title; m.type = type; m.subject = subject; m.topic = topic;
       m.score = score; m.total = total; m.time = time; m.date = date; m.notes = notes;
-      toast('âœï¸ Mock test updated!');
+      toast('✏️ Mock test updated!');
     }
   } else {
     S.mockTests.unshift({ id: Date.now(), title, type, subject, topic, score, total, time, date, notes });
-    toast('ðŸ“ Mock test saved!');
+    toast('📝 Mock test saved!');
   }
 
   localStorage.setItem('mockTests', JSON.stringify(S.mockTests));
@@ -3089,7 +3117,7 @@ function deleteMockTest(id) {
       localStorage.setItem('mockTests', JSON.stringify(S.mockTests));
       triggerCloudSync();
       renderMockTests();
-      toast('ðŸ—‘ï¸ Mock test deleted');
+      toast('🗑️ Mock test deleted');
     }
   }
 }
@@ -3098,17 +3126,17 @@ function deleteMockTest(id) {
    APPLE MUSIC
 ================================================================ */
 const AM_PRESETS=[
-  {name:'Deep Focus',desc:'Instrumental Â· No lyrics',art:'ðŸ§ ',color:'#4338ca',
+  {name:'Deep Focus',desc:'Instrumental · No lyrics',art:'🧠',color:'#4338ca',
    url:'https://embed.music.apple.com/in/playlist/pure-focus/pl.u-oZylDDDs78b7v1'},
-  {name:'Lo-fi Study',desc:'Chill beats Â· Relaxed',art:'ðŸŽ§',color:'#6b21a8',
+  {name:'Lo-fi Study',desc:'Chill beats · Relaxed',art:'🎧',color:'#6b21a8',
    url:'https://embed.music.apple.com/in/playlist/lo-fi-study/pl.u-8aAVZAAs78b7v1'},
-  {name:'Classical Focus',desc:'Mozart Â· Bach Â· Beethoven',art:'ðŸŽ»',color:'#1e3a8a',
+  {name:'Classical Focus',desc:'Mozart · Bach · Beethoven',art:'🎻',color:'#1e3a8a',
    url:'https://embed.music.apple.com/in/playlist/classical-focus/pl.u-2aoqBBBs78b7v1'},
-  {name:'Ambient Chill',desc:'Atmospheric Â· Calm',art:'ðŸŒ™',color:'#0f766e',
+  {name:'Ambient Chill',desc:'Atmospheric · Calm',art:'🌙',color:'#0f766e',
    url:'https://embed.music.apple.com/in/playlist/ambient-chill/pl.u-kv9lPPPs78b7v1'},
-  {name:'Study Beats',desc:'Hip-hop instrumental',art:'ðŸŽµ',color:'#831843',
+  {name:'Study Beats',desc:'Hip-hop instrumental',art:'🎵',color:'#831843',
    url:'https://embed.music.apple.com/in/playlist/study-beats/pl.u-RRboPPPs78b7v1'},
-  {name:'Nature Sounds',desc:'Rain Â· Forest Â· Ocean',art:'ðŸŒ¿',color:'#14532d',
+  {name:'Nature Sounds',desc:'Rain · Forest · Ocean',art:'🌿',color:'#14532d',
    url:'https://embed.music.apple.com/in/playlist/nature-sounds/pl.u-AAboZZZs78b7v1'},
 ];
 
@@ -3143,24 +3171,24 @@ function loadPreset(idx, el){
 
   const openLink = document.getElementById('amOpenLink');
   openLink.href = preset.url.replace('embed.music.apple.com','music.apple.com');
-  toast(`ðŸŽµ Loading "${preset.name}"`);
+  toast(`🎵 Loading "${preset.name}"`);
 }
 
 function embedCustom(){
   let url = document.getElementById('amUrlInput').value.trim();
-  if(!url){ toast('âš ï¸ Please paste an Apple Music link first'); return; }
+  if(!url){ toast('⚠️ Please paste an Apple Music link first'); return; }
 
   if(url.includes('music.apple.com') && !url.includes('embed.music.apple.com')){
     url = url.replace('music.apple.com','embed.music.apple.com');
   }
   if(!url.includes('embed.music.apple.com')){
-    toast('âš ï¸ Please use an Apple Music link (music.apple.com/â€¦)'); return;
+    toast('⚠️ Please use an Apple Music link (music.apple.com/…)'); return;
   }
 
   const iframe = document.getElementById('amCustomIframe');
   iframe.src = url;
   document.getElementById('amCustomEmbedWrap').classList.add('visible');
-  toast('ðŸŽµ Apple Music playlist embedded!');
+  toast('🎵 Apple Music playlist embedded!');
 }
 
 function amTab(tab, btn){
@@ -3199,15 +3227,37 @@ function saveSettings(){
   if(!S.running){ S.timeLeft = modeMin()*60; S.total = S.timeLeft; updateDisp(); drawRing(1); }
   renderSessionDots(); renderDaysLeft();
   triggerCloudSync();
-  closeOv(null,'settingsOv'); toast('âœ… Settings saved!');
+  closeOv(null,'settingsOv'); toast('✅ Settings saved!');
 }
 function resetAllData() {
-  if(confirm('Reset ALL data? This clears tasks, study logs, workout logs and mock tests.')) {
-    ['tasks','studyLog','subjLog','hourlyLog','hourlyRunLog','mockTests','streak','runEntries','runLog'].forEach(k=>localStorage.removeItem(k));
-    S.tasks=[];S.studyLog={};S.subjLog={};S.hourlyLog={};S.hourlyRunLog={};S.mockTests=[];S.streak=0;S.runEntries=[];S.runLog={};
-    document.getElementById('streakNum').textContent='0';
-    renderTasks();renderStats();renderRunStats();renderMockTests();renderActivity();renderSubjectDropdowns();
-    triggerCloudSync();closeOv(null,'settingsOv');toast('All data cleared!');
+  if(confirm('Are you sure you want to reset ALL study logs, tasks, and mock tests to zero?')) {
+    localStorage.removeItem('tasks');
+    localStorage.removeItem('studyLog');
+    localStorage.removeItem('subjLog');
+    localStorage.removeItem('hourlyLog');
+    localStorage.removeItem('mockTests');
+    localStorage.removeItem('streak');
+    
+    S.tasks = [];
+    S.studyLog = {};
+    S.subjLog = {};
+    S.hourlyLog = {};
+    S.hourlyRunLog = {};
+    S.mockTests = [];
+    S.streak = 0;
+    S.runEntries = [];
+    S.runLog = {};
+    
+    document.getElementById('streakNum').textContent = '0';
+    renderTasks();
+    renderStats();
+    renderRunStats();
+    renderMockTests();
+    renderActivity();
+    renderSubjectDropdowns();
+    triggerCloudSync();
+    closeOv(null,'settingsOv');
+    toast('🔄 All data cleared to zero!');
   }
 }
 
@@ -3225,13 +3275,13 @@ function saveName(){
   S.name = v; localStorage.setItem('focusName', v);
   document.getElementById('userName').textContent = v;
   triggerCloudSync();
-  closeOv(null,'renameOv'); toast('ðŸ‘‹ Name updated!');
+  closeOv(null,'renameOv'); toast('👋 Name updated!');
 }
 function notYou(){
   if(confirm('Reset your name?')){
     S.name = 'Your Name'; localStorage.removeItem('focusName');
     document.getElementById('userName').textContent = S.name;
-    toast('ðŸ”„ Name reset');
+    toast('🔄 Name reset');
   }
 }
 
@@ -3362,7 +3412,7 @@ function updateCloudStatusUI(status) {
 
   if (status === 'syncing') {
     dot.classList.add('syncing');
-    txt.textContent = 'Syncingâ€¦';
+    txt.textContent = 'Syncing…';
     return;
   }
 
@@ -3370,7 +3420,7 @@ function updateCloudStatusUI(status) {
     dot.classList.add('connected');
     const isAnon = currentUser.is_anonymous || !currentUser.email;
     const emailPrefix = isAnon ? 'Guest' : (currentUser.email || 'User').split('@')[0];
-    txt.textContent = isAnon ? 'â˜ï¸ Guest' : 'â˜ï¸ ' + emailPrefix;
+    txt.textContent = isAnon ? '☁️ Guest' : '☁️ ' + emailPrefix;
 
     if (authView && userView) {
       authView.style.display = 'none';
@@ -3384,11 +3434,11 @@ function updateCloudStatusUI(status) {
           ? 'Guest Account <span class="badge badge-purple" style="font-size:0.65rem;vertical-align:middle;margin-left:4px">Instant Cloud Sync</span>'
           : esc(currentUser.email);
       }
-      if (avatar) avatar.textContent = isAnon ? 'âš¡' : (currentUser.email || 'U').charAt(0).toUpperCase();
+      if (avatar) avatar.textContent = isAnon ? '⚡' : (currentUser.email || 'U').charAt(0).toUpperCase();
       if (syncTimeLbl) {
         syncTimeLbl.textContent = lastSyncedAt 
-          ? 'âœ“ Last synced: ' + formatRelativeTime(lastSyncedAt)
-          : 'âœ“ Ready to sync';
+          ? '✓ Last synced: ' + formatRelativeTime(lastSyncedAt)
+          : '✓ Ready to sync';
       }
     }
   } else {
@@ -3401,11 +3451,11 @@ function updateCloudStatusUI(status) {
     const hasKeys = !!((localStorage.getItem('sb_url') || DEFAULT_SUPABASE_URL).trim() && (localStorage.getItem('sb_key') || DEFAULT_SUPABASE_KEY).trim());
     if (status === 'error') {
       dot.classList.add('error');
-      txt.textContent = 'â˜ï¸ Sync Error';
+      txt.textContent = '☁️ Sync Error';
     } else if (hasKeys) {
-      txt.textContent = 'â˜ï¸ Sign In / Sync';
+      txt.textContent = '☁️ Sign In / Sync';
     } else {
-      txt.textContent = 'â˜ï¸ Connect Cloud';
+      txt.textContent = '☁️ Connect Cloud';
     }
   }
 }
@@ -3485,7 +3535,7 @@ async function handleSignIn(e) {
   }
 
   btn.disabled = true;
-  btn.textContent = 'Signing inâ€¦';
+  btn.textContent = 'Signing in…';
 
   try {
     const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
@@ -3495,21 +3545,21 @@ async function handleSignIn(e) {
         errDiv.className = 'cloud-alert cloud-alert-error';
         errDiv.innerHTML = `
           <div style="font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
-            <span>âœ‰ï¸</span> Email Not Confirmed Yet
+            <span>✉️</span> Email Not Confirmed Yet
           </div>
           <div style="margin-bottom:8px;line-height:1.45">
             Your Supabase account was created, but your email address has not been confirmed yet. Please check your inbox and spam folder for the verification link.
           </div>
           <div style="display:flex;flex-direction:column;gap:6px">
             <button type="button" class="btn btn-secondary btn-sm" id="btnResendConfirm" onclick="resendConfirmationEmail('${esc(email)}')">
-              âœ‰ï¸ Resend Confirmation Email
+              ✉️ Resend Confirmation Email
             </button>
             <div id="resendStatusMsg" style="display:none;font-size:0.75rem;margin-top:2px"></div>
           </div>
           <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(244,63,94,0.25);font-size:0.73rem">
-            âš¡ <strong>Don't want to wait for email confirmation?</strong><br>
+            ⚡ <strong>Don't want to wait for email confirmation?</strong><br>
             <a href="#" onclick="handleGuestSignIn();return false" style="color:var(--foreground);text-decoration:underline;font-weight:600">
-              Continue as Guest & Instant Cloud Backup â†’
+              Continue as Guest & Instant Cloud Backup →
             </a>
           </div>
         `;
@@ -3517,12 +3567,12 @@ async function handleSignIn(e) {
       } else if (errText.includes('rate limit')) {
         errDiv.className = 'cloud-alert cloud-alert-error';
         errDiv.innerHTML = `
-          <div style="font-weight:700;margin-bottom:4px">âš ï¸ Email Rate Limit Exceeded</div>
+          <div style="font-weight:700;margin-bottom:4px">⚠️ Email Rate Limit Exceeded</div>
           <div style="margin-bottom:8px;line-height:1.45">
             Supabase email rate limit reached. Please wait a few minutes before trying again.
           </div>
           <button type="button" class="btn btn-secondary btn-sm" onclick="handleGuestSignIn()" style="width:100%">
-            âš¡ Continue as Guest (Instant Cloud Backup)
+            ⚡ Continue as Guest (Instant Cloud Backup)
           </button>
         `;
         errDiv.style.display = 'block';
@@ -3533,7 +3583,7 @@ async function handleSignIn(e) {
       }
     } else if (data && data.user) {
       closeOv(null, 'cloudOv');
-      toast(`ðŸ‘‹ Welcome back, ${email.split('@')[0]}!`);
+      toast(`👋 Welcome back, ${email.split('@')[0]}!`);
     }
   } catch (err) {
     errDiv.className = 'cloud-alert cloud-alert-error';
@@ -3578,7 +3628,7 @@ async function handleSignUp(e) {
   }
 
   btn.disabled = true;
-  btn.textContent = 'Creating accountâ€¦';
+  btn.textContent = 'Creating account…';
 
   try {
     const { data, error } = await sbClient.auth.signUp({ email, password });
@@ -3588,16 +3638,16 @@ async function handleSignUp(e) {
         errDiv.className = 'cloud-alert cloud-alert-error';
         errDiv.innerHTML = `
           <div style="font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
-            <span>âš ï¸</span> Email Rate Limit Exceeded
+            <span>⚠️</span> Email Rate Limit Exceeded
           </div>
           <div style="margin-bottom:8px;line-height:1.45">
             Supabase has reached its hourly email delivery limit for confirmation emails.
           </div>
           <div style="background:rgba(0,0,0,0.2);padding:8px 10px;border-radius:6px;margin-bottom:8px;font-size:0.73rem;line-height:1.4">
-            ðŸ’¡ <strong>No waiting required!</strong> You can back up and sync your study data right now using 1-click Instant Guest Backup.
+            💡 <strong>No waiting required!</strong> You can back up and sync your study data right now using 1-click Instant Guest Backup.
           </div>
           <button type="button" class="btn btn-secondary btn-sm" onclick="handleGuestSignIn()" style="width:100%">
-            âš¡ Continue as Guest (Instant Cloud Backup)
+            ⚡ Continue as Guest (Instant Cloud Backup)
           </button>
         `;
         errDiv.style.display = 'block';
@@ -3609,22 +3659,22 @@ async function handleSignUp(e) {
     } else if (data) {
       if (data.session) {
         closeOv(null, 'cloudOv');
-        toast('ðŸŽ‰ Account created! Syncing local data to cloudâ€¦');
+        toast('🎉 Account created! Syncing local data to cloud…');
       } else {
         errDiv.className = 'cloud-alert cloud-alert-success';
         errDiv.innerHTML = `
           <div style="font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
-            <span>âœ‰ï¸</span> Confirmation Email Sent!
+            <span>✉️</span> Confirmation Email Sent!
           </div>
           <div style="line-height:1.45;margin-bottom:8px">
             We sent a verification link to <strong>${esc(email)}</strong>. Please verify your email, then click Sign In.
           </div>
           <div style="display:flex;gap:6px;flex-wrap:wrap">
             <button type="button" class="btn btn-secondary btn-sm" id="btnResendConfirm" onclick="resendConfirmationEmail('${esc(email)}')">
-              âœ‰ï¸ Resend Email
+              ✉️ Resend Email
             </button>
             <button type="button" class="btn btn-outline btn-sm" onclick="handleGuestSignIn()">
-              âš¡ Or Continue as Guest
+              ⚡ Or Continue as Guest
             </button>
           </div>
           <div id="resendStatusMsg" style="display:none;font-size:0.75rem;margin-top:4px"></div>
@@ -3645,7 +3695,7 @@ async function handleSignUp(e) {
 async function resendConfirmationEmail(targetEmail) {
   const email = targetEmail || (document.getElementById('authEmail') ? document.getElementById('authEmail').value : '').trim();
   if (!email) {
-    toast('âš ï¸ Please enter your email address');
+    toast('⚠️ Please enter your email address');
     return;
   }
 
@@ -3654,12 +3704,12 @@ async function resendConfirmationEmail(targetEmail) {
 
   if (btn) {
     btn.disabled = true;
-    btn.textContent = 'Sendingâ€¦';
+    btn.textContent = 'Sending…';
   }
   if (statusDiv) {
     statusDiv.style.display = 'block';
     statusDiv.style.color = 'var(--muted-foreground)';
-    statusDiv.textContent = 'Sending confirmation emailâ€¦';
+    statusDiv.textContent = 'Sending confirmation email…';
   }
 
   if (!sbClient) {
@@ -3677,29 +3727,29 @@ async function resendConfirmationEmail(targetEmail) {
       if (statusDiv) {
         statusDiv.style.color = '#fb7185';
         if (error.message.toLowerCase().includes('rate limit')) {
-          statusDiv.innerHTML = 'âš ï¸ Resend rate limit reached. Please wait a few minutes, or use <strong>Instant Guest Backup</strong> below.';
+          statusDiv.innerHTML = '⚠️ Resend rate limit reached. Please wait a few minutes, or use <strong>Instant Guest Backup</strong> below.';
         } else {
-          statusDiv.textContent = 'âš ï¸ ' + error.message;
+          statusDiv.textContent = '⚠️ ' + error.message;
         }
       }
-      toast('âš ï¸ Could not resend confirmation email');
+      toast('⚠️ Could not resend confirmation email');
     } else {
       if (statusDiv) {
         statusDiv.style.color = '#34d399';
-        statusDiv.innerHTML = 'âœ… Confirmation email resent to <strong>' + esc(email) + '</strong>! Please check your inbox and spam folder.';
+        statusDiv.innerHTML = '✅ Confirmation email resent to <strong>' + esc(email) + '</strong>! Please check your inbox and spam folder.';
       }
-      toast('âœ‰ï¸ Confirmation email resent!');
+      toast('✉️ Confirmation email resent!');
     }
   } catch (err) {
     console.error('Resend confirmation exception:', err);
     if (statusDiv) {
       statusDiv.style.color = '#fb7185';
-      statusDiv.textContent = 'âš ï¸ ' + (err.message || 'Failed to resend confirmation email.');
+      statusDiv.textContent = '⚠️ ' + (err.message || 'Failed to resend confirmation email.');
     }
   } finally {
     if (btn) {
       btn.disabled = false;
-      btn.textContent = 'âœ‰ï¸ Resend Confirmation Email';
+      btn.textContent = '✉️ Resend Confirmation Email';
     }
   }
 }
@@ -3709,13 +3759,13 @@ async function handleGuestSignIn() {
   const origText = btn ? btn.innerHTML : '';
   if (btn) {
     btn.disabled = true;
-    btn.innerHTML = '<span>â³</span> Connecting as Guestâ€¦';
+    btn.innerHTML = '<span>⏳</span> Connecting as Guest…';
   }
 
   if (!sbClient) {
     const inited = initSupabase();
     if (!inited) {
-      toast('âš ï¸ Could not connect to Supabase. Please check your internet connection.');
+      toast('⚠️ Could not connect to Supabase. Please check your internet connection.');
       if (btn) { btn.disabled = false; btn.innerHTML = origText; }
       return;
     }
@@ -3726,18 +3776,18 @@ async function handleGuestSignIn() {
     if (error) {
       console.warn('Anonymous sign-in error:', error);
       if (error.message && error.message.toLowerCase().includes('anonymous')) {
-        toast('âš ï¸ Anonymous login is disabled in this Supabase project. Please sign in with email.');
+        toast('⚠️ Anonymous login is disabled in this Supabase project. Please sign in with email.');
       } else {
-        toast('âš ï¸ Guest login: ' + error.message);
+        toast('⚠️ Guest login: ' + error.message);
       }
     } else if (data && data.user) {
       closeOv(null, 'cloudOv');
-      toast('âš¡ Connected as Guest! Backing up data to cloudâ€¦');
+      toast('⚡ Connected as Guest! Backing up data to cloud…');
       await onUserAuthenticated(data.user, true);
     }
   } catch (err) {
     console.error('handleGuestSignIn catch:', err);
-    toast('âš ï¸ Guest sign-in error: ' + (err.message || 'Unknown error'));
+    toast('⚠️ Guest sign-in error: ' + (err.message || 'Unknown error'));
   } finally {
     if (btn) {
       btn.disabled = false;
@@ -3755,7 +3805,7 @@ async function handleSignOut() {
   }
   currentUser = null;
   updateCloudStatusUI('logged_out');
-  toast('ðŸšª Signed out of Supabase');
+  toast('🚪 Signed out of Supabase');
 }
 
 function triggerCloudSync() {
@@ -3769,7 +3819,7 @@ function triggerCloudSync() {
 
 async function syncToCloud(silent = false) {
   if (!sbClient || !currentUser) {
-    if (!silent) toast('âš ï¸ Please sign in to sync with cloud');
+    if (!silent) toast('⚠️ Please sign in to sync with cloud');
     return;
   }
 
@@ -3808,20 +3858,20 @@ async function syncToCloud(silent = false) {
       console.error('Supabase sync error:', error);
       updateCloudStatusUI('error');
       if (error.message && error.message.includes('user_data')) {
-        if (!silent) toast('âš ï¸ Table user_data not found in Supabase! Run SQL in Setup tab.');
+        if (!silent) toast('⚠️ Table user_data not found in Supabase! Run SQL in Setup tab.');
       } else {
-        if (!silent) toast('âš ï¸ Cloud sync failed: ' + error.message);
+        if (!silent) toast('⚠️ Cloud sync failed: ' + error.message);
       }
     } else {
       lastSyncedAt = now;
       localStorage.setItem('sb_last_synced', lastSyncedAt);
       updateCloudStatusUI('logged_in');
-      if (!silent) toast('â˜ï¸ Synced to Supabase!');
+      if (!silent) toast('☁️ Synced to Supabase!');
     }
   } catch (err) {
     console.error('Sync failed:', err);
     updateCloudStatusUI('error');
-    if (!silent) toast('âš ï¸ Sync error: ' + (err.message || 'Unknown'));
+    if (!silent) toast('⚠️ Sync error: ' + (err.message || 'Unknown'));
   } finally {
     setCloudSyncing(false);
   }
@@ -3842,9 +3892,9 @@ async function pullDataFromCloud(isManual = false) {
       console.error('Error fetching cloud data:', error);
       if (isManual) {
         if (error.message && error.message.includes('user_data')) {
-          toast('âš ï¸ Table user_data not found. Run SQL in Setup tab.');
+          toast('⚠️ Table user_data not found. Run SQL in Setup tab.');
         } else {
-          toast('âš ï¸ Failed to load cloud data: ' + error.message);
+          toast('⚠️ Failed to load cloud data: ' + error.message);
         }
       }
       return;
@@ -3855,11 +3905,11 @@ async function pullDataFromCloud(isManual = false) {
       lastSyncedAt = data.updated_at || new Date().toISOString();
       localStorage.setItem('sb_last_synced', lastSyncedAt);
       updateCloudStatusUI('logged_in');
-      if (isManual) toast('â˜ï¸ Data restored from Supabase!');
+      if (isManual) toast('☁️ Data restored from Supabase!');
     } else {
       // First time on cloud: seed cloud with local data
       await syncToCloud(true);
-      if (isManual) toast('â˜ï¸ First cloud backup initialized!');
+      if (isManual) toast('☁️ First cloud backup initialized!');
     }
   } catch (err) {
     console.error('Pull cloud data failed:', err);
@@ -3920,7 +3970,7 @@ function mergeCloudData(cloud) {
       }
     });
     localStorage.setItem('hourlyLog', JSON.stringify(S.hourlyLog));
-  // Merge run entries and run log
+  }
   if (cloud.runEntries && Array.isArray(cloud.runEntries)) {
     const localIds = new Set(S.runEntries.map(e => e.id));
     cloud.runEntries.forEach(e => { if(!localIds.has(e.id)) S.runEntries.push(e); });
@@ -3942,7 +3992,6 @@ function mergeCloudData(cloud) {
       else cloud.hourlyRunLog[d].forEach((v,i)=>{ S.hourlyRunLog[d][i]=Math.max(S.hourlyRunLog[d][i]||0,v||0); });
     });
     localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
-  }
   }
 
   // Mock Tests: merge by ID
@@ -3972,14 +4021,14 @@ function manualSyncNow() {
   const btn = document.getElementById('btnSyncNow');
   if (btn) {
     btn.disabled = true;
-    btn.textContent = 'ðŸ”„ Syncingâ€¦';
+    btn.textContent = '🔄 Syncing…';
   }
   syncToCloud(false).catch(err => {
     console.error('manualSyncNow error:', err);
   }).finally(() => {
     if (btn) {
       btn.disabled = false;
-      btn.textContent = 'ðŸ”„ Sync Now to Cloud';
+      btn.textContent = '🔄 Sync Now to Cloud';
     }
   });
 }
