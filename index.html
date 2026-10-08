@@ -592,6 +592,11 @@ body {
 .run-kpi-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; margin-bottom: 12px; }
 .run-kpi-box { background: var(--muted); border-radius: 8px; padding: 10px 12px; }
 .run-kpi-val { font-size: 1.25rem; font-weight: 800; color: #f97316; letter-spacing: -0.02em; }
+.run-highlights-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+.run-hl-box { background: var(--muted); border-radius: 8px; padding: 8px 10px; border: 1px solid var(--border); }
+.run-hl-label { font-size: 0.65rem; color: var(--muted-foreground); font-weight: 600; text-transform: uppercase; }
+.run-hl-val { font-size: 1.05rem; font-weight: 800; color: #f97316; margin-top: 2px; }
+.pace-pill { display: inline-flex; align-items: center; gap: 3px; font-size: 0.68rem; font-weight: 700; color: #f97316; background: rgba(249,115,22,0.12); border: 1px solid rgba(249,115,22,0.25); border-radius: 99px; padding: 2px 7px; white-space: nowrap; }
 .run-kpi-lbl { font-size: 0.68rem; color: var(--muted-foreground); margin-top: 2px; }
 .run-bar-chart { display: flex; align-items: flex-end; gap: 5px; height: 70px; padding-top: 4px; }
 .run-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 3px; flex: 1; }
@@ -1119,44 +1124,38 @@ body {
   <div class="card" id="runStatsCard" style="margin-bottom:0">
     <div class="stats-header" style="margin-bottom:10px">
       <div>
-        <div class="run-stats-title">🏃 Running &amp; Workout</div>
-        <div class="auto-credit-hint" style="font-size:0.68rem;color:#f97316">⚡ Auto-credits on task completion</div>
+        <div class="run-stats-title">🏃 Running Tracker</div>
+        <div class="auto-credit-hint" style="font-size:0.68rem;color:#f97316">⚡ Distance, Pace &amp; Time</div>
       </div>
       <div style="display:flex;gap:6px;align-items:center">
         <div class="tabs-list" style="padding:2px">
           <button class="tabs-trigger" onclick="setRunView('week',this)" style="font-size:0.68rem;padding:2px 7px">Week</button>
           <button class="tabs-trigger active" onclick="setRunView('month',this)" style="font-size:0.68rem;padding:2px 7px">Month</button>
         </div>
-        <button class="btn btn-outline btn-sm" onclick="openRunModal()" style="font-size:0.72rem;padding:3px 8px;white-space:nowrap">+ Log</button>
+        <button class="btn btn-outline btn-sm" onclick="openRunModal()" style="font-size:0.72rem;padding:3px 8px;white-space:nowrap">+ Log Run</button>
       </div>
     </div>
 
-    <!-- KPIs -->
+    <!-- KPIs: Distance, Avg Pace, Time, Runs -->
     <div class="run-kpi-grid" id="runKpiGrid"></div>
 
     <!-- Distance Bar Chart -->
     <div style="margin-bottom:12px">
-      <div class="chart-title" id="runBarTitle" style="font-size:0.75rem;margin-bottom:6px">Distance this week (km)</div>
+      <div class="chart-title" id="runBarTitle" style="font-size:0.75rem;margin-bottom:6px">Distance this month (km)</div>
       <div class="run-bar-chart" id="runBarChart"></div>
     </div>
 
-    <!-- Activity Breakdown -->
-    <div style="margin-bottom:12px">
-      <div class="chart-title" style="font-size:0.75rem;margin-bottom:6px">Activity Breakdown</div>
-      <div class="pie-inner" style="justify-content:flex-start;gap:10px">
-        <svg id="runPieChart" width="70" height="70" viewBox="0 0 100 100" style="flex-shrink:0"></svg>
-        <div class="pie-legend" id="runPieLegend" style="font-size:0.68rem"></div>
-      </div>
-    </div>
+    <!-- Highlights: Best Pace & Longest Run -->
+    <div class="run-highlights-grid" id="runHighlightsGrid"></div>
 
     <!-- Streak Heatmap -->
     <div style="margin-bottom:10px">
-      <div class="chart-title" style="font-size:0.75rem;margin-bottom:5px">Workout Streak (28 days)</div>
+      <div class="chart-title" style="font-size:0.75rem;margin-bottom:5px">Running Streak (28 days)</div>
       <div class="run-streak-grid" id="runSgGrid"></div>
     </div>
 
-    <!-- Recent Workouts -->
-    <div class="run-list-header">Recent Workouts</div>
+    <!-- Recent Runs -->
+    <div class="run-list-header">Recent Runs</div>
     <div id="runEntryList" style="max-height:160px;overflow-y:auto;padding-right:2px"></div>
   </div>
 
@@ -1293,15 +1292,11 @@ body {
       <div class="chip-group" id="taskTypeChips" style="margin-top:4px">
         <button type="button" class="chip-btn active" onclick="setTaskType('study',this)">📚 Study</button>
         <button type="button" class="chip-btn" onclick="setTaskType('run',this)">🏃 Running</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('walk',this)">🚶 Walk</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('gym',this)">🏋️ Gym</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('cycle',this)">🚴 Cycle</button>
-        <button type="button" class="chip-btn" onclick="setTaskType('yoga',this)">🧘 Yoga</button>
       </div>
       <input type="hidden" id="taskInputType" value="study"/>
     </div>
 
-    <!-- Subject row - shown only for study tasks -->
+    <!-- Subject row - shown for Study tasks -->
     <div id="taskSubjectRow" class="form-row">
       <div class="form-group">
         <label>Subject</label>
@@ -1311,6 +1306,29 @@ body {
       <div class="form-group">
         <label>Target Duration</label>
         <input class="form-input" id="taskInputTime" placeholder="e.g. 1h 30m or 45m" maxlength="20"/>
+      </div>
+    </div>
+
+    <!-- Running row - shown for Running tasks -->
+    <div id="taskRunRow" style="display:none">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Distance (km)</label>
+          <input type="number" step="0.1" min="0" class="form-input" id="taskInputRunDist" placeholder="e.g. 5.0" oninput="updateTaskRunPace()"/>
+        </div>
+        <div class="form-group">
+          <label>Target Duration</label>
+          <input class="form-input" id="taskInputRunTime" placeholder="e.g. 25m or 30m" oninput="updateTaskRunPace()"/>
+        </div>
+      </div>
+      <div style="margin-top:-6px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px">
+        <div class="chip-group">
+          <button type="button" class="chip-btn" onclick="setTaskRunDistChip(3)">3 km</button>
+          <button type="button" class="chip-btn" onclick="setTaskRunDistChip(5)">5 km</button>
+          <button type="button" class="chip-btn" onclick="setTaskRunDistChip(7)">7 km</button>
+          <button type="button" class="chip-btn" onclick="setTaskRunDistChip(10)">10 km</button>
+        </div>
+        <div id="taskRunPaceBadge" class="pace-pill">⚡ Pace: —</div>
       </div>
     </div>
 
@@ -1348,43 +1366,48 @@ body {
 <div class="overlay" id="runModalOv" onclick="closeOv(event,'runModalOv')">
   <div class="modal">
     <button class="mclose" onclick="closeOv(null,'runModalOv')">✕</button>
-    <div class="mtitle" id="runModalTitle">🏃 Log Workout</div>
+    <div class="mtitle" id="runModalTitle">🏃 Log Run</div>
     <input type="hidden" id="editRunId" value=""/>
 
-    <div class="form-row">
-      <div class="form-group">
-        <label>Activity Type</label>
-        <select class="form-select" id="runInputType">
-          <option value="run">🏃 Running</option>
-          <option value="walk">🚶 Walking</option>
-          <option value="cycle">🚴 Cycling</option>
-          <option value="gym">🏋️ Gym / Strength</option>
-          <option value="yoga">🧘 Yoga / Stretch</option>
-        </select>
-      </div>
-      <div class="form-group">
-        <label>Date</label>
-        <input type="date" class="form-input" id="runInputDate"/>
-      </div>
+    <div class="form-group">
+      <label>Date</label>
+      <input type="date" class="form-input" id="runInputDate"/>
     </div>
 
     <div class="form-row">
       <div class="form-group">
-        <label>Distance (km) <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
-        <input type="number" step="0.1" min="0" class="form-input" id="runInputDist" placeholder="e.g. 5.2"/>
+        <label>Distance (km)</label>
+        <input type="number" step="0.1" min="0" class="form-input" id="runInputDist" placeholder="e.g. 5.0" oninput="updateRunModalPace()"/>
+        <div class="chip-group" style="margin-top:4px">
+          <button type="button" class="chip-btn" onclick="setRunModalDistChip(3)">3k</button>
+          <button type="button" class="chip-btn" onclick="setRunModalDistChip(5)">5k</button>
+          <button type="button" class="chip-btn" onclick="setRunModalDistChip(7)">7k</button>
+          <button type="button" class="chip-btn" onclick="setRunModalDistChip(10)">10k</button>
+        </div>
       </div>
       <div class="form-group">
         <label>Duration</label>
-        <input class="form-input" id="runInputDur" placeholder="e.g. 30m or 1h"/>
+        <input class="form-input" id="runInputDur" placeholder="e.g. 25m or 1h" oninput="updateRunModalPace()"/>
+        <div class="chip-group" style="margin-top:4px">
+          <button type="button" class="chip-btn" onclick="setRunModalDurChip('20m')">20m</button>
+          <button type="button" class="chip-btn" onclick="setRunModalDurChip('25m')">25m</button>
+          <button type="button" class="chip-btn" onclick="setRunModalDurChip('30m')">30m</button>
+          <button type="button" class="chip-btn" onclick="setRunModalDurChip('45m')">45m</button>
+        </div>
       </div>
     </div>
 
-    <div class="form-group">
-      <label>Notes <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
-      <input class="form-input" id="runInputNotes" placeholder="e.g. Morning jog, intervals" maxlength="80"/>
+    <div style="background:var(--muted);border:1px solid var(--border);border-radius:6px;padding:8px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center">
+      <span style="font-size:0.75rem;color:var(--muted-foreground)">Calculated Pace:</span>
+      <span id="runModalPacePreview" class="pace-pill" style="font-size:0.8rem">⚡ —</span>
     </div>
 
-    <button class="btn btn-primary" onclick="saveRunEntry()" style="width:100%;margin-top:4px">Save Workout</button>
+    <div class="form-group">
+      <label>Notes / Title <span style="color:var(--muted-foreground);font-size:0.7rem">optional</span></label>
+      <input class="form-input" id="runInputNotes" placeholder="e.g. Morning 5K outdoor run" maxlength="80"/>
+    </div>
+
+    <button class="btn btn-primary" onclick="saveRunEntry()" style="width:100%;margin-top:4px">Save Run</button>
   </div>
 </div>
 
@@ -2095,11 +2118,14 @@ function toggleTask(id){
   if(t.done) {
     t.creditedMins = targetMins;
     if(isRun) {
+      const kmVal = t.km || 0;
       if(!S.runLog[taskDate]) S.runLog[taskDate] = { mins: 0, km: 0 };
       S.runLog[taskDate].mins = (S.runLog[taskDate].mins || 0) + targetMins;
+      S.runLog[taskDate].km   = (S.runLog[taskDate].km   || 0) + kmVal;
+      const pace = formatPace(targetMins, kmVal);
       const autoEntry = {
-        id: Date.now(), type: t.taskType, date: taskDate,
-        mins: targetMins, km: 0, notes: t.name, fromTask: true
+        id: Date.now(), type: 'run', date: taskDate,
+        mins: targetMins, km: kmVal, pace, notes: t.name, fromTask: true
       };
       S.runEntries.push(autoEntry);
       if(!S.hourlyRunLog[taskDate]) S.hourlyRunLog[taskDate] = [0,0,0,0,0,0,0,0];
@@ -2107,7 +2133,7 @@ function toggleTask(id){
       localStorage.setItem('runLog', JSON.stringify(S.runLog));
       localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
       localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
-      toast(`🏃 Workout logged! +${fmtTime(targetMins)} added to Running Stats`);
+      toast(`🏃 Run completed! +${kmVal > 0 ? kmVal.toFixed(1)+' km, ' : ''}${fmtTime(targetMins)} (Pace: ${pace})`);
     } else {
       S.studyLog[taskDate] = (S.studyLog[taskDate] || 0) + targetMins;
       S.subjLog[subj] = (S.subjLog[subj] || 0) + targetMins;
@@ -2121,8 +2147,10 @@ function toggleTask(id){
   } else {
     const revertMins = t.creditedMins || targetMins;
     if(isRun) {
+      const kmVal = t.km || 0;
       if(S.runLog[taskDate]) {
         S.runLog[taskDate].mins = Math.max(0, (S.runLog[taskDate].mins || 0) - revertMins);
+        S.runLog[taskDate].km   = Math.max(0, (S.runLog[taskDate].km   || 0) - kmVal);
       }
       S.runEntries = S.runEntries.filter(e => !(e.fromTask && e.date === taskDate && e.notes === t.name));
       if(S.hourlyRunLog[taskDate]) {
@@ -2131,7 +2159,7 @@ function toggleTask(id){
       localStorage.setItem('runLog', JSON.stringify(S.runLog));
       localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
       localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
-      toast('↩️ Workout unmarked. Running Stats adjusted.');
+      toast('↩️ Run unmarked. Running Tracker adjusted.');
     } else {
       if(S.studyLog[taskDate]) {
         S.studyLog[taskDate] = Math.max(0, S.studyLog[taskDate] - revertMins);
@@ -2312,23 +2340,24 @@ function renderTasks(){
     const color = t.color || PALETTE[Math.abs(hashString(t.subject||'')) % PALETTE.length];
     const duration = t.time || `${parseDurationMins(t.time)}m`;
     
-    const isRun = t.taskType && t.taskType !== 'study';
-    const runColor = isRun ? '#f97316' : null;
-    const finalColor = runColor || color;
-    const runTypeIcons = { run:'🏃', walk:'🚶', gym:'🏋️', cycle:'🚴', yoga:'🧘' };
-    const runBadge = isRun ? `<span class="task-type-run">${runTypeIcons[t.taskType] || '🏃'} ${t.taskType}</span>` : '';
+    const isRun = t.taskType === 'run';
+    const finalColor = isRun ? '#f97316' : color;
+    const kmVal = t.km || 0;
+    const paceStr = isRun && kmVal > 0 ? formatPace(parseDurationMins(t.time), kmVal) : null;
     
     d.innerHTML = `
       <div class="tchk" onclick="toggleTask(${t.id})" style="${isRun ? 'border-color:#f97316' : ''}">${t.done ? '✓' : ''}</div>
       <div class="tinfo" onclick="toggleTask(${t.id})">
-        <div class="tname">${esc(t.name)}${runBadge}</div>
+        <div class="tname">${isRun ? '🏃 ' : ''}${esc(t.name)}</div>
         <div class="tsubj-row">
           <span style="display:flex;align-items:center;gap:4px">
-            <span class="sdot-subj" style="background:${finalColor}"></span><strong>${isRun ? (runTypeIcons[t.taskType]||'🏃') + ' ' + t.taskType : esc(t.subject || 'General')}</strong>
+            <span class="sdot-subj" style="background:${finalColor}"></span><strong>${isRun ? 'Running' : esc(t.subject || 'General')}</strong>
           </span>
+          ${isRun && kmVal > 0 ? `<span class="badge badge-secondary">📍 ${kmVal.toFixed(1)} km</span>` : ''}
           <span class="badge ${t.done ? 'badge-success' : 'badge-secondary'}">
             ${t.done ? (isRun ? '🏃 Logged' : '✓ Auto-credited') : '⏱ ' + esc(duration)}
           </span>
+          ${paceStr ? `<span class="pace-pill">⚡ ${paceStr}</span>` : ''}
           <span class="badge badge-secondary">📅 ${formatShortDate(t.date || fmt(new Date()))}</span>
         </div>
       </div>
@@ -2361,11 +2390,15 @@ function openTaskModal(taskId, dayOffset) {
       document.getElementById('taskInputTime').value = t.time || '';
       document.getElementById('taskInputDate').value = t.date || S.selectedDate;
       taskType = t.taskType || 'study';
+      if(document.getElementById('taskInputRunDist')) document.getElementById('taskInputRunDist').value = t.km || '5.0';
+      if(document.getElementById('taskInputRunTime')) document.getElementById('taskInputRunTime').value = t.time || '25m';
     }
   } else {
     document.getElementById('taskInputName').value = '';
     document.getElementById('taskInputSubject').value = S.activeSubject || '';
     document.getElementById('taskInputTime').value = '1h';
+    if(document.getElementById('taskInputRunDist')) document.getElementById('taskInputRunDist').value = '5.0';
+    if(document.getElementById('taskInputRunTime')) document.getElementById('taskInputRunTime').value = '25m';
     if(typeof dayOffset === 'number') {
       const d = new Date(); d.setDate(d.getDate() + dayOffset);
       document.getElementById('taskInputDate').value = fmt(d);
@@ -2394,16 +2427,28 @@ function setTaskType(type, btn) {
 function updateTaskTypeUI(type) {
   const isStudy = type === 'study';
   const subjectRow = document.getElementById('taskSubjectRow');
+  const runRow = document.getElementById('taskRunRow');
   const hint = document.getElementById('taskAutoHint');
+  const nameInput = document.getElementById('taskInputName');
+
   if(subjectRow) subjectRow.style.display = isStudy ? '' : 'none';
+  if(runRow) runRow.style.display = isStudy ? 'none' : 'block';
+
+  if(nameInput) {
+    nameInput.placeholder = isStudy
+      ? 'e.g. Chapter 4: Practice Problems'
+      : 'e.g. Morning 5K Run / Easy Jog';
+  }
+
   if(hint) {
     hint.innerHTML = isStudy
       ? '✓ When marked complete, duration is auto-credited to your <strong>Study Stats</strong>.'
-      : '🏃 When marked complete, duration is auto-credited to your <strong>Running &amp; Workout Stats</strong>.';
+      : '🏃 When marked complete, distance &amp; time will auto-credit to your <strong>Running Tracker</strong> with calculated pace!';
     hint.style.color = isStudy ? 'var(--accent4)' : '#f97316';
     hint.style.borderColor = isStudy ? 'rgba(16,185,129,0.2)' : 'rgba(249,115,22,0.25)';
     hint.style.background = isStudy ? 'rgba(16,185,129,0.08)' : 'rgba(249,115,22,0.08)';
   }
+  updateTaskRunPace();
 }
 
 function setTaskTimeChip(val) {
@@ -2421,23 +2466,26 @@ function saveTaskFromModal() {
 
   const taskType = document.getElementById('taskInputType').value || 'study';
   const isStudy = taskType === 'study';
-  const subject = isStudy ? (document.getElementById('taskInputSubject').value.trim() || 'General') : taskType;
-  const time = document.getElementById('taskInputTime').value.trim() || '45m';
+  const subject = isStudy ? (document.getElementById('taskInputSubject').value.trim() || 'General') : 'Running';
+  const time = isStudy
+    ? (document.getElementById('taskInputTime').value.trim() || '45m')
+    : (document.getElementById('taskInputRunTime').value.trim() || '25m');
+  const km = isStudy ? 0 : (parseFloat(document.getElementById('taskInputRunDist').value) || 0);
   const date = document.getElementById('taskInputDate').value || S.selectedDate;
   const editId = document.getElementById('editTaskId').value;
 
   if(editId) {
     const t = S.tasks.find(x => x.id === +editId);
     if(t) {
-      t.name = name; t.subject = subject; t.time = time; t.date = date; t.taskType = taskType;
+      t.name = name; t.subject = subject; t.time = time; t.date = date; t.taskType = taskType; t.km = km;
       toast('✏️ Task updated!');
     }
   } else {
     const color = isStudy
       ? PALETTE[Math.abs(hashString(subject)) % PALETTE.length]
       : '#f97316';
-    S.tasks.push({ id: Date.now(), name, subject, time, date, color, done: false, creditedMins: 0, taskType });
-    toast(isStudy ? '📝 Task scheduled!' : '🏃 Workout scheduled!');
+    S.tasks.push({ id: Date.now(), name, subject, time, date, color, done: false, creditedMins: 0, taskType, km });
+    toast(isStudy ? '📝 Study task scheduled!' : `🏃 Run scheduled! ${km > 0 ? km.toFixed(1)+' km' : ''}`);
   }
 
   saveTasks();
@@ -4042,4 +4090,267 @@ function restoreFromCloud() {
 }
 </script>
 </body>
-</html>
+</html>function renderActivity(){
+  // Replaced by Running Tracker
+}
+
+/* ================================================================
+   RUNNING TRACKER (KM, PACE & TIME)
+================================================================ */
+function formatPace(mins, km) {
+  if (!km || km <= 0 || !mins || mins <= 0) return '—';
+  const paceDec = mins / km;
+  if (!isFinite(paceDec) || paceDec > 60 || paceDec < 1) return '—';
+  const pMins = Math.floor(paceDec);
+  const pSecs = Math.round((paceDec - pMins) * 60);
+  if (pSecs === 60) return `${pMins + 1}'00" /km`;
+  return `${pMins}'${pSecs < 10 ? '0' : ''}${pSecs}" /km`;
+}
+
+function updateRunModalPace() {
+  const km = parseFloat(document.getElementById('runInputDist').value) || 0;
+  const durStr = document.getElementById('runInputDur').value.trim();
+  const mins = parseDurationMins(durStr);
+  const pace = formatPace(mins, km);
+  const badge = document.getElementById('runModalPacePreview');
+  if (badge) badge.textContent = pace !== '—' ? `⚡ ${pace}` : '⚡ —';
+}
+
+function setRunModalDistChip(km) {
+  document.getElementById('runInputDist').value = km;
+  updateRunModalPace();
+}
+
+function setRunModalDurChip(dur) {
+  document.getElementById('runInputDur').value = dur;
+  updateRunModalPace();
+}
+
+function updateTaskRunPace() {
+  const km = parseFloat(document.getElementById('taskInputRunDist').value) || 0;
+  const durStr = document.getElementById('taskInputRunTime').value.trim();
+  const mins = parseDurationMins(durStr);
+  const pace = formatPace(mins, km);
+  const badge = document.getElementById('taskRunPaceBadge');
+  if (badge) badge.textContent = pace !== '—' ? `⚡ Pace: ${pace}` : '⚡ Pace: —';
+}
+
+function setTaskRunDistChip(km) {
+  document.getElementById('taskInputRunDist').value = km;
+  updateTaskRunPace();
+}
+
+function setRunView(view, btn) {
+  S.runView = view;
+  document.querySelectorAll('#runStatsCard .tabs-trigger').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderRunStats();
+}
+
+function openRunModal(entryId) {
+  const isEdit = typeof entryId === 'number';
+  document.getElementById('runModalTitle').textContent = isEdit ? '✏️ Edit Run' : '🏃 Log Run';
+  document.getElementById('editRunId').value = isEdit ? entryId : '';
+  if(isEdit) {
+    const e = S.runEntries.find(x => x.id === entryId);
+    if(e) {
+      document.getElementById('runInputDate').value = e.date || fmt(new Date());
+      document.getElementById('runInputDist').value = e.km || '';
+      const m = e.mins || 0;
+      document.getElementById('runInputDur').value = m >= 60 ? Math.floor(m/60)+'h '+(m%60?m%60+'m':'') : m+'m';
+      document.getElementById('runInputNotes').value = e.notes || '';
+    }
+  } else {
+    document.getElementById('runInputDate').value = fmt(new Date());
+    document.getElementById('runInputDist').value = '5.0';
+    document.getElementById('runInputDur').value = '25m';
+    document.getElementById('runInputNotes').value = '';
+  }
+  updateRunModalPace();
+  document.getElementById('runModalOv').classList.add('open');
+}
+
+function saveRunEntry() {
+  const date = document.getElementById('runInputDate').value || fmt(new Date());
+  const km = parseFloat(document.getElementById('runInputDist').value) || 0;
+  const durStr = document.getElementById('runInputDur').value.trim();
+  const mins = parseDurationMins(durStr || '25m');
+  const notes = document.getElementById('runInputNotes').value.trim() || 'Run';
+  const editId = document.getElementById('editRunId').value;
+
+  if(!durStr && km === 0) { toast('⚠️ Please enter distance and time'); return; }
+
+  if(editId) {
+    const e = S.runEntries.find(x => x.id === +editId);
+    if(e) {
+      if(S.runLog[e.date]) {
+        S.runLog[e.date].mins = Math.max(0, (S.runLog[e.date].mins||0) - e.mins);
+        S.runLog[e.date].km  = Math.max(0, (S.runLog[e.date].km||0) - (e.km||0));
+      }
+      e.date = date; e.km = km; e.mins = mins; e.notes = notes; e.pace = formatPace(mins, km);
+      toast('✏️ Run updated!');
+    }
+  } else {
+    S.runEntries.push({ id: Date.now(), type: 'run', date, km, mins, notes, pace: formatPace(mins, km), fromTask: false });
+    toast(`🏃 Run logged! ${km.toFixed(1)} km at ${formatPace(mins, km)}`);
+  }
+
+  if(!S.runLog[date]) S.runLog[date] = { mins: 0, km: 0 };
+  S.runLog[date].mins = (S.runLog[date].mins || 0) + mins;
+  S.runLog[date].km   = (S.runLog[date].km   || 0) + km;
+
+  const block = Math.floor(new Date().getHours() / 3);
+  if(!S.hourlyRunLog[date]) S.hourlyRunLog[date] = [0,0,0,0,0,0,0,0];
+  S.hourlyRunLog[date][block] = (S.hourlyRunLog[date][block] || 0) + mins;
+
+  localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
+  localStorage.setItem('runLog', JSON.stringify(S.runLog));
+  localStorage.setItem('hourlyRunLog', JSON.stringify(S.hourlyRunLog));
+  triggerCloudSync();
+  closeOv(null, 'runModalOv');
+  renderRunStats();
+}
+
+function deleteRunEntry(id) {
+  const idx = S.runEntries.findIndex(x => x.id === id);
+  if(idx > -1) {
+    const e = S.runEntries[idx];
+    if(S.runLog[e.date]) {
+      S.runLog[e.date].mins = Math.max(0, (S.runLog[e.date].mins||0) - e.mins);
+      S.runLog[e.date].km   = Math.max(0, (S.runLog[e.date].km||0) - (e.km||0));
+    }
+    S.runEntries.splice(idx, 1);
+    localStorage.setItem('runEntries', JSON.stringify(S.runEntries));
+    localStorage.setItem('runLog', JSON.stringify(S.runLog));
+    triggerCloudSync();
+    renderRunStats();
+    toast('🗑️ Run removed');
+  }
+}
+
+function renderRunStats() {
+  const now = new Date();
+  const days = S.runView === 'week' ? 7 : 30;
+  const dates = [];
+  for(let i = days - 1; i >= 0; i--) {
+    const d = new Date(now); d.setDate(d.getDate() - i);
+    dates.push(fmt(d));
+  }
+
+  let totalMins = 0, totalKm = 0, totalSessions = 0;
+  let maxKmSingle = 0, bestPaceDecimal = Infinity, bestPaceStr = '—';
+
+  dates.forEach(d => {
+    const rl = S.runLog[d];
+    if(rl && (rl.mins > 0 || rl.km > 0)) {
+      totalMins += (rl.mins || 0);
+      totalKm   += (rl.km || 0);
+      totalSessions++;
+    }
+  });
+
+  // Check all run entries for best pace & longest run
+  S.runEntries.forEach(e => {
+    if ((e.km || 0) > maxKmSingle) maxKmSingle = e.km;
+    if ((e.km || 0) >= 0.5 && (e.mins || 0) > 0) {
+      const p = e.mins / e.km;
+      if (p < bestPaceDecimal && p >= 2.5) {
+        bestPaceDecimal = p;
+        bestPaceStr = formatPace(e.mins, e.km);
+      }
+    }
+  });
+
+  const avgPace = formatPace(totalMins, totalKm);
+
+  // 4 KPIs: Distance, Avg Pace, Time, Runs
+  const kpiGrid = document.getElementById('runKpiGrid');
+  if(kpiGrid) {
+    kpiGrid.innerHTML = '';
+    [
+      { v: totalKm.toFixed(1) + ' km', l: 'Distance' },
+      { v: avgPace, l: 'Avg Pace' },
+      { v: fmtTime(totalMins), l: 'Total Time' },
+      { v: totalSessions, l: 'Runs' }
+    ].forEach(k => {
+      const box = document.createElement('div'); box.className = 'run-kpi-box';
+      box.innerHTML = `<div class="run-kpi-val">${k.v}</div><div class="run-kpi-lbl">${k.l}</div>`;
+      kpiGrid.appendChild(box);
+    });
+  }
+
+  // Distance Bar Chart
+  const barChart = document.getElementById('runBarChart');
+  const barTitle = document.getElementById('runBarTitle');
+  if(barChart) {
+    barChart.innerHTML = '';
+    const barVals = dates.map(d => (S.runLog[d] && S.runLog[d].km) || 0);
+    const maxBar = Math.max(...barVals, 0.1);
+    if(barTitle) barTitle.textContent = days === 7 ? 'Distance this week (km)' : 'Distance this month (km)';
+    dates.forEach((d, i) => {
+      const v = barVals[i];
+      const h = Math.round((v / maxBar) * 65);
+      const lbl = days === 7 ? ['M','T','W','T','F','S','S'][i] : (i % 5 === 0 ? d.slice(5) : '');
+      const w = document.createElement('div'); w.className = 'run-bar-wrap';
+      w.innerHTML = `<div class="run-bar${v > 0 ? ' on' : ''}" style="height:${Math.max(v > 0 ? h : 3, 3)}px" title="${v.toFixed(1)} km"></div><div class="run-bar-lbl">${lbl}</div>`;
+      barChart.appendChild(w);
+    });
+  }
+
+  // Performance Highlights: Best Pace & Longest Run
+  const hlGrid = document.getElementById('runHighlightsGrid');
+  if(hlGrid) {
+    hlGrid.innerHTML = `
+      <div class="run-hl-box">
+        <div class="run-hl-label">⚡ Best Pace</div>
+        <div class="run-hl-val">${bestPaceStr}</div>
+      </div>
+      <div class="run-hl-box">
+        <div class="run-hl-label">🏆 Longest Run</div>
+        <div class="run-hl-val">${maxKmSingle > 0 ? maxKmSingle.toFixed(1) + ' km' : '—'}</div>
+      </div>
+    `;
+  }
+
+  // Streak heatmap
+  const sgGrid = document.getElementById('runSgGrid');
+  if(sgGrid) {
+    sgGrid.innerHTML = '';
+    for(let i = 27; i >= 0; i--) {
+      const d2 = new Date(now); d2.setDate(d2.getDate() - i);
+      const ds = fmt(d2);
+      const active = S.runLog[ds] && (S.runLog[ds].mins > 0 || S.runLog[ds].km > 0);
+      const cell = document.createElement('div');
+      cell.className = 'run-sg-cell' + (active ? ' lit' : '');
+      cell.title = ds + (active ? ` — ${(S.runLog[ds].km||0).toFixed(1)} km` : '');
+      sgGrid.appendChild(cell);
+    }
+  }
+
+  // Recent runs list
+  const listEl = document.getElementById('runEntryList');
+  if(listEl) {
+    listEl.innerHTML = '';
+    const recent = [...S.runEntries].sort((a, b) => b.date.localeCompare(a.date)).slice(0, 15);
+    if(!recent.length) {
+      listEl.innerHTML = `<div class="empty-box" style="padding:14px 10px"><p style="font-size:0.75rem">No runs recorded yet. Schedule a run or tap "+ Log Run".</p></div>`;
+      return;
+    }
+    recent.forEach(e => {
+      const row = document.createElement('div'); row.className = 'run-entry';
+      const distStr = e.km > 0 ? `${e.km.toFixed(1)} km` : '';
+      const timeStr = fmtTime(e.mins || 0);
+      const pace = e.pace || formatPace(e.mins, e.km);
+      row.innerHTML = `
+        <div class="run-entry-icon">🏃</div>
+        <div class="run-entry-info">
+          <div class="run-entry-title">${esc(e.notes || 'Run')}</div>
+          <div class="run-entry-meta">${distStr ? distStr + ' · ' : ''}${timeStr} · ${e.date}</div>
+        </div>
+        <div class="pace-pill">⚡ ${pace}</div>
+        ${!e.fromTask ? `<button class="btn-icon del" onclick="deleteRunEntry(${e.id})" title="Delete" style="font-size:0.7rem">🗑️</button>` : ''}
+      `;
+      listEl.appendChild(row);
+    });
+  }
+}
