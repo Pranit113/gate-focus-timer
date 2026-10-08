@@ -19,8 +19,10 @@ A sleek, responsive dark/light study focus timer and preparation tracker designe
 - **🎵 Ambient Study Sounds**: Built-in Lo-Fi beats, Rain 🌧, Café ☕, White Noise 🌊, and Fireplace 🔥 ambience.
 - **🎧 Apple Music Integration**: Embed curated study playlists or paste your own custom Apple Music links.
 - **🌌 Dynamic Aurora Background**: Reactive particle & aurora animation that intensifies during focus mode.
+- **☁️ Supabase Cloud Sync & Authentication**: Sign Up and Log In with Supabase to automatically back up and sync your tasks, study logs, streak, mock tests, and settings across all your devices.
+- **💾 Local-First & Offline Ready**: Works seamlessly offline without an account, saving to localStorage, and syncs automatically when logged in.
 - **🌗 Dark / Light Theme Toggle**: Seamless transition with local persistence.
-- **💾 100% Local Storage & Clean Reset**: All data stays private in your browser with an option to reset to zero anytime.
+- **🔄 Clean Reset**: Option to reset all data to zero anytime.
 
 ## 🚀 Getting Started
 
@@ -46,3 +48,27 @@ Click the **⚙️ Gear Icon** on the timer to configure:
 - Short & long break intervals
 - Sessions before long break
 - Target exam date
+
+## ☁️ Cloud Sync (Supabase Setup)
+
+To access your study logs and tasks across any device:
+1. Create a free account and project at [Supabase](https://supabase.com).
+2. In your Supabase project dashboard, navigate to **SQL Editor** and run:
+   ```sql
+   CREATE TABLE IF NOT EXISTS public.user_data (
+     id uuid references auth.users on delete cascade primary key,
+     data jsonb not null default '{}'::jsonb,
+     updated_at timestamp with time zone default timezone('utc'::text, now()) not null
+   );
+
+   ALTER TABLE public.user_data ENABLE ROW LEVEL SECURITY;
+
+   CREATE POLICY "Users access own data"
+     ON public.user_data
+     FOR ALL
+     USING (auth.uid() = id)
+     WITH CHECK (auth.uid() = id);
+   ```
+3. Open the app, click **☁️ Connect Cloud**, go to the **⚙️ Setup** tab, paste your **Project URL** and **Anon Key**, and click **Save**.
+4. Create an account via **Sign Up** or log in via **Sign In**. Your data will now automatically sync to the cloud!
+
