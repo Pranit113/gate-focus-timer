@@ -1513,6 +1513,7 @@ body {
   updated_at timestamp with time zone default timezone('utc'::text, now()) not null
 );
 ALTER TABLE public.user_data ENABLE ROW LEVEL SECURITY;
+DROP POLICY IF EXISTS "Users access own data" ON public.user_data;
 CREATE POLICY "Users access own data" ON public.user_data FOR ALL USING (auth.uid() = id) WITH CHECK (auth.uid() = id);</pre>
         </div>
       </div>
@@ -3444,6 +3445,8 @@ function copySetupSQL() {
 );
 
 ALTER TABLE public.user_data ENABLE ROW LEVEL SECURITY;
+
+DROP POLICY IF EXISTS "Users access own data" ON public.user_data;
 
 CREATE POLICY "Users access own data"
   ON public.user_data

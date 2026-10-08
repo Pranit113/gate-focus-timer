@@ -63,6 +63,8 @@ To access your study logs and tasks across any device:
 
    ALTER TABLE public.user_data ENABLE ROW LEVEL SECURITY;
 
+   DROP POLICY IF EXISTS "Users access own data" ON public.user_data;
+
    CREATE POLICY "Users access own data"
      ON public.user_data
      FOR ALL
