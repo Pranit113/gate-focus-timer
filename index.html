@@ -1477,6 +1477,21 @@ body {
           Already have an account? <a href="#" onclick="setCloudTab('signin');return false" style="color:var(--foreground);text-decoration:underline">Sign In</a>
         </div>
       </div>
+
+      <!-- 1-Click Guest & Instant Cloud Backup -->
+      <div style="margin-top:18px;padding-top:14px;border-top:1px solid var(--border)">
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:10px">
+          <span style="font-size:0.7rem;color:var(--muted-foreground);text-transform:uppercase;letter-spacing:0.05em;font-weight:600">
+            Or Instant Backup Without Account
+          </span>
+        </div>
+        <button type="button" class="btn btn-outline" id="btnGuestBackup" onclick="handleGuestSignIn()" style="width:100%;border-style:dashed;display:flex;align-items:center;justify-content:center;gap:8px">
+          <span>⚡</span> Continue as Guest (Instant Cloud Backup)
+        </button>
+        <div style="font-size:0.7rem;color:var(--muted-foreground);text-align:center;margin-top:6px;line-height:1.4">
+          Backs up all study tasks, timer history & mock tests to Supabase instantly. No email or password needed!
+        </div>
+      </div>
     </div>
 
     <!-- When Logged In View -->
@@ -1811,7 +1826,9 @@ function onEnd(){
     setMode('focus', null);
   }
   renderSessionDots();
-  if(Notification.permission==='granted') new Notification('Focus Timer',{body:'Session finished! Take a break.'});
+  if(typeof Notification !== 'undefined' && Notification.permission==='granted') {
+    try { new Notification('Focus Timer',{body:'Session finished! Take a break.'}); } catch(e){}
+  }
 }
 function setMode(m,btn){
   S.mode = m; clearInterval(S.iid); S.running = false;
@@ -1885,8 +1902,22 @@ function startNoise(type){
 function toggleMusic(){
   S.musicOn = !S.musicOn;
   document.getElementById('musicPlayBtn').textContent = S.musicOn?'⏸':'▶';
-  if(S.musicOn){ try{ getACtx().resume(); startNoise(S.sound); }catch(e){ toast('⚠️ Click anywhere to enable audio'); } }
-  else stopAllNoise();
+  if(S.musicOn){
+    try{
+      const ac = getACtx();
+      const p = ac.resume();
+      if(p && typeof p.then === 'function'){
+        p.then(() => startNoise(S.sound)).catch(e => {
+          console.warn('Audio resume blocked:', e);
+          toast('⚠️ Click anywhere to enable audio');
+        });
+      } else {
+        startNoise(S.sound);
+      }
+    }catch(e){ toast('⚠️ Click anywhere to enable audio'); }
+  } else {
+    stopAllNoise();
+  }
 }
 function setSound(s,btn){
   S.sound = s;
@@ -1894,7 +1925,18 @@ function setSound(s,btn){
   btn.classList.add('active');
   document.getElementById('musicName').textContent = soundDefs[s].label;
   document.getElementById('musicSub').textContent = soundDefs[s].sub;
-  if(S.musicOn){ stopAllNoise(); try{ startNoise(s); }catch(e){} }
+  if(S.musicOn){
+    stopAllNoise();
+    try{
+      const ac = getACtx();
+      const p = ac.resume();
+      if(p && typeof p.then === 'function'){
+        p.then(() => startNoise(s)).catch(() => {});
+      } else {
+        startNoise(s);
+      }
+    }catch(e){}
+  }
 }
 function setVol(v){ S.vol = parseFloat(v); if(gainNode) gainNode.gain.value = S.vol; }
 
@@ -2011,8 +2053,11 @@ function navTaskToday() {
 function openDateNavPicker() {
   const inp = document.getElementById('quickDateNavPicker');
   inp.value = S.selectedDate;
-  if (inp.showPicker) inp.showPicker();
-  else inp.click();
+  if (inp.showPicker) {
+    try { inp.showPicker(); } catch(e) { inp.click(); }
+  } else {
+    inp.click();
+  }
 }
 
 function onNavDatePicker(val) {
@@ -2901,7 +2946,7 @@ function initSupabase() {
         return;
       }
       if (data && data.session && data.session.user) {
-        onUserAuthenticated(data.session.user, false);
+        onUserAuthenticated(data.session.user, false).catch(e => console.error('Session auth error:', e));
       } else {
         updateCloudStatusUI('logged_out');
       }
@@ -2914,7 +2959,7 @@ function initSupabase() {
     sbClient.auth.onAuthStateChange((event, session) => {
       if (session && session.user) {
         if (!currentUser || currentUser.id !== session.user.id) {
-          onUserAuthenticated(session.user, event === 'SIGNED_IN');
+          onUserAuthenticated(session.user, event === 'SIGNED_IN').catch(e => console.error('Auth change error:', e));
         }
       } else {
         currentUser = null;
@@ -2931,11 +2976,15 @@ function initSupabase() {
 }
 
 async function onUserAuthenticated(user, isJustSignedIn) {
-  currentUser = user;
-  updateCloudStatusUI('logged_in');
-  
-  // Fetch cloud backup and merge
-  await pullDataFromCloud(isJustSignedIn);
+  try {
+    currentUser = user;
+    updateCloudStatusUI('logged_in');
+    
+    // Fetch cloud backup and merge
+    await pullDataFromCloud(isJustSignedIn);
+  } catch (err) {
+    console.error('onUserAuthenticated error:', err);
+  }
 }
 
 function updateCloudStatusUI(status) {
@@ -2957,8 +3006,9 @@ function updateCloudStatusUI(status) {
 
   if (currentUser && status === 'logged_in') {
     dot.classList.add('connected');
-    const emailPrefix = (currentUser.email || 'User').split('@')[0];
-    txt.textContent = '☁️ ' + emailPrefix;
+    const isAnon = currentUser.is_anonymous || !currentUser.email;
+    const emailPrefix = isAnon ? 'Guest' : (currentUser.email || 'User').split('@')[0];
+    txt.textContent = isAnon ? '☁️ Guest' : '☁️ ' + emailPrefix;
 
     if (authView && userView) {
       authView.style.display = 'none';
@@ -2967,8 +3017,12 @@ function updateCloudStatusUI(status) {
       const emailLbl = document.getElementById('userEmailLabel');
       const avatar = document.getElementById('userAvatar');
       const syncTimeLbl = document.getElementById('userSyncTime');
-      if (emailLbl) emailLbl.textContent = currentUser.email || 'User';
-      if (avatar) avatar.textContent = (currentUser.email || 'U').charAt(0).toUpperCase();
+      if (emailLbl) {
+        emailLbl.innerHTML = isAnon 
+          ? 'Guest Account <span class="badge badge-purple" style="font-size:0.65rem;vertical-align:middle;margin-left:4px">Instant Cloud Sync</span>'
+          : esc(currentUser.email);
+      }
+      if (avatar) avatar.textContent = isAnon ? '⚡' : (currentUser.email || 'U').charAt(0).toUpperCase();
       if (syncTimeLbl) {
         syncTimeLbl.textContent = lastSyncedAt 
           ? '✓ Last synced: ' + formatRelativeTime(lastSyncedAt)
@@ -3039,8 +3093,8 @@ function setCloudTab(tab) {
   // Clear messages
   const err1 = document.getElementById('authErrorMsg');
   const err2 = document.getElementById('signUpErrorMsg');
-  if (err1) { err1.style.display = 'none'; err1.textContent = ''; err1.className = 'cloud-alert cloud-alert-error'; }
-  if (err2) { err2.style.display = 'none'; err2.textContent = ''; err2.className = 'cloud-alert cloud-alert-error'; }
+  if (err1) { err1.style.display = 'none'; err1.innerHTML = ''; err1.className = 'cloud-alert cloud-alert-error'; }
+  if (err2) { err2.style.display = 'none'; err2.innerHTML = ''; err2.className = 'cloud-alert cloud-alert-error'; }
 }
 
 async function handleSignIn(e) {
@@ -3048,6 +3102,7 @@ async function handleSignIn(e) {
   const errDiv = document.getElementById('authErrorMsg');
   const btn = document.getElementById('btnSignInSubmit');
   errDiv.style.display = 'none';
+  errDiv.innerHTML = '';
 
   if (!sbClient) {
     const inited = initSupabase();
@@ -3073,17 +3128,53 @@ async function handleSignIn(e) {
   try {
     const { data, error } = await sbClient.auth.signInWithPassword({ email, password });
     if (error) {
-      if (error.message.toLowerCase().includes('email not confirmed')) {
-        errDiv.textContent = '✉️ Email not confirmed yet! Please click the verification link in your email inbox, or turn off "Confirm email" in Supabase Auth settings.';
+      const errText = (error.message || '').toLowerCase();
+      if (errText.includes('email not confirmed')) {
+        errDiv.className = 'cloud-alert cloud-alert-error';
+        errDiv.innerHTML = `
+          <div style="font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
+            <span>✉️</span> Email Not Confirmed Yet
+          </div>
+          <div style="margin-bottom:8px;line-height:1.45">
+            Your Supabase account was created, but your email address has not been confirmed yet. Please check your inbox and spam folder for the verification link.
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnResendConfirm" onclick="resendConfirmationEmail('${esc(email)}')">
+              ✉️ Resend Confirmation Email
+            </button>
+            <div id="resendStatusMsg" style="display:none;font-size:0.75rem;margin-top:2px"></div>
+          </div>
+          <div style="margin-top:10px;padding-top:8px;border-top:1px solid rgba(244,63,94,0.25);font-size:0.73rem">
+            ⚡ <strong>Don't want to wait for email confirmation?</strong><br>
+            <a href="#" onclick="handleGuestSignIn();return false" style="color:var(--foreground);text-decoration:underline;font-weight:600">
+              Continue as Guest & Instant Cloud Backup →
+            </a>
+          </div>
+        `;
+        errDiv.style.display = 'block';
+      } else if (errText.includes('rate limit')) {
+        errDiv.className = 'cloud-alert cloud-alert-error';
+        errDiv.innerHTML = `
+          <div style="font-weight:700;margin-bottom:4px">⚠️ Email Rate Limit Exceeded</div>
+          <div style="margin-bottom:8px;line-height:1.45">
+            Supabase email rate limit reached. Please wait a few minutes before trying again.
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="handleGuestSignIn()" style="width:100%">
+            ⚡ Continue as Guest (Instant Cloud Backup)
+          </button>
+        `;
+        errDiv.style.display = 'block';
       } else {
+        errDiv.className = 'cloud-alert cloud-alert-error';
         errDiv.textContent = error.message;
+        errDiv.style.display = 'block';
       }
-      errDiv.style.display = 'block';
     } else if (data && data.user) {
       closeOv(null, 'cloudOv');
       toast(`👋 Welcome back, ${email.split('@')[0]}!`);
     }
   } catch (err) {
+    errDiv.className = 'cloud-alert cloud-alert-error';
     errDiv.textContent = err.message || 'Failed to sign in';
     errDiv.style.display = 'block';
   } finally {
@@ -3097,6 +3188,7 @@ async function handleSignUp(e) {
   const errDiv = document.getElementById('signUpErrorMsg');
   const btn = document.getElementById('btnSignUpSubmit');
   errDiv.style.display = 'none';
+  errDiv.innerHTML = '';
   errDiv.className = 'cloud-alert cloud-alert-error';
 
   if (!sbClient) {
@@ -3129,23 +3221,57 @@ async function handleSignUp(e) {
   try {
     const { data, error } = await sbClient.auth.signUp({ email, password });
     if (error) {
-      if (error.message.toLowerCase().includes('rate limit')) {
-        errDiv.textContent = '⚠️ Email rate limit reached by Supabase. Turn off "Confirm email" in Supabase Auth settings for instant signups.';
+      const errText = (error.message || '').toLowerCase();
+      if (errText.includes('rate limit')) {
+        errDiv.className = 'cloud-alert cloud-alert-error';
+        errDiv.innerHTML = `
+          <div style="font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
+            <span>⚠️</span> Email Rate Limit Exceeded
+          </div>
+          <div style="margin-bottom:8px;line-height:1.45">
+            Supabase has reached its hourly email delivery limit for confirmation emails.
+          </div>
+          <div style="background:rgba(0,0,0,0.2);padding:8px 10px;border-radius:6px;margin-bottom:8px;font-size:0.73rem;line-height:1.4">
+            💡 <strong>No waiting required!</strong> You can back up and sync your study data right now using 1-click Instant Guest Backup.
+          </div>
+          <button type="button" class="btn btn-secondary btn-sm" onclick="handleGuestSignIn()" style="width:100%">
+            ⚡ Continue as Guest (Instant Cloud Backup)
+          </button>
+        `;
+        errDiv.style.display = 'block';
       } else {
+        errDiv.className = 'cloud-alert cloud-alert-error';
         errDiv.textContent = error.message;
+        errDiv.style.display = 'block';
       }
-      errDiv.style.display = 'block';
     } else if (data) {
       if (data.session) {
         closeOv(null, 'cloudOv');
         toast('🎉 Account created! Syncing local data to cloud…');
       } else {
         errDiv.className = 'cloud-alert cloud-alert-success';
-        errDiv.textContent = '✉️ Account created! Please check your email to verify your address, then sign in.';
+        errDiv.innerHTML = `
+          <div style="font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:6px">
+            <span>✉️</span> Confirmation Email Sent!
+          </div>
+          <div style="line-height:1.45;margin-bottom:8px">
+            We sent a verification link to <strong>${esc(email)}</strong>. Please verify your email, then click Sign In.
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap">
+            <button type="button" class="btn btn-secondary btn-sm" id="btnResendConfirm" onclick="resendConfirmationEmail('${esc(email)}')">
+              ✉️ Resend Email
+            </button>
+            <button type="button" class="btn btn-outline btn-sm" onclick="handleGuestSignIn()">
+              ⚡ Or Continue as Guest
+            </button>
+          </div>
+          <div id="resendStatusMsg" style="display:none;font-size:0.75rem;margin-top:4px"></div>
+        `;
         errDiv.style.display = 'block';
       }
     }
   } catch (err) {
+    errDiv.className = 'cloud-alert cloud-alert-error';
     errDiv.textContent = err.message || 'Failed to create account';
     errDiv.style.display = 'block';
   } finally {
@@ -3154,11 +3280,117 @@ async function handleSignUp(e) {
   }
 }
 
+async function resendConfirmationEmail(targetEmail) {
+  const email = targetEmail || (document.getElementById('authEmail') ? document.getElementById('authEmail').value : '').trim();
+  if (!email) {
+    toast('⚠️ Please enter your email address');
+    return;
+  }
+
+  const btn = document.getElementById('btnResendConfirm');
+  const statusDiv = document.getElementById('resendStatusMsg');
+
+  if (btn) {
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+  }
+  if (statusDiv) {
+    statusDiv.style.display = 'block';
+    statusDiv.style.color = 'var(--muted-foreground)';
+    statusDiv.textContent = 'Sending confirmation email…';
+  }
+
+  if (!sbClient) {
+    initSupabase();
+  }
+
+  try {
+    const { data, error } = await sbClient.auth.resend({
+      type: 'signup',
+      email: email
+    });
+
+    if (error) {
+      console.warn('Resend confirmation error:', error);
+      if (statusDiv) {
+        statusDiv.style.color = '#fb7185';
+        if (error.message.toLowerCase().includes('rate limit')) {
+          statusDiv.innerHTML = '⚠️ Resend rate limit reached. Please wait a few minutes, or use <strong>Instant Guest Backup</strong> below.';
+        } else {
+          statusDiv.textContent = '⚠️ ' + error.message;
+        }
+      }
+      toast('⚠️ Could not resend confirmation email');
+    } else {
+      if (statusDiv) {
+        statusDiv.style.color = '#34d399';
+        statusDiv.innerHTML = '✅ Confirmation email resent to <strong>' + esc(email) + '</strong>! Please check your inbox and spam folder.';
+      }
+      toast('✉️ Confirmation email resent!');
+    }
+  } catch (err) {
+    console.error('Resend confirmation exception:', err);
+    if (statusDiv) {
+      statusDiv.style.color = '#fb7185';
+      statusDiv.textContent = '⚠️ ' + (err.message || 'Failed to resend confirmation email.');
+    }
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.textContent = '✉️ Resend Confirmation Email';
+    }
+  }
+}
+
+async function handleGuestSignIn() {
+  const btn = document.getElementById('btnGuestBackup');
+  const origText = btn ? btn.innerHTML : '';
+  if (btn) {
+    btn.disabled = true;
+    btn.innerHTML = '<span>⏳</span> Connecting as Guest…';
+  }
+
+  if (!sbClient) {
+    const inited = initSupabase();
+    if (!inited) {
+      toast('⚠️ Could not connect to Supabase. Please check your internet connection.');
+      if (btn) { btn.disabled = false; btn.innerHTML = origText; }
+      return;
+    }
+  }
+
+  try {
+    const { data, error } = await sbClient.auth.signInAnonymously();
+    if (error) {
+      console.warn('Anonymous sign-in error:', error);
+      if (error.message && error.message.toLowerCase().includes('anonymous')) {
+        toast('⚠️ Anonymous login is disabled in this Supabase project. Please sign in with email.');
+      } else {
+        toast('⚠️ Guest login: ' + error.message);
+      }
+    } else if (data && data.user) {
+      closeOv(null, 'cloudOv');
+      toast('⚡ Connected as Guest! Backing up data to cloud…');
+      await onUserAuthenticated(data.user, true);
+    }
+  } catch (err) {
+    console.error('handleGuestSignIn catch:', err);
+    toast('⚠️ Guest sign-in error: ' + (err.message || 'Unknown error'));
+  } finally {
+    if (btn) {
+      btn.disabled = false;
+      btn.innerHTML = origText;
+    }
+  }
+}
+
 async function handleSignOut() {
   if (!sbClient) return;
   try {
     await sbClient.auth.signOut();
-  } catch(e) {}
+  } catch(e) {
+    console.error('Sign out error:', e);
+  }
   currentUser = null;
   updateCloudStatusUI('logged_out');
   toast('🚪 Signed out of Supabase');
@@ -3169,7 +3401,7 @@ function triggerCloudSync() {
   setCloudSyncing(true);
   clearTimeout(cloudSyncDebounceTimer);
   cloudSyncDebounceTimer = setTimeout(() => {
-    syncToCloud(true);
+    syncToCloud(true).catch(e => console.error('Auto cloud sync error:', e));
   }, 1000);
 }
 
@@ -3354,7 +3586,9 @@ function manualSyncNow() {
     btn.disabled = true;
     btn.textContent = '🔄 Syncing…';
   }
-  syncToCloud(false).finally(() => {
+  syncToCloud(false).catch(err => {
+    console.error('manualSyncNow error:', err);
+  }).finally(() => {
     if (btn) {
       btn.disabled = false;
       btn.textContent = '🔄 Sync Now to Cloud';
@@ -3364,7 +3598,9 @@ function manualSyncNow() {
 
 function restoreFromCloud() {
   if (confirm('Fetch latest data from Supabase cloud and merge with this device?')) {
-    pullDataFromCloud(true);
+    pullDataFromCloud(true).catch(err => {
+      console.error('restoreFromCloud error:', err);
+    });
   }
 }
 </script>
