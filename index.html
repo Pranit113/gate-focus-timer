@@ -970,6 +970,155 @@ body {
   border: 1px solid rgba(16, 185, 129, 0.3);
   color: #34d399;
 }
+
+/* ================================================================
+   MULTI-PAGE NAVIGATION & BOTTOM DOCK
+================================================================ */
+.page-view {
+  display: none;
+  animation: fadeInPage 0.2s ease;
+}
+.page-view.active {
+  display: block;
+}
+@keyframes fadeInPage {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Bottom Navigation Bar */
+.bottom-nav {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 64px;
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  z-index: 150;
+  padding: 0 10px;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 -4px 20px rgba(0,0,0,0.25);
+}
+.nav-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  background: none;
+  border: none;
+  color: var(--muted-foreground);
+  cursor: pointer;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  transition: all 0.18s ease;
+  flex: 1;
+  max-width: 90px;
+  min-width: 0;
+}
+.nav-btn .nav-icon {
+  font-size: 1.3rem;
+  line-height: 1;
+  transition: transform 0.18s ease;
+}
+.nav-btn.active {
+  color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.12);
+}
+.nav-btn.active .nav-icon {
+  transform: scale(1.12);
+}
+.nav-btn:hover:not(.active) {
+  background: var(--muted);
+  color: var(--foreground);
+}
+
+/* Profile Avatar Button in Header */
+.profile-avatar-btn {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #f43f5e);
+  color: #fff;
+  border: 2px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  margin-left: 4px;
+  flex-shrink: 0;
+}
+.profile-avatar-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(139,92,246,0.5);
+}
+.profile-avatar-btn.active {
+  border-color: #fff;
+  box-shadow: 0 0 14px var(--accent);
+}
+
+/* Profile Page Styling */
+.profile-header-card {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px;
+  margin-bottom: 18px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+}
+.profile-big-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #f43f5e);
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(139,92,246,0.4);
+  flex-shrink: 0;
+}
+.profile-info { flex: 1; min-width: 0; }
+.profile-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.profile-name {
+  font-size: 1.35rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.profile-sub {
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+}
+.profile-back-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+/* App wrapper bottom padding so nav doesn't cover content */
+.app-wrapper {
+  padding-bottom: 88px !important;
+}
+
 </style>
 </head>
 <body>
@@ -993,20 +1142,28 @@ body {
   <div class="top-right">
     <button class="cloud-status-btn" id="cloudStatusBtn" onclick="openCloudModal()" title="Supabase Cloud Account & Sync">
       <span class="cloud-dot" id="cloudDot"></span>
-      <span id="cloudBtnText">☁️ Cloud Sync</span>
+      <span id="cloudBtnText">☁️ Cloud</span>
     </button>
     <button class="theme-btn" id="themeBtn" onclick="toggleTheme()" title="Toggle theme"></button>
-    <div class="days-pill">
+    <div class="days-pill" onclick="showPage('profile')" style="cursor:pointer" title="GATE Countdown (click for profile)">
       <div class="icon">📅</div>
       <div>
         <div class="num" id="daysLeft">—</div>
-        <div class="lbl">days till GATE</div>
+        <div class="lbl">days</div>
       </div>
     </div>
+    <button class="profile-avatar-btn" id="profileAvatarBtn" onclick="showPage('profile')" title="My Profile & Settings">
+      <span id="avatarLetter">P</span>
+    </button>
   </div>
 </div>
 
-<!-- ===================== TIMER CARD ===================== -->
+
+<!-- ================================================================
+     PAGE 1: FOCUS TIMER & MUSIC
+================================================================ -->
+<div class="page-view active" id="page-timer">
+  <!-- ===================== TIMER CARD ===================== -->
 <div class="card timer-card">
   <button class="gear-btn" onclick="openSettings()" title="Settings">⚙️</button>
 
@@ -1055,9 +1212,73 @@ body {
     <button class="sound-btn" onclick="setSound('fire',this)">🔥 Fire</button>
   </div>
 </div>
+  
+  <div style="margin-top:18px">
+    <!-- ===================== APPLE MUSIC ===================== -->
+<div class="card apple-music-card">
+  <div class="am-header">
+    <div class="am-title">
+      <div class="am-logo">🎵</div>
+      <div>
+        <div class="am-title-text">Apple Music</div>
+        <div class="am-title-sub">Play study playlists directly in-app</div>
+      </div>
+    </div>
+    <div class="tabs-list">
+      <button class="tabs-trigger active" onclick="amTab('presets',this)">Presets</button>
+      <button class="tabs-trigger" onclick="amTab('custom',this)">My Link</button>
+    </div>
+  </div>
 
-<!-- ===================== SCHEDULE & TASKS ===================== -->
-<div class="bottom-grid">
+  <div id="amPresetsPanel">
+    <div class="am-presets" id="amPresets"></div>
+    <div class="am-embed-wrap" id="amEmbedWrap">
+      <iframe id="amIframe" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+        frameborder="0" height="175"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
+      </iframe>
+    </div>
+    <a class="btn btn-secondary btn-sm" id="amOpenLink" href="https://music.apple.com" target="_blank" rel="noopener" style="width:100%">
+      🎵 Open in Apple Music
+    </a>
+  </div>
+
+  <div id="amCustomPanel" style="display:none">
+    <div style="background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius)-2px);padding:14px;margin-bottom:12px">
+      <div style="font-size:0.75rem;font-weight:700;color:var(--muted-foreground);text-transform:uppercase">Paste your Apple Music link</div>
+      <div class="am-input-row">
+        <input class="am-url-input" id="amUrlInput" placeholder="https://music.apple.com/in/playlist/…" />
+        <button class="btn btn-primary btn-sm" onclick="embedCustom()">Embed ▶</button>
+      </div>
+    </div>
+    <div class="am-embed-wrap" id="amCustomEmbedWrap">
+      <iframe id="amCustomIframe" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+        frameborder="0" height="175"
+        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
+      </iframe>
+    </div>
+  </div>
+</div>
+
+</div><!-- /app-wrapper -->
+  </div>
+</div>
+
+<!-- ================================================================
+     PAGE 2: SCHEDULE & TASK PLANNER
+================================================================ -->
+<div class="page-view" id="page-schedule">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+    <div>
+      <h2 style="font-size:1.35rem;font-weight:800;letter-spacing:-0.02em">📅 Schedule &amp; Tasks</h2>
+      <p style="font-size:0.8rem;color:var(--muted-foreground)">Plan and check off study sessions and running workouts</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="openTaskModal()" style="padding:7px 16px;font-weight:600">
+      ＋ Add Task
+    </button>
+  </div>
+  <!-- ===================== SCHEDULE & TASKS ===================== -->
+
 
   <div class="card" style="margin-bottom:0">
     <div class="sched-top">
@@ -1119,7 +1340,23 @@ body {
       ＋ Add task for this day
     </button>
   </div>
+</div>
 
+<!-- ================================================================
+     PAGE 3: RUNNING TRACKER
+================================================================ -->
+<div class="page-view" id="page-running">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+    <div>
+      <h2 style="font-size:1.35rem;font-weight:800;letter-spacing:-0.02em;display:flex;align-items:center;gap:8px">
+        🏃 Running Tracker
+      </h2>
+      <p style="font-size:0.8rem;color:var(--muted-foreground)">Track distance (km), pace (min/km), and time automatically</p>
+    </div>
+    <button class="btn btn-primary btn-sm" onclick="openRunModal()" style="padding:7px 16px;font-weight:600">
+      ＋ Log Run
+    </button>
+  </div>
   <!-- Running & Workout Stats (replaces Activity by Hour) -->
   <div class="card" id="runStatsCard" style="margin-bottom:0">
     <div class="stats-header" style="margin-bottom:10px">
@@ -1158,10 +1395,25 @@ body {
     <div class="run-list-header">Recent Runs</div>
     <div id="runEntryList" style="max-height:160px;overflow-y:auto;padding-right:2px"></div>
   </div>
-
 </div>
 
-<!-- ===================== STUDY STATS (AUTOMATIC TRACKING) ===================== -->
+<!-- ================================================================
+     PAGE 4: ANALYTICS & STATS (STUDY + MOCK TESTS)
+================================================================ -->
+<div class="page-view" id="page-stats">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px">
+    <div>
+      <h2 style="font-size:1.35rem;font-weight:800;letter-spacing:-0.02em">📊 Analytics &amp; Performance</h2>
+      <p style="font-size:0.8rem;color:var(--muted-foreground)">Detailed insights into your study habits and test scores</p>
+    </div>
+    <div class="tabs-list">
+      <button class="tabs-trigger active" id="tabStatsStudy" onclick="switchStatsTab('study',this)">📈 Study Stats</button>
+      <button class="tabs-trigger" id="tabStatsMock" onclick="switchStatsTab('mock',this)">📝 Mock Tests</button>
+    </div>
+  </div>
+
+  <div id="panelStatsStudy">
+    <!-- ===================== STUDY STATS (AUTOMATIC TRACKING) ===================== -->
 <div class="card">
   <div class="stats-header">
     <div>
@@ -1198,8 +1450,10 @@ body {
     <div class="sg-grid" id="sgGrid"></div>
   </div>
 </div>
+  </div>
 
-<!-- ===================== MOCK TESTS TRACKER ===================== -->
+  <div id="panelStatsMock" style="display:none">
+    <!-- ===================== MOCK TESTS TRACKER ===================== -->
 <div class="card">
   <div class="mock-header">
     <div>
@@ -1224,54 +1478,140 @@ body {
     <div class="mock-analysis-grid" id="mockAnalysisGrid"></div>
   </div>
 </div>
+  </div>
+</div>
 
-<!-- ===================== APPLE MUSIC ===================== -->
-<div class="card apple-music-card">
-  <div class="am-header">
-    <div class="am-title">
-      <div class="am-logo">🎵</div>
+<!-- ================================================================
+     PAGE 5: PROFILE & SETTINGS (ACCESSED VIA TOP CIRCLE)
+================================================================ -->
+<div class="page-view" id="page-profile">
+  <div class="profile-back-bar">
+    <button class="btn btn-outline btn-sm" onclick="showPage('timer')" style="display:flex;align-items:center;gap:6px">
+      ← Back to App
+    </button>
+    <div class="badge badge-purple">My Account &amp; Settings</div>
+  </div>
+
+  <!-- Profile Header Card -->
+  <div class="profile-header-card">
+    <div class="profile-big-avatar" id="profileBigAvatar">P</div>
+    <div class="profile-info">
+      <div class="profile-name-row">
+        <div class="profile-name" id="profileUserName">Your Name</div>
+        <button class="btn-icon" onclick="openRename()" title="Edit Name" style="font-size:0.9rem">✏️</button>
+      </div>
+      <div class="profile-sub">Target: GATE 2026 · 120 Days – 70 Marks</div>
+      <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+        <div class="badge badge-secondary" id="profileDaysBadge">📅 Days till GATE</div>
+        <div class="badge badge-secondary" id="profileStreakBadge">🔥 Streak</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cloud Sync Status Card -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px">
       <div>
-        <div class="am-title-text">Apple Music</div>
-        <div class="am-title-sub">Play study playlists directly in-app</div>
+        <div style="font-size:1.05rem;font-weight:700;display:flex;align-items:center;gap:6px">
+          ☁️ Cloud Backup &amp; Sync
+        </div>
+        <div style="font-size:0.75rem;color:var(--muted-foreground)">Automatic multi-device synchronization via Supabase</div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="syncToCloud(false)">Sync Now 🔄</button>
+    </div>
+    
+    <div style="background:var(--muted);border:1px solid var(--border);border-radius:8px;padding:12px;margin-bottom:12px">
+      <div style="font-size:0.8rem;margin-bottom:4px;display:flex;justify-content:space-between">
+        <span style="color:var(--muted-foreground)">Account:</span>
+        <strong id="profileAccountEmail">Not signed in</strong>
+      </div>
+      <div style="font-size:0.8rem;display:flex;justify-content:space-between">
+        <span style="color:var(--muted-foreground)">Status:</span>
+        <span id="profileSyncStatusText" style="color:var(--accent4);font-weight:600">Ready</span>
       </div>
     </div>
-    <div class="tabs-list">
-      <button class="tabs-trigger active" onclick="amTab('presets',this)">Presets</button>
-      <button class="tabs-trigger" onclick="amTab('custom',this)">My Link</button>
+
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-secondary btn-sm" onclick="openCloudModal()">Manage Cloud Account / Sign In</button>
+      <button class="btn btn-outline btn-sm" id="profileSignOutBtn" onclick="cloudSignOut()" style="display:none;color:#f43f5e">Sign Out</button>
     </div>
   </div>
 
-  <div id="amPresetsPanel">
-    <div class="am-presets" id="amPresets"></div>
-    <div class="am-embed-wrap" id="amEmbedWrap">
-      <iframe id="amIframe" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-        frameborder="0" height="175"
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
-      </iframe>
-    </div>
-    <a class="btn btn-secondary btn-sm" id="amOpenLink" href="https://music.apple.com" target="_blank" rel="noopener" style="width:100%">
-      🎵 Open in Apple Music
-    </a>
-  </div>
-
-  <div id="amCustomPanel" style="display:none">
-    <div style="background:var(--muted);border:1px solid var(--border);border-radius:calc(var(--radius)-2px);padding:14px;margin-bottom:12px">
-      <div style="font-size:0.75rem;font-weight:700;color:var(--muted-foreground);text-transform:uppercase">Paste your Apple Music link</div>
-      <div class="am-input-row">
-        <input class="am-url-input" id="amUrlInput" placeholder="https://music.apple.com/in/playlist/…" />
-        <button class="btn btn-primary btn-sm" onclick="embedCustom()">Embed ▶</button>
+  <!-- Timer & Target Settings Card -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="font-size:1.05rem;font-weight:700;margin-bottom:12px">⚙️ Focus Timer Settings</div>
+    
+    <div class="form-row">
+      <div class="form-group">
+        <label>Focus Duration (min)</label>
+        <input type="number" class="form-input" id="profFocusInp" min="1" max="180" value="120" onchange="saveProfileSettings()"/>
+      </div>
+      <div class="form-group">
+        <label>Short Break (min)</label>
+        <input type="number" class="form-input" id="profShortInp" min="1" max="60" value="10" onchange="saveProfileSettings()"/>
       </div>
     </div>
-    <div class="am-embed-wrap" id="amCustomEmbedWrap">
-      <iframe id="amCustomIframe" allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
-        frameborder="0" height="175"
-        sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation">
-      </iframe>
+
+    <div class="form-row">
+      <div class="form-group">
+        <label>Long Break (min)</label>
+        <input type="number" class="form-input" id="profLongInp" min="1" max="90" value="20" onchange="saveProfileSettings()"/>
+      </div>
+      <div class="form-group">
+        <label>Target Sessions</label>
+        <input type="number" class="form-input" id="profSessInp" min="1" max="16" value="4" onchange="saveProfileSettings()"/>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>GATE Exam Date</label>
+      <input type="date" class="form-input" id="profGateInp" onchange="saveProfileSettings()"/>
+    </div>
+  </div>
+
+  <!-- Appearance & Data Management Card -->
+  <div class="card" style="margin-bottom:16px">
+    <div style="font-size:1.05rem;font-weight:700;margin-bottom:12px">🎨 Appearance &amp; Data</div>
+    
+    <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--border)">
+      <div>
+        <div style="font-weight:600;font-size:0.85rem">Color Theme</div>
+        <div style="font-size:0.72rem;color:var(--muted-foreground)">Switch between dark zinc and light clean theme</div>
+      </div>
+      <button class="btn btn-secondary btn-sm" onclick="toggleTheme()">Toggle Dark / Light</button>
+    </div>
+
+    <div style="padding-top:14px">
+      <div style="font-weight:600;font-size:0.85rem;color:#f43f5e;margin-bottom:4px">Danger Zone</div>
+      <div style="font-size:0.72rem;color:var(--muted-foreground);margin-bottom:8px">Clear local tasks, study history, and workout logs to zero</div>
+      <button class="btn btn-outline btn-sm" onclick="resetAllData()" style="color:#f43f5e;border-color:rgba(244,63,94,0.3)">
+        Reset All Data to Zero
+      </button>
     </div>
   </div>
 </div>
 
-</div><!-- /app-wrapper -->
+<!-- ================================================================
+     BOTTOM DOCKED NAVIGATION BAR (4 PAGES)
+================================================================ -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="timer" onclick="showPage('timer')" title="Focus Timer">
+    <span class="nav-icon">⏱️</span>
+    <span>Focus</span>
+  </button>
+  <button class="nav-btn" data-page="schedule" onclick="showPage('schedule')" title="Schedule & Tasks">
+    <span class="nav-icon">📅</span>
+    <span>Tasks</span>
+  </button>
+  <button class="nav-btn" data-page="running" onclick="showPage('running')" title="Running Tracker">
+    <span class="nav-icon">🏃</span>
+    <span>Running</span>
+  </button>
+  <button class="nav-btn" data-page="stats" onclick="showPage('stats')" title="Study & Mock Stats">
+    <span class="nav-icon">📊</span>
+    <span>Stats</span>
+  </button>
+</nav>
 
 <!-- ===================== TASK MODAL (ADD / EDIT / NEXT DAY) ===================== -->
 <div class="overlay" id="taskModalOv" onclick="closeOv(event,'taskModalOv')">
@@ -1805,6 +2145,8 @@ function drawRing(prog){
    INIT
 ================================================================ */
 window.addEventListener('DOMContentLoaded', ()=>{
+  updateAvatar();
+  showPage('timer');
   document.documentElement.setAttribute('data-theme', S.theme);
   applyState();
   renderDate();
@@ -2376,6 +2718,134 @@ function formatShortDate(ds) {
   return ds;
 }
 
+
+/* ================================================================
+   MULTI-PAGE NAVIGATION & PROFILE CONTROLLERS
+================================================================ */
+let activePage = 'timer';
+
+function showPage(name) {
+  activePage = name;
+
+  // Toggle page-view active class
+  document.querySelectorAll('.page-view').forEach(p => p.classList.remove('active'));
+  const target = document.getElementById('page-' + name);
+  if(target) target.classList.add('active');
+
+  // Toggle bottom nav active class
+  document.querySelectorAll('.nav-btn').forEach(b => {
+    b.classList.toggle('active', b.getAttribute('data-page') === name);
+  });
+
+  // Toggle top profile avatar button active state
+  const profBtn = document.getElementById('profileAvatarBtn');
+  if(profBtn) profBtn.classList.toggle('active', name === 'profile');
+
+  // Re-render contents for current page
+  if(name === 'schedule') {
+    renderTasks();
+  } else if(name === 'running') {
+    renderRunStats();
+  } else if(name === 'stats') {
+    renderStats();
+    renderMockTests();
+  } else if(name === 'profile') {
+    updateProfilePageUI();
+  }
+
+  // Scroll to top
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function switchStatsTab(tab, btn) {
+  const isStudy = tab === 'study';
+  document.getElementById('panelStatsStudy').style.display = isStudy ? 'block' : 'none';
+  document.getElementById('panelStatsMock').style.display = isStudy ? 'none' : 'block';
+  document.getElementById('tabStatsStudy').classList.toggle('active', isStudy);
+  document.getElementById('tabStatsMock').classList.toggle('active', !isStudy);
+  if(isStudy) renderStats();
+  else renderMockTests();
+}
+
+function updateAvatar() {
+  const name = (S.name && S.name !== 'Your Name') ? S.name : 'Focus User';
+  const letter = (name.trim()[0] || 'P').toUpperCase();
+  
+  const avTop = document.getElementById('avatarLetter');
+  if(avTop) avTop.textContent = letter;
+
+  const avBig = document.getElementById('profileBigAvatar');
+  if(avBig) avBig.textContent = letter;
+
+  const profName = document.getElementById('profileUserName');
+  if(profName) profName.textContent = S.name || 'Your Name';
+}
+
+function updateProfilePageUI() {
+  updateAvatar();
+
+  // Populate settings inputs from State S
+  if(document.getElementById('profFocusInp')) document.getElementById('profFocusInp').value = S.focusMin || 120;
+  if(document.getElementById('profShortInp')) document.getElementById('profShortInp').value = S.shortMin || 10;
+  if(document.getElementById('profLongInp'))  document.getElementById('profLongInp').value = S.longMin || 20;
+  if(document.getElementById('profSessInp'))  document.getElementById('profSessInp').value = S.sessions || 4;
+  if(document.getElementById('profGateInp'))  document.getElementById('profGateInp').value = S.gateDate || '2026-02-07';
+
+  // Badges
+  const dl = document.getElementById('daysLeft');
+  if(dl && document.getElementById('profileDaysBadge')) {
+    document.getElementById('profileDaysBadge').textContent = `📅 ${dl.textContent} days till GATE`;
+  }
+  if(document.getElementById('profileStreakBadge')) {
+    document.getElementById('profileStreakBadge').textContent = `🔥 ${S.streak || 0} day streak`;
+  }
+
+  // Cloud status
+  const emailEl = document.getElementById('profileAccountEmail');
+  const statusEl = document.getElementById('profileSyncStatusText');
+  const signoutBtn = document.getElementById('profileSignOutBtn');
+
+  if(currentUser) {
+    if(emailEl) emailEl.textContent = currentUser.email || 'Guest User (Cloud Active)';
+    if(statusEl) statusEl.textContent = 'Connected & Synced ✓';
+    if(signoutBtn) signoutBtn.style.display = 'inline-block';
+  } else {
+    if(emailEl) emailEl.textContent = 'Not signed in';
+    if(statusEl) statusEl.textContent = 'Local only (Sign in to backup)';
+    if(signoutBtn) signoutBtn.style.display = 'none';
+  }
+}
+
+function saveProfileSettings() {
+  S.focusMin = parseInt(document.getElementById('profFocusInp').value) || 120;
+  S.shortMin = parseInt(document.getElementById('profShortInp').value) || 10;
+  S.longMin  = parseInt(document.getElementById('profLongInp').value) || 20;
+  S.sessions = parseInt(document.getElementById('profSessInp').value) || 4;
+  
+  const gateVal = document.getElementById('profGateInp').value;
+  if(gateVal) S.gateDate = gateVal;
+
+  localStorage.setItem('focusMin', S.focusMin);
+  localStorage.setItem('shortMin', S.shortMin);
+  localStorage.setItem('longMin', S.longMin);
+  localStorage.setItem('sessions', S.sessions);
+  localStorage.setItem('gateDate', S.gateDate);
+
+  // Sync to settings modal inputs if open
+  if(document.getElementById('sFocus')) document.getElementById('sFocus').value = S.focusMin;
+  if(document.getElementById('sShort')) document.getElementById('sShort').value = S.shortMin;
+  if(document.getElementById('sLong'))  document.getElementById('sLong').value = S.longMin;
+  if(document.getElementById('sSess'))  document.getElementById('sSess').value = S.sessions;
+  if(document.getElementById('sGate'))  document.getElementById('sGate').value = S.gateDate;
+
+  calcDays();
+  renderSessionDots();
+  if(curMode === 'focus' && !timerRunning) { timeLeft = S.focusMin * 60; totalTime = timeLeft; updateDisplay(); }
+  triggerCloudSync();
+  toast('⚙️ Settings saved!');
+}
+
+
 function openTaskModal(taskId, dayOffset) {
   const isEdit = typeof taskId === 'number';
   document.getElementById('taskModalTitle').textContent = isEdit ? '✏️ Edit Task' : '📝 Add Task';
@@ -2452,7 +2922,11 @@ function updateTaskTypeUI(type) {
 }
 
 function setTaskTimeChip(val) {
-  document.getElementById('taskInputTime').value = val;
+  if(document.getElementById('taskInputTime')) document.getElementById('taskInputTime').value = val;
+  if(document.getElementById('taskInputRunTime')) {
+    document.getElementById('taskInputRunTime').value = val;
+    updateTaskRunPace();
+  }
 }
 
 function setTaskDateChip(offset) {
@@ -2461,18 +2935,20 @@ function setTaskDateChip(offset) {
 }
 
 function saveTaskFromModal() {
-  const name = document.getElementById('taskInputName').value.trim();
-  if(!name) { toast('⚠️ Please enter a task title'); return; }
-
+  const rawName = document.getElementById('taskInputName').value.trim();
   const taskType = document.getElementById('taskInputType').value || 'study';
   const isStudy = taskType === 'study';
   const subject = isStudy ? (document.getElementById('taskInputSubject').value.trim() || 'General') : 'Running';
+
   const time = isStudy
     ? (document.getElementById('taskInputTime').value.trim() || '45m')
     : (document.getElementById('taskInputRunTime').value.trim() || '25m');
-  const km = isStudy ? 0 : (parseFloat(document.getElementById('taskInputRunDist').value) || 0);
-  const date = document.getElementById('taskInputDate').value || S.selectedDate;
+  const km = isStudy ? 0 : (parseFloat(document.getElementById('taskInputRunDist').value) || 5.0);
+  const date = document.getElementById('taskInputDate').value || S.selectedDate || fmt(new Date());
   const editId = document.getElementById('editTaskId').value;
+
+  // If user didn't enter a title, generate a clear, sensible default title
+  const name = rawName || (isStudy ? `${subject} Practice` : `${km > 0 ? km.toFixed(1) + ' km ' : ''}Run`);
 
   if(editId) {
     const t = S.tasks.find(x => x.id === +editId);
@@ -2485,8 +2961,12 @@ function saveTaskFromModal() {
       ? PALETTE[Math.abs(hashString(subject)) % PALETTE.length]
       : '#f97316';
     S.tasks.push({ id: Date.now(), name, subject, time, date, color, done: false, creditedMins: 0, taskType, km });
-    toast(isStudy ? '📝 Study task scheduled!' : `🏃 Run scheduled! ${km > 0 ? km.toFixed(1)+' km' : ''}`);
+    toast(isStudy ? `✅ Added: ${name} (${time})` : `🏃 Added: ${name} (${km.toFixed(1)} km, ${time})`);
   }
+
+  // Ensure current scheduler view switches to this date and displays all tasks
+  S.selectedDate = date;
+  S.taskFilter = 'all';
 
   saveTasks();
   closeOv(null, 'taskModalOv');
@@ -3322,6 +3802,7 @@ function saveName(){
   if(!v) return;
   S.name = v; localStorage.setItem('focusName', v);
   document.getElementById('userName').textContent = v;
+  updateAvatar();
   triggerCloudSync();
   closeOv(null,'renameOv'); toast('👋 Name updated!');
 }
