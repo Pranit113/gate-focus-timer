@@ -977,6 +977,7 @@ body {
 .page-view {
   display: none;
   animation: fadeInPage 0.2s ease;
+  padding-bottom: 120px !important; /* Ensures no content is ever hidden behind bottom dock */
 }
 .page-view.active {
   display: block;
@@ -1296,9 +1297,7 @@ body {
   </div>
 </div>
 
-</div><!-- /app-wrapper -->
-  </div>
-</div>
+</div></div>
 
 <!-- ================================================================
      PAGE 2: SCHEDULE & TASK PLANNER
@@ -1316,7 +1315,7 @@ body {
   <!-- ===================== SCHEDULE & TASKS ===================== -->
 
 
-  <div class="card" style="margin-bottom:0">
+  <div class="card" style="margin-bottom:24px">
     <div class="sched-top">
       <div>
         <div class="badge badge-purple" id="dayBadge" style="margin-bottom:6px">Day 1 · 120 Days – 70 Marks</div>
@@ -1372,7 +1371,7 @@ body {
     <!-- Task List -->
     <div class="task-list" id="taskList"></div>
 
-    <button class="btn btn-outline" onclick="openTaskModal()" style="width:100%;margin-top:12px;border-style:dashed">
+    <button class="btn btn-outline" onclick="openTaskModal()" style="width:100%;margin-top:16px;margin-bottom:8px;padding:12px;font-size:0.85rem;font-weight:600;border-style:dashed;border-color:var(--accent);color:var(--foreground)">
       ＋ Add task for this day
     </button>
   </div>
@@ -1394,7 +1393,7 @@ body {
     </button>
   </div>
   <!-- Running & Workout Stats (replaces Activity by Hour) -->
-  <div class="card" id="runStatsCard" style="margin-bottom:0">
+  <div class="card" id="runStatsCard" style="margin-bottom:24px">
     <div class="stats-header" style="margin-bottom:10px">
       <div>
         <div class="run-stats-title">🏃 Running Tracker</div>
@@ -1429,7 +1428,7 @@ body {
 
     <!-- Recent Runs -->
     <div class="run-list-header">Recent Runs</div>
-    <div id="runEntryList" style="max-height:160px;overflow-y:auto;padding-right:2px"></div>
+    <div id="runEntryList" style="max-height:300px;overflow-y:auto;padding-right:4px;margin-bottom:8px"></div>
   </div>
 </div>
 
@@ -1626,6 +1625,8 @@ body {
     </div>
   </div>
 </div>
+
+</div><!-- /app-wrapper -->
 
 <!-- ================================================================
      BOTTOM DOCKED NAVIGATION BAR (4 PAGES)
